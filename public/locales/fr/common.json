@@ -1,0 +1,158 @@
+{
+  "404": {
+    "go_back": "Retour au tableau de bord",
+    "note1": "Il manque quelque chose...",
+    "note2": "Désolé, nous ne pouvons pas trouver cette page. Vous trouverez beaucoup de choses à explorer sur la page d'accueil."
+  },
+  "add_joints": "Ajouter des Pièces Jointes",
+  "answer": {
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "app_name": "Système de facturation",
+  "app_settings": {
+    "dark": "Sombre",
+    "light": "Clair",
+    "system": "Système",
+    "theme": "Theme"
+  },
+  "coming_soon": {
+    "coming_soon": "Bientôt disponible",
+    "go_back": "Retour au tableau de bord",
+    "note1": "Quelque chose d'incroyable arrive bientôt !",
+    "note2": "Nous travaillons dur pour vous apporter de nouvelles fonctionnalités. Restez à l'écoute !"
+  },
+  "commands": {
+    "apply": "Appliquer",
+    "activate": "Activer",
+    "deactivate": "Désactiver",
+    "actions": "Actions",
+    "add": "Ajouter",
+    "accept": "Accepter",
+    "cancel": "Annuler",
+    "copy": "Copier",
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "demote": "Rétrograder",
+    "draft": "Broullion",
+    "display": "Afficher",
+    "download": "Télécharger",
+    "duplicate": "Dupliquer",
+    "hide": "Masquer",
+    "initialize": "Initialiser",
+    "to_invoice": "Facturer",
+    "inspect": "Inspecter",
+    "modify": "Modifier",
+    "reject": "Rejeter",
+    "resend": "Renvoyer",
+    "save": "Enregistrer",
+    "search_by": "Recherche par",
+    "search_sort_by": "Rechercher/Trier par",
+    "send": "Envoyer",
+    "shrink": "Réduire",
+    "promote": "Promouvoir",
+    "reset": "Réinitialiser",
+    "validate": "Valider",
+    "unassociate": "Dissocier"
+  },
+  "elements": "Éléments",
+  "files": {
+    "uploading": "Téléchargement",
+    "uploaded": "Téléchargé",
+    "singular": "Fichier",
+    "plural": "Fichiers",
+    "drag_files_sentance": "Faites glisser et déposez les fichiers ici ou cliquez pour sélectionner les fichiers",
+    "multiple_files_max_size_sentence": "Vous pouvez télécharger {{count}} fichiers (jusqu'à {{size}} chacun)",
+    "single_file_max_size_sentence": "Vous pouvez télécharger un fichier d'une taille maximale de {{size}}",
+    "no_selected_file": "Aucun fichier sélectionné",
+    "drop_image": "Faites glisser l'image",
+    "select_image": "Cliquez pour sélectionner",
+    "rejected_empty_file_warning": "Le fichier {{name}} est vide et a été rejeté.",
+    "max_one_per_upload_warning": "Impossible de télécharger plus d'un fichier à la fois",
+    "max_file_warning": "Impossible de télécharger plus de {{count}} fichiers",
+    "file_rejected": "Le fichier {{name}} a été rejeté",
+    "failed_to_upload": "Impossible de télécharger {{target}}"
+  },
+  "languages": {
+    "word": "Langue",
+    "en": "Anglais 🇬🇧",
+    "fr": "Français 🇫🇷"
+  },
+  "menu": {
+    "buying": "Achat",
+    "contacts": "Contacts",
+    "dashboard": "Tableau de bord",
+    "selling": "Vente",
+    "administrative_tools": "Outils Administratifs",
+    "settings": "Réglage"
+  },
+  "order": {
+    "asc": "Croissant",
+    "desc": "Décroissant"
+  },
+  "pagination": {
+    "enumerate": "Page {{page}} sur {{totalPageCount}}",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "rows_per": "Lignes par page",
+    "selected_rows": "{{count}} sur {{size}} ligne(s) sélectionnée(s)."
+  },
+  "phone-input": {
+    "not_found": "Aucun pays trouvé",
+    "search": "Rechercher un pays"
+  },
+  "pick_date": "Choisissez une Date",
+  "start_date": "Date de début",
+  "end_date": "Date de fin",
+  "submenu": {
+    "account": "Compte",
+    "firms": "Entreprises",
+    "interlocutors": "Interlocuteurs",
+    "invoices": "Factures",
+    "other": "Autre",
+    "quotations": "Devis",
+    "payments": "Paiements",
+    "user_management": "Gestion des utilisateurs",
+    "logger": "Journalisation",
+    "system": "Système",
+    "withholding": "Retenue à la source",
+    "pdf": "PDF"
+  },
+  "settings": {
+    "account": {
+      "singular": "Compte",
+      "plural": "Comptes",
+      "my_profile": "Mon Profil",
+      "my_cabinet": "Mon Cabinet",
+      "bank_accounts": "Comptes Bancaires"
+    },
+    "system": {
+      "singular": "Système",
+      "plural": "Systèmes",
+      "activity": "Activité",
+      "sequence": "Séquence de numérotation",
+      "payment_condition": "Conditions de paiement",
+      "tax_withholding": "Retenue à la source",
+      "tax": "Synthèse des taxes",
+      "default_condition": "Condition par défaut"
+    },
+    "user_management": {
+      "users": "Utilisateurs",
+      "roles": "Rôles",
+      "permissions": "Permissions"
+    }
+  },
+  "table": {
+    "delete_prompt": "Voulez-vous vraiment supprimer",
+    "filter_placeholder": "Filtrer les {{entity}} ...",
+    "no_results": "Aucun résultat",
+    "visible_cols": "Colonnes Visibles",
+    "loading": "Chargement des données, veuillez patienter..."
+  },
+  "words": {
+    "for": "Pour",
+    "main_m": "Principal",
+    "main_f": "Principale",
+    "or": "ou"
+  }
+}

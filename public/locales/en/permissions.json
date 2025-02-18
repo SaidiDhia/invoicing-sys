@@ -1,0 +1,303 @@
+{
+  "role": {
+    "singular": "Role",
+    "create_role": {
+      "value": "Create Role",
+      "description": "Permission to create role"
+    },
+    "read_role": {
+      "value": "Read Role",
+      "description": "Permission to view role"
+    },
+    "update_role": {
+      "value": "Update Role",
+      "description": "Permission to update role"
+    },
+    "delete_role": {
+      "value": "Delete Role",
+      "description": "Permission to delete role"
+    },
+    "assign_role": {
+      "value": "Assign Role",
+      "description": "Permission to assign role to users"
+    },
+    "unassign_role": {
+      "value": "Unassign Role",
+      "description": "Permission to remove role from users"
+    }
+  },
+  "permission": {
+    "singular": "Permission",
+    "create_permission": {
+      "value": "Create Permission",
+      "description": "Permission to create permission"
+    },
+    "read_permission": {
+      "value": "Read Permission",
+      "description": "Permission to view permission"
+    },
+    "update_permission": {
+      "value": "Update Permission",
+      "description": "Permission to update permission"
+    },
+    "delete_permission": {
+      "value": "Delete Permission",
+      "description": "Permission to delete permission"
+    },
+    "assign_permission": {
+      "value": "Assign Permission",
+      "description": "Permission to assign permission to roles"
+    },
+    "unassign_permission": {
+      "value": "Unassign Permission",
+      "description": "Permission to remove permission from roles"
+    }
+  },
+  "user": {
+    "singular": "User",
+    "create_user": {
+      "value": "Create User",
+      "description": "Permission to create user"
+    },
+    "read_user": {
+      "value": "Read User",
+      "description": "Permission to view user details"
+    },
+    "update_user": {
+      "value": "Update User",
+      "description": "Permission to update user"
+    },
+    "delete_user": {
+      "value": "Delete User",
+      "description": "Permission to delete user"
+    }
+  },
+  "activity": {
+    "singular": "Activity",
+    "create_activity": {
+      "value": "Create Activity",
+      "description": "Permission to create activity"
+    },
+    "read_activity": {
+      "value": "Read Activity",
+      "description": "Permission to view activity details"
+    },
+    "update_activity": {
+      "value": "Update Activity",
+      "description": "Permission to update activity"
+    },
+    "delete_activity": {
+      "value": "Delete Activity",
+      "description": "Permission to delete activity"
+    }
+  },
+  "bank_account": {
+    "singular": "Bank Account",
+    "create_bank_account": {
+      "value": "Create Bank Account",
+      "description": "Permission to create bank account"
+    },
+    "read_bank_account": {
+      "value": "Read Bank Account",
+      "description": "Permission to view bank account details"
+    },
+    "update_bank_account": {
+      "value": "Update Bank Account",
+      "description": "Permission to update bank account"
+    },
+    "delete_bank_account": {
+      "value": "Delete Bank Account",
+      "description": "Permission to delete bank account"
+    }
+  },
+  "default_condition": {
+    "singular": "Default Condition",
+    "create_default_condition": {
+      "value": "Create Default Condition",
+      "description": "Permission to create default condition"
+    },
+    "read_default_condition": {
+      "value": "Read Default Condition",
+      "description": "Permission to view default condition details"
+    },
+    "update_default_condition": {
+      "value": "Update Default Condition",
+      "description": "Permission to update default condition"
+    },
+    "delete_default_condition": {
+      "value": "Delete Default Condition",
+      "description": "Permission to delete default condition"
+    }
+  },
+  "payment_condition": {
+    "singular": "Payment Condition",
+    "create_payment_condition": {
+      "value": "Create Payment Condition",
+      "description": "Permission to create payment condition"
+    },
+    "read_payment_condition": {
+      "value": "Read Payment Condition",
+      "description": "Permission to view payment condition details"
+    },
+    "update_payment_condition": {
+      "value": "Update Payment Condition",
+      "description": "Permission to update payment condition"
+    },
+    "delete_payment_condition": {
+      "value": "Delete Payment Condition",
+      "description": "Permission to delete payment condition"
+    }
+  },
+  "tax_withholding": {
+    "singular": "Tax Withholding",
+    "create_tax_withholding": {
+      "value": "Create Tax Withholding",
+      "description": "Permission to create tax withholding"
+    },
+    "read_tax_withholding": {
+      "value": "Read Tax Withholding",
+      "description": "Permission to view tax withholding details"
+    },
+    "update_tax_withholding": {
+      "value": "Update Tax Withholding",
+      "description": "Permission to update tax withholding"
+    },
+    "delete_tax_withholding": {
+      "value": "Delete Tax Withholding",
+      "description": "Permission to delete tax withholding"
+    }
+  },
+  "tax": {
+    "singular": "Tax",
+    "create_tax": {
+      "value": "Create Tax",
+      "description": "Permission to create tax"
+    },
+    "read_tax": {
+      "value": "Read Tax",
+      "description": "Permission to view tax details"
+    },
+    "update_tax": {
+      "value": "Update Tax",
+      "description": "Permission to update tax"
+    },
+    "delete_tax": {
+      "value": "Delete Tax",
+      "description": "Permission to delete tax"
+    }
+  },
+  "sequential": {
+    "singular": "Sequential",
+    "create_sequential": {
+      "value": "Create Sequential",
+      "description": "Permission to create sequential"
+    },
+    "read_sequential": {
+      "value": "Read Sequential",
+      "description": "Permission to view sequential details"
+    },
+    "update_sequential": {
+      "value": "Update Sequential",
+      "description": "Permission to update sequential"
+    },
+    "delete_sequential": {
+      "value": "Delete Sequential",
+      "description": "Permission to delete sequential"
+    }
+  },
+  "firm": {
+    "singular": "Firm",
+    "create_firm": {
+      "value": "Create Firm",
+      "description": "Permission to create firm"
+    },
+    "read_firm": {
+      "value": "Read Firm",
+      "description": "Permission to view firm details"
+    },
+    "update_firm": {
+      "value": "Update Firm",
+      "description": "Permission to update firm"
+    },
+    "delete_firm": {
+      "value": "Delete Firm",
+      "description": "Permission to delete firm"
+    }
+  },
+  "interlocutor": {
+    "singular": "Interlocutor",
+    "create_interlocutor": {
+      "value": "Create Interlocutor",
+      "description": "Permission to create interlocutor"
+    },
+    "read_interlocutor": {
+      "value": "Read Interlocutor",
+      "description": "Permission to view interlocutor details"
+    },
+    "update_interlocutor": {
+      "value": "Update Interlocutor",
+      "description": "Permission to update interlocutor"
+    },
+    "delete_interlocutor": {
+      "value": "Delete Interlocutor",
+      "description": "Permission to delete interlocutor"
+    }
+  },
+  "selling_quotation": {
+    "singular": "Selling Quotation",
+    "create_selling_quotation": {
+      "value": "Create Selling Quotation",
+      "description": "Permission to create selling quotation"
+    },
+    "read_selling_quotation": {
+      "value": "Read Selling Quotation",
+      "description": "Permission to view selling quotation details"
+    },
+    "update_selling_quotation": {
+      "value": "Update Selling Quotation",
+      "description": "Permission to update selling quotation"
+    },
+    "delete_selling_quotation": {
+      "value": "Delete Selling Quotation",
+      "description": "Permission to delete selling quotation"
+    }
+  },
+  "selling_invoice": {
+    "singular": "Selling Invoice",
+    "create_selling_invoice": {
+      "value": "Create Selling Invoice",
+      "description": "Permission to create selling invoice"
+    },
+    "read_selling_invoice": {
+      "value": "Read Selling Invoice",
+      "description": "Permission to view selling invoice details"
+    },
+    "update_selling_invoice": {
+      "value": "Update Selling Invoice",
+      "description": "Permission to update selling invoice"
+    },
+    "delete_selling_invoice": {
+      "value": "Delete Selling Invoice",
+      "description": "Permission to delete selling invoice"
+    }
+  },
+  "selling_payment": {
+    "singular": "Selling Payment",
+    "create_selling_payment": {
+      "value": "Create Selling Payment",
+      "description": "Permission to create selling payment"
+    },
+    "read_selling_payment": {
+      "value": "Read Selling Payment",
+      "description": "Permission to view selling payment details"
+    },
+    "update_selling_payment": {
+      "value": "Update Selling Payment",
+      "description": "Permission to update selling payment"
+    },
+    "delete_selling_payment": {
+      "value": "Delete Selling Payment",
+      "description": "Permission to delete selling payment"
+    }
+  }
+}

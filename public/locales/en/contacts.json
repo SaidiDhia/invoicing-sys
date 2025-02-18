@@ -1,0 +1,132 @@
+{
+  "common": {
+    "address": {
+      "address": "Address",
+      "address2": "Complementary Address",
+      "country": "Country",
+      "region": "Region",
+      "zip_code": "Zip Code"
+    },
+    "contact_information": "Contact Information",
+    "firm_information": "Firm Information",
+    "quotations_list": "Quotations List"
+  },
+  "firm": {
+    "action_add_failure": "Error while creating the firm",
+    "action_add_success": "Firm successfully added",
+    "action_remove_failure": "Error while removing the firm",
+    "action_remove_success": "Firm successfully removed",
+    "add_button_label": "New Firm",
+    "attributes": {
+      "activity": "Activity",
+      "created_at": "Date of Creation",
+      "currency": "Currency",
+      "delivery_address": "Delivery Address",
+      "entreprise_name": "Enterprise Name",
+      "entreprise_type": "Entreprise",
+      "main_interlocurtor_name": "Interlocuteur Name",
+      "main_interlocurtor_surname": "Interlocuteur Surname",
+      "invoicing_address": "Invoicing Address",
+      "notes": "Notes",
+      "particular_entreprise_type": "Particular",
+      "payment_conditions": "Payment Conditions",
+      "phone": "Phone",
+      "tax_number": "Tax Identification Number",
+      "type": "Firm Type",
+      "website": "Website"
+    },
+    "card_description": "This section offers a comprehensive and structured overview of all firm, ensuring clarity and ease of access.",
+    "errors": {
+      "empty_entreprise_name": "Firm name is required",
+      "firm_name_already_taken": "Firm name is already taken",
+      "tax_number_already_taken": "Tax number is already taken"
+    },
+    "deleteLabel": "Deletion of Firm",
+    "deletePrompt": "Do you really want to delete the firm",
+    "detailmenu": {
+      "title": "{{firmName}}'s Details",
+      "description": "You can edit the inspect all details of {{firmName}} here.",
+      "overview": "Overview",
+      "interlocutors": "Interlocutors",
+      "chronological": "Chronological",
+      "quotations": "Quotations",
+      "invoices": "Invoices",
+      "payments": "Payments"
+    },
+    "introduce_info": "Enter the company information",
+    "introduce_info_description": "Please provide the required details of the new company in the fields below.",
+    "edit_info": "Edit {{firmName}} Information",
+    "edit_info_description": "You can edit the {{firmName}} here by providing the required information.",
+    "empty_table": "No Firms found ",
+    "empty_cells": {
+      "phone": "No Phone",
+      "website": "No Website",
+      "activity": "No Activity",
+      "currency": "No Currency",
+      "tax_number": "No Tax Number"
+    },
+    "new": "New Firm",
+    "plural": "Firms",
+    "presented_by": "presented By",
+    "singular": "Firm"
+  },
+  "interlocutor": {
+    "action_add_failure": "Error while creating the interlocutor",
+    "action_add_success": "Interlocutor successfully added",
+    "action_associate_failure": "Error while associating the interlocutor",
+    "action_associate_success": "Interlocutor successfully associated",
+    "action_disassociate_failure": "Error while disassociating the interlocutor",
+    "action_disassociate_success": "Interlocutor successfully disassociated",
+    "action_promote_failure": "Error while promoting the interlocutor",
+    "action_promote_success": "Interlocutor successfully promoted",
+    "action_remove_failure": "Error while removing the interlocutor",
+    "action_remove_success": "Interlocutor successfully removed",
+    "action_update_failure": "Error while updating the interlocutor",
+    "action_update_success": "Interlocutor successfully updated",
+    "associate_firm": "Add Firm",
+    "associate_firm_when empty": "No firm association, Add the first association ?",
+    "associate_firm_prompt": "Select Firm",
+    "add_button_label": "New Interlocutor",
+    "attributes": {
+      "created_at": "Date of Creation",
+      "email": "Email",
+      "is_main": "Main",
+      "name": "Name",
+      "phone": "Phone",
+      "position": "Position",
+      "surname": "Surname",
+      "title": "Title",
+      "firms": "Firms"
+    },
+    "card_description": "This section offers a comprehensive and structured overview of all interlocutors, ensuring clarity and ease of access.",
+
+    "create_dialog_description": "Use this menu to create a new interlocutor or associate an existing one. Make sure all required fields are filled before saving.",
+    "update_dialog_description": "Enter the details to update the interlocutor. Make sure all required fields are filled before saving.",
+    "disassociate_dialog_description": "This action is permanent and cannot be undone. All associations with this company will also be removed.",
+    "promote_dialog_description": "Ensure this action aligns with their responsibilities, as it may impact system functionality.",
+    "delete_dialog_description": "This action is permanent and cannot be undone. All associations with this interlocutor will also be removed.",
+
+    "delete_label": "Deletion of Interlocutor",
+
+    "disassociate_prompt": "Do you really want to disassociate the interlocutor",
+    "promote_prompt": "Do you really want to promote the interlocutor",
+    "delete_prompt": "Do you really want to delete the interlocutor",
+
+    "empty_cells": {
+      "phone": "No Phone",
+      "position": "No Position"
+    },
+    "create_or_associate": {
+      "new": "New Interlocutor",
+      "associate": "Existing Interlocutor"
+    },
+    "errors": {
+      "surpassed_firm_limit": "You have mentioned all the possible firm available"
+    },
+    "list": "List of Interlocutors",
+    "new": "New Interlocutor",
+    "update": "Update Interlocutor",
+    "plural": "Interlocutors",
+    "singular": "Interlocutor"
+  }
+}

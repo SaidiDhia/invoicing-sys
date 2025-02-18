@@ -1,0 +1,208 @@
+{
+    "account": {
+        "singular": "Account Settings",
+        "description": "The Account Settings provides a centralized vue to manage personal information, access cabinet, and oversee linked bank accounts."
+    },
+    "system": {
+        "singular": "System Settings",
+        "description": "The System Settings page provides a centralized interface for administrators to configure and manage essential system settings."
+    },
+    "user_management": {
+        "singular": "User Management",
+        "description": "Manage user accounts, roles, and permissions effortlessly to ensure secure and efficient access control."
+    },
+    "pdf": {},
+    "cabinet": {
+        "general_information": "General Information",
+        "financial_information": "Financial Information",
+        "assets": "Assets",
+        "attributes": {
+            "name": "Cabinet Name",
+            "phone": "Phone",
+            "email": "E-mail",
+            "tax_number": "Tax Identification Number",
+            "currency": "Currency",
+            "activity": "Activity",
+            "logo": "Logo",
+            "signature": "Signature"
+        }
+    },
+    "bank_account": {
+        "action_add_failure": "Error while creating Bank Account",
+        "action_add_success": "Bank Account Added Successfully",
+        "action_edit_failure": "Error while updating Bank Account",
+        "action_edit_success": "Bank Account updated successfully",
+        "action_remove_failure": "Error while deleting bank account",
+        "action_remove_success": "Bank Account deleted successfully",
+        "action_promote_failure": "Error while promoting bank account",
+        "action_promote_success": "Bank Account {{name}} promoted successfully",
+        "add_button_label": "New Bank Account",
+        "attributes": {
+            "name": "Bank Name",
+            "bic": "BIC/SWIFT",
+            "currency": "Currency",
+            "rib": "RIB",
+            "iban": "IBAN",
+            "isMain": "Main Bank"
+        },
+        "card_description": "This section allows users to efficiently manage bank accounts by performing the key actions related to saved bank accounts",
+        "hints": {
+            "create_dialog_hint": "Enter the details to create a new bank account. Make sure all the required fields are filled before saving.",
+            "update_dialog_hint": "Enter the details to update the bank account. Make sure all the required fields are filled before saving."
+        },
+        "new": "New Bank Account",
+        "update": "Bank Account Update",
+        "singular": "Bank Account",
+        "plural": "Bank Accounts",
+        "promote_prompt": "Are you sure you want to promote '<label>{{label}}</label>' as your main account?"
+    },
+    "default_condition": {
+        "action_edit_failure": "Error while altering the default conditions",
+        "action_edit_success": "Default conditions updated successfully",
+        "card_description": "This section allows users to efficiently manage default conditions by performing the key actions related to saved conditions",
+        "elements": {
+            "quotation": "Quotations",
+            "invoice": "Invoices"
+        },
+        "not_set": "There are no default conditions set. Please configure them in the settings menu.",
+        "section": {
+            "selling": "Default Conditions of Selling",
+            "buying": "Default Conditions of Buying"
+        },
+        "singular": "Default Conditions"
+    },
+    "activity": {
+        "attributes": {
+            "label": "Label"
+        },
+        "add_button_label": "New Activity",
+        "card_description": "This section allows users to efficiently manage activities by performing the key actions related to saved activities",
+        "new": "New Activity",
+        "singular": "Activity",
+        "plural": "Activities"
+    },
+    "sequence": {
+        "attributes": {
+            "prefix": "Prefix",
+            "dynamic_sequence": "Dynamic Sequence",
+            "next": "Next Number"
+        },
+        "elements": {
+            "quotation": "Quotations",
+            "invoice": "Invoices"
+        },
+        "card_description": "This section allows users to efficiently manage sequences by performing the key actions related to predefined sequences",
+        "invoice_sequence": "Invoice Sequence",
+        "quotation_sequence": "Quotation Sequence",
+        "title": "Configuring the numbering sequence"
+    },
+    "payment_condition": {
+        "attributes": {
+            "label": "Label",
+            "description": "Description"
+        },
+        "add_button_label": "New Payment Condition",
+        "card_description": "This section allows users to efficiently manage payment conditions by performing the key actions related to saved conditions",
+        "new": "New Payment Condition",
+        "singular": "Payment Condition",
+        "plural": "Payment Conditions"
+    },
+    "withholding": {
+        "singular": "Tax Withholding",
+        "plural": "Tax Withholdings",
+        "attributes": {
+            "label": "Label",
+            "rate": "Rate"
+        },
+        "card_description": "This section allows users to efficiently manage tax witholding by performing the key actions related to saved taxes",
+        "add_button_label": "New Tax Withholding"
+    },
+    "tax": {
+        "attributes": {
+            "label": "Label",
+            "value": "Value",
+            "type": "Type",
+            "is_special": "Special"
+        },
+        "types": {
+            "rate": "Pourcentage",
+            "fixed": "Fixed Ammount"
+        },
+        "add_button_label": "New Tax",
+        "card_description": "This section allows users to efficiently manage taxes by performing the key actions related to saved taxes",
+        "new": "New Tax",
+        "singular": "Tax",
+        "plural": "Taxes"
+    },
+    "users": {
+        "singular": "User",
+        "plural": "Users",
+        "description": "View, manage, and customize user accounts to streamline access and ensure security.",
+        "attributes": {
+            "general": "General Information",
+            "account": "Account Information",
+            "id": "ID",
+            "username": "Username",
+            "email": "E-mail",
+            "first_name": "First Name",
+            "no_first_name": "Missing First Name",
+            "last_name": "Last Name",
+            "no_last_name": "Missing Last Name",
+            "date_of_birth": "Date of Birth",
+            "no_date_of_birth": "Missing Date of Birth",
+            "role": "Role",
+            "no_role": "No Role is assigned",
+            "active": "Active",
+            "password": "New Password",
+            "confirm_password": "Confirm Password"
+        },
+        "add_button_label": "New User",
+        "new": "New User",
+        "update": "Update a User",
+        "update_password": "Change User's Password",
+        "activate": "Activate a User",
+        "deactivate": "Deactivate User",
+        "hints": {
+            "create_dialog_hint": "Enter the details to create a new user. Make sure all the required fields are filled before saving.",
+            "update_dialog_hint": "Enter the details to update the user. Make sure all the required fields are filled before saving.",
+            "activate_dialog_hint": "This action will reactivate the user and restore their associated roles and permissions. Ensure this action aligns with your intended changes",
+            "deactivate_dialog_hint": "This action is irreversible and permanent. Deactivating the user will remove all associated roles and connections, affecting their access and permissions. Please proceed with caution.",
+            "update_password_hint": "Check this option if you want to change {{name}} {{surname}}'s password"
+        },
+        "require_password": "Require Password Update",
+        "require_password_hint": "Users will be prompted to update their password on their next login."
+    },
+    "roles": {
+        "singular": "Role",
+        "plural": "Roles",
+        "description": "Define and assign roles to streamline permissions and access control for users.",
+        "attributes": {
+            "label": "Label",
+            "description": "Description",
+            "no_description": "No Description",
+            "permissions": "Permissions",
+            "no_permissions": "No Permissions"
+        },
+        "add_button_label": "New Role",
+        "new": "New Role",
+        "update": "Update a Role",
+        "delete": "Delete Role",
+        "duplicate": "Duplicate Role",
+        "hints": {
+            "create_dialog_hint": "Enter the details to create a new role. Make sure all the required fields are filled before saving.",
+            "update_dialog_hint": "Enter the details to update the role. Make sure all the required fields are filled before saving.",
+            "delete_dialog_hint": "This action is permanent and cannot be undone. All associations with this role will also be removed.",
+            "duplicate_dialog_hint": "This action will duplicate the role, including all its associations. You can undo this action later if needed."
+        }
+    },
+    "permissions": {
+        "singular": "Permission",
+        "plural": "Permissions",
+        "description": "Set and manage permissions to control access to features and resources securely and efficiently.",
+        "attributes": {
+            "label": "Label",
+            "description": "Description",
+            "no_description": "No Description"
+        }
+    }
+}

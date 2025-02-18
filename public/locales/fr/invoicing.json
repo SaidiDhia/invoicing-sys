@@ -1,0 +1,178 @@
+{
+  "common": {
+    "firm_not_there": "Vous ne trouvez pas ce que vous cherchez ? Ajoutez une entreprise ici."
+  },
+  "quotation": {
+    "action_download_failure": "Erreur lors de la telechargement du devis",
+    "action_download_success": "Devis telechargé avec succès",
+    "action_duplicate_failure": "Erreur lors de la duplication du devis",
+    "action_duplicate_success": "Devis dupliquée avec succès",
+    "action_remove_failure": "Erreur lors de la suppression du devis",
+    "action_remove_success": "Devis supprimée avec succès",
+    "associate_firm": "Choisissez une entreprise",
+    "associate_interlocutor": "Choisissez un interlocuteur",
+    "add_button_label": "Nouveau devis",
+    "attributes": {
+      "number": "N°",
+      "date": "Date",
+      "due_date": "Échéance",
+      "object": "Objet",
+      "firm": "Entreprise",
+      "interlocutor": "Interlocuteur",
+      "invoicing_address": "Adresse de facturation",
+      "delivery_address": "Adresse de livraison",
+      "status": "Statut",
+      "sub_total": "Sous-total",
+      "discount": "Remise",
+      "total": "Total",
+      "general_condition": "Conditions générales",
+      "created_at": "Date de création",
+      "notes": "Remarques",
+      "files": "Pièces jointes",
+      "no_date": "Date manquante",
+      "no_due_date": "Date d'échéance manquante"
+    },
+    "card_description": "Cette section fournit une vue claire et organisée de tous vos devis.",
+    "errors": {
+      "surpassed_tax_limit": "Vous avez utilisé tous les taxes disponibles"
+    },
+    "new": "Nouveau devis",
+    "status": {
+      "accepted": "Accepté",
+      "draft": "Broullion",
+      "expired": "Expiré",
+      "non_existent": "Inexistante",
+      "sent": "Envoyé",
+      "rejected": "Rejeté",
+      "validated": "Validé",
+      "invoiced": "Facturé"
+    },
+    "mark_invoiced": "Changer le statut sans générer de nouvelle facture",
+    "file_duplication": "Voulez-vous également dupliquer les fichiers ?",
+    "plural": "Devis",
+    "singular": "Devis",
+    "use_default_condition": "Utiliser la condition par défaut"
+  },
+  "invoice": {
+    "action_download_failure": "Erreur lors de la telechargement du facture",
+    "action_download_success": "Facture telechargé avec succès",
+    "action_duplicate_failure": "Erreur lors de la duplication du facture",
+    "action_duplicate_success": "Facture dupliquée avec succès",
+    "action_remove_failure": "Erreur lors de la suppression du facture",
+    "action_remove_success": "Facture supprimée avec succès",
+    "associate_firm": "Choisissez une entreprise",
+    "associate_interlocutor": "Choisissez un interlocuteur",
+    "add_button_label": "Nouvelle facture",
+    "attributes": {
+      "number": "N°",
+      "date": "Date",
+      "due_date": "Échéance",
+      "object": "Objet",
+      "firm": "Entreprise",
+      "interlocutor": "Interlocuteur",
+      "invoicing_address": "Adresse de facturation",
+      "delivery_address": "Adresse de livraison",
+      "status": "Statut",
+      "sub_total": "Sous-total",
+      "discount": "Remise",
+      "total": "Total",
+      "tax_stamp": "Timbre Fiscal",
+      "general_condition": "Conditions générales",
+      "created_at": "Date de création",
+      "notes": "Remarques",
+      "files": "Pièces jointes",
+      "remaining_amount": "Montant restant",
+      "amount_paid": "Montant payé",
+      "payment": "Paiement",
+      "withholding": "Retenus à la source",
+      "no_date": "Date manquante",
+      "no_due_date": "Date d'échéance manquante"
+    },
+    "invoice_list": "Liste des factures",
+    "new": "Nouvelle facture",
+    "status": {
+      "draft": "Broullion",
+      "expired": "Expiré",
+      "non_existent": "Inexistante",
+      "sent": "Envoyé",
+      "paid": "Payé",
+      "partially_paid": "Payée partiellement",
+      "unpaid": "Inpayée",
+      "validated": "Validé"
+    },
+    "card_description": "Cette section fournit une vue claire et organisée de toutes vos factures.",
+    "file_duplication": "Voulez-vous également dupliquer les fichiers ?",
+    "plural": "Factures",
+    "singular": "Facture",
+    "use_default_condition": "Utiliser la condition par défaut"
+  },
+  "article": {
+    "attributes": {
+      "title": "Titre",
+      "quantity": "Qte.",
+      "taxes": "Taxes",
+      "tax_excluded": "Prix HT",
+      "tax_included": "Prix TTC",
+      "unit_price": "P.U",
+      "description": "Description"
+    },
+    "no_applied_tax": "Aucune taxe appliquée",
+    "manager": "Gestion articles",
+    "manager_statement": "Lister les articles de devis",
+    "manager_statement_quotation": "Lister les articles de devis",
+    "manager_statement_invoice": "Lister les articles de la facture",
+    "new": "Nouveau article",
+    "singular": "Article",
+    "plural": "Articles"
+  },
+  "payment": {
+    "add_button_label": "Nouveau paiement",
+    "singular": "Paiement",
+    "plural": "Paiements",
+    "card_description": "Cette section fournit une vue claire et organisée de tous vos paiements.",
+    "attributes": {
+      "number": "N°",
+      "date": "Date",
+      "mode": "Mode de paiement",
+      "amount": "Montant",
+      "currency": "Devise",
+      "fee": "Frais",
+      "convertion_rate": "Taux de change",
+      "created_at": "Date de création",
+      "notes": "Remarques",
+      "files": "Pièces jointes"
+    },
+    "empty_cells": {
+      "currency": "Aucun devise"
+    },
+    "new": "Nouveau paiement",
+    "payment_mode": {
+      "cash": "En espèce",
+      "credit_card": "Carte de crédit",
+      "check": "Chèque",
+      "bank_transfer": "Remise bancaire",
+      "wire_transfer": "Virement bancaire"
+    },
+    "financial_status": {
+      "available": "Disponible",
+      "used": "Utilisé",
+      "received": "Reçu"
+    },
+    "no_invoices": "Aucune facture impayée trouvée"
+  },
+  "controls": {
+    "associate_quotation": "Devis associés",
+    "article_description": "Description des articles",
+    "currency_select_placeholder": "Choisissez une devise",
+    "currency_details": "Devise",
+    "bank_select_placeholder": "Choisissez une compte bancaire",
+    "quotation_select_placeholder": "Choisissez un devis",
+    "bank_details": "Détails bancaires",
+    "no_bank_accounts": " Aucun compte bancaire trouvé",
+    "no_associated_quotation": "Aucun devis associé",
+    "include_on_quotation": "Inclure sur le devis",
+    "extra_entries": "Entrées supplémentaires",
+    "withholding": "Retenus à la source",
+    "tax_withholding_select_placeholder": "Choisissez une retenue à la source"
+  }
+}

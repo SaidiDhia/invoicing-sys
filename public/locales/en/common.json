@@ -1,0 +1,161 @@
+{
+  "404": {
+    "go_back": "Go Back to Dashboard",
+    "note1": "Something is missing...",
+    "note2": "Sorry, we can't find this page. You'll find plenty of things to explore on the homepage."
+  },
+  "add_joints": "Add Attachments",
+  "answer": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "app_name": "Invoicing System",
+  "app_settings": {
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
+    "theme": "Theme"
+  },
+  "coming_soon": {
+    "coming_soon": "Coming Soon",
+    "go_back": "Go Back to Dashboard",
+    "note1": "Something incredible is coming soon!",
+    "note2": "We are working hard to bring you new features. Stay tuned!"
+  },
+  "commands": {
+    "apply": "Apply",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "actions": "Actions",
+    "add": "Add",
+    "accept": "Accept",
+    "cancel": "Cancel",
+    "copy": "Copy",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "demote": "Demote",
+    "draft": "Draft",
+    "display": "Display",
+    "download": "Download",
+    "duplicate": "Duplicate",
+    "hide": "Hide",
+    "initialize": "Initialize",
+    "to_invoice": "To Invoice",
+    "inspect": "Inspect",
+    "modify": "Modify",
+    "reject": "Reject",
+    "resend": "Resend",
+    "save": "Save",
+    "search_by": "Search By",
+    "search_sort_by": "Search/Sort By",
+    "send": "Send",
+    "shrink": "Shrink",
+    "promote": "Promote",
+    "reset": "Reset",
+    "validate": "Validate",
+    "unassociate": "Unassociate"
+  },
+  "elements": "Elements",
+  "files": {
+    "uploading": "Uploading",
+    "uploaded": "Uploaded",
+    "singular": "File",
+    "plural": "Files",
+    "drag_files_sentance": "Drag&drop files here, or click to select files",
+    "multiple_files_max_size_sentence": "You can upload {{count}} files (up to {{size}} each)",
+    "single_file_max_size_sentence": "You can upload a file with size up to {{size}}",
+    "no_selected_file": "No Selected Files",
+    "drop_image": "Drop the image",
+    "select_image": "Click to Select",
+    "rejected_empty_file_warning": "File {{name}} is empty and has been rejected.",
+    "max_one_per_upload_warning": "Cannot upload more than 1 file at a time",
+    "max_file_warning": "Cannot upload more than {{count}} files",
+    "file_rejected": "File {{name}} was rejected",
+    "failed_to_upload": "Failed to upload {{target}}"
+  },
+  "languages": {
+    "word": "Language",
+    "en": "English 🇬🇧",
+    "fr": "French 🇫🇷"
+  },
+  "menu": {
+    "buying": "Buying",
+    "contacts": "Contacts",
+    "dashboard": "Dashboard",
+    "selling": "Selling",
+    "administrative_tools": "Administrative Tools",
+    "settings": "Settings"
+  },
+  "order": {
+    "asc": "Ascending",
+    "desc": "Descending"
+  },
+  "pagination": {
+    "enumerate": "Page {{page}} of {{totalPageCount}}",
+    "next": "Next",
+    "previous": "Previous",
+    "rows_per": "Rows per page",
+    "selected_rows": "{{count}} of {{size}} row(s) selected."
+  },
+  "phone-input": {
+    "not_found": "No country found",
+    "search": "Search country"
+  },
+  "pick_date": "Pick a Date",
+  "start_date": "Start Date",
+  "end_date": "End Date",
+  "submenu": {
+    "account": "Account",
+    "firms": "Firms",
+    "interlocutors": "Interlocutors",
+    "invoices": "Invoices",
+    "other": "Other",
+    "quotations": "Quotations",
+    "payments": "Payments",
+    "user_management": "User Management",
+    "logger": "Logger",
+    "system": "System",
+    "withholding": "Withholding",
+    "pdf": "PDF"
+  },
+  "administrative-tools": {
+    "logger": {},
+    "user_management": {
+      "users": "Users",
+      "roles": "Roles",
+      "permissions": "Permissions"
+    }
+  },
+  "settings": {
+    "account": {
+      "singular": "Account",
+      "plural": "Accounts",
+      "my_profile": "My Profile",
+      "my_cabinet": "My Cabinet",
+      "bank_accounts": "Bank Accounts"
+    },
+    "system": {
+      "singular": "System",
+      "plural": "Systems",
+      "activity": "Activity",
+      "sequence": "Numerical Sequence",
+      "payment_condition": "Payment Condition",
+      "tax_withholding": "Tax Withholding",
+      "tax": "Tax Synthesis",
+      "default_condition": "Default Condition"
+    }
+  },
+  "table": {
+    "delete_prompt": "Are you sure you want to delete",
+    "filter_placeholder": "Filter the {{entity}} ...",
+    "no_results": "No results",
+    "visible_cols": "Visible Columns",
+    "loading": "Loading Data, Please wait..."
+  },
+  "words": {
+    "for": "For",
+    "main_m": "Main",
+    "main_f": "Main",
+    "or": "or"
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "common": {
+    "address": {
+      "address": "Adresse",
+      "address2": "Complément d'adresse",
+      "country": "Pays",
+      "region": "Gouvernorat",
+      "zip_code": "Code Postal"
+    },
+    "contact_information": "Informations Contacts",
+    "firm_information": "Informations Entreprise",
+    "quotations_list": "Liste des Devis"
+  },
+  "firm": {
+    "action_add_failure": "Erreur lors de la création de l'entreprise",
+    "action_add_success": "Entreprise ajoutée avec succès",
+    "action_remove_failure": "Erreur lors de la suppression de la entreprise",
+    "action_remove_success": "Entreprise supprimée avec succès",
+    "add_button_label": "Nouvelle Entreprise",
+    "attributes": {
+      "activity": "Activité",
+      "created_at": "Date de Création",
+      "currency": "Devise",
+      "delivery_address": "Adresse de livraison",
+      "entreprise_name": "Nom de l'entreprise",
+      "entreprise_type": "Entreprise",
+      "main_interlocurtor_name": "Nom de l'interlocuteur",
+      "main_interlocurtor_surname": "Prénom de l'interlocuteur",
+      "invoicing_address": "Adresse de facturation",
+      "notes": "Remarques",
+      "particular_entreprise_type": "Particulier",
+      "payment_conditions": "Conditions de paiement",
+      "phone": "Téléphone",
+      "tax_number": "Numéro d'identification fiscale",
+      "type": "Type d'entreprise",
+      "website": "Site Web"
+    },
+    "card_description": "Cette section offre un aperçu complet et structuré de l'ensemble des entreprises, garantissant clarté et facilité d'accès.",
+    "errors": {
+      "empty_entreprise_name": "Nom de de l'entreprise est obligatoire",
+      "firm_name_already_taken": "Le nom de l'entreprise est déjà utilisé",
+      "tax_number_already_taken": "Le numéro fiscal est déjà utilisé"
+    },
+    "delete_label": "Suppression du l'entreprise",
+    "delete_prompt": "Voulez-vous vraiment supprimer l'entreprise",
+    "detailmenu": {
+      "title": "Les détails de {{firmName}}",
+      "description": "Vous pouvez éditer et inspecter tous les détails de {{firmName}} ici.",
+      "overview": "Aperçu Général",
+      "interlocutors": "Interlocuteurs",
+      "chronological": "Chronologie",
+      "quotations": "Devis",
+      "invoices": "Factures",
+      "payments": "Paiements"
+    },
+    "introduce_info": "Saisissez les informations de l'entreprise",
+    "introduce_info_description": "Veuillez renseigner les détails de la nouvelle entreprise en fournissant toutes les informations requises.",
+    "edit_info": "Modifier les informations de {{firmName}}",
+    "edit_info_description": "Vous pouvez modifier {{firmName}} ici en fournissant les informations requises",
+    "empty_table": "Aucune Entreprise trouvée",
+    "empty_cells": {
+      "phone": "Aucun Téléphone",
+      "website": "Aucun Site Web",
+      "activity": "Aucune Activité",
+      "currency": "Aucun Devise",
+      "tax_number": "Aucun Numéro d'Identification Fiscale"
+    },
+    "new": "Nouvelle Entreprise",
+    "presented_by": "présenté par",
+    "plural": "Entreprises",
+    "singular": "Entreprise"
+  },
+  "interlocutor": {
+    "action_add_failure": "Erreur lors de la création de l'interlocuteur",
+    "action_add_success": "Interlocuteur ajoutée avec succès",
+    "action_associate_failure": "Erreur lors de l'association de l'interlocuteur",
+    "action_associate_success": "Interlocuteur associé avec succès",
+    "action_disassociate_failure": "Erreur lors de la dissociation de l'interlocuteur",
+    "action_disassociate_success": "Interlocuteur dissocié avec succès",
+    "action_promote_failure": "Erreur lors de la promotion de l'interlocuteur",
+    "action_promote_success": "Interlocuteur promotionné avec succès",
+    "action_remove_failure": "Erreur lors de la suppression de l'interlocuteur",
+    "action_remove_success": "Interlocuteur supprimée avec succès",
+    "action_update_failure": "Erreur lors de la mise à jour de l'interlocuteur",
+    "action_update_success": "Interlocuteur mis à jour avec succès",
+    "associate_firm": "Ajouter une entreprise",
+    "associate_firm_when empty": "Aucune association d'entreprise, Ajoutez la première association ?",
+    "associate_firm_prompt": "Choisir une entreprise",
+    "add_button_label": "Nouvel Interlocuteur",
+    "attributes": {
+      "created_at": "Date de Création",
+      "email": "Email",
+      "is_main": "Principal",
+      "name": "Nom",
+      "phone": "Téléphone",
+      "position": "Position",
+      "surname": "Prénom",
+      "title": "Titre",
+      "firms": "Entreprises"
+    },
+    "card_description": "Cette section offre un aperçu complet et structuré de l'ensemble des interlocuteurs, garantissant clarté et facilité d'accès.",
+
+    "create_dialog_description": "Utilisez ce menu pour créer un nouvel interlocuteur ou associer un interlocuteur existant. Assurez-vous de remplir tous les champs obligatoires avant d'enregistrer vos modifications.",
+    "update_dialog_description": "Introduisez les détails pour mettre à jour l'interlocuteur. Assurez-vous que tous les champs obligatoires sont remplis avant d'enregistrer.",
+    "disassociate_dialog_description": "Cette action est permanente et ne peut pas être annulée. Toutes les associations avec cette entreprise seront également supprimées.",
+    "promote_dialog_description": "Assurez-vous que cette action correspond à leurs responsabilités, car elle peut avoir un impact sur la fonctionnalité du système.",
+    "delete_dialog_description": "Cette action est permanente et ne peut pas être annulée. Toutes les associations avec cet interlocuteur seront également supprimées.",
+
+    "delete_label": "Suppression du l'interlocuteur",
+
+    "disassociate_prompt": "Voulez-vous vraiment dissocier l'interlocuteur",
+    "promote_prompt": "Voulez-vous vraiment promouvoir l'interlocuteur",
+    "delete_prompt": "Voulez-vous vraiment supprimer",
+
+    "empty_cells": {
+      "phone": "Aucun Téléphone",
+      "position": "Aucune Position"
+    },
+    "create_or_associate": {
+      "new": "Nouvel Interlocuteur",
+      "associate": "Interlocuteur existant"
+    },
+    "errors": {
+      "surpassed_firm_limit": "Vous avez mentionné toutes les entreprises disponibles"
+    },
+    "list": "Liste des Interlocuteurs",
+    "new": "Nouvel Interlocuteur",
+    "update": "Mise à jour Interlocutor",
+    "plural": "Interlocuteurs",
+    "singular": "Interlocuteur"
+  }
+}

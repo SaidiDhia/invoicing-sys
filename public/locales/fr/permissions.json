@@ -1,0 +1,303 @@
+{
+  "role": {
+    "singular": "Rôle",
+    "create_role": {
+      "value": "Créer un rôle",
+      "description": "Permission de créer un rôle"
+    },
+    "read_role": {
+      "value": "Lire un rôle",
+      "description": "Permission de voir un rôle"
+    },
+    "update_role": {
+      "value": "Mettre à jour un rôle",
+      "description": "Permission de mettre à jour un rôle"
+    },
+    "delete_role": {
+      "value": "Supprimer un rôle",
+      "description": "Permission de supprimer un rôle"
+    },
+    "assign_role": {
+      "value": "Attribuer un rôle",
+      "description": "Permission d'attribuer un rôle aux utilisateurs"
+    },
+    "unassign_role": {
+      "value": "Retirer un rôle",
+      "description": "Permission de retirer un rôle des utilisateurs"
+    }
+  },
+  "permission": {
+    "singular": "Permission",
+    "create_permission": {
+      "value": "Créer une permission",
+      "description": "Permission de créer une permission"
+    },
+    "read_permission": {
+      "value": "Lire une permission",
+      "description": "Permission de voir une permission"
+    },
+    "update_permission": {
+      "value": "Mettre à jour une permission",
+      "description": "Permission de mettre à jour une permission"
+    },
+    "delete_permission": {
+      "value": "Supprimer une permission",
+      "description": "Permission de supprimer une permission"
+    },
+    "assign_permission": {
+      "value": "Attribuer une permission",
+      "description": "Permission d'attribuer une permission aux rôles"
+    },
+    "unassign_permission": {
+      "value": "Retirer une permission",
+      "description": "Permission de retirer une permission des rôles"
+    }
+  },
+  "user": {
+    "singular": "Utilisateur",
+    "create_user": {
+      "value": "Créer un utilisateur",
+      "description": "Permission de créer un utilisateur"
+    },
+    "read_user": {
+      "value": "Lire un utilisateur",
+      "description": "Permission de voir les détails d'un utilisateur"
+    },
+    "update_user": {
+      "value": "Mettre à jour un utilisateur",
+      "description": "Permission de mettre à jour un utilisateur"
+    },
+    "delete_user": {
+      "value": "Supprimer un utilisateur",
+      "description": "Permission de supprimer un utilisateur"
+    }
+  },
+  "activity": {
+    "singular": "Activité",
+    "create_activity": {
+      "value": "Créer une activité",
+      "description": "Permission de créer une activité"
+    },
+    "read_activity": {
+      "value": "Lire une activité",
+      "description": "Permission de voir les détails d'une activité"
+    },
+    "update_activity": {
+      "value": "Mettre à jour une activité",
+      "description": "Permission de mettre à jour une activité"
+    },
+    "delete_activity": {
+      "value": "Supprimer une activité",
+      "description": "Permission de supprimer une activité"
+    }
+  },
+  "bank_account": {
+    "singular": "Compte bancaire",
+    "create_bank_account": {
+      "value": "Créer un compte bancaire",
+      "description": "Permission de créer un compte bancaire"
+    },
+    "read_bank_account": {
+      "value": "Lire un compte bancaire",
+      "description": "Permission de voir les détails d'un compte bancaire"
+    },
+    "update_bank_account": {
+      "value": "Mettre à jour un compte bancaire",
+      "description": "Permission de mettre à jour un compte bancaire"
+    },
+    "delete_bank_account": {
+      "value": "Supprimer un compte bancaire",
+      "description": "Permission de supprimer un compte bancaire"
+    }
+  },
+  "default_condition": {
+    "singular": "Condition par défaut",
+    "create_default_condition": {
+      "value": "Créer une condition par défaut",
+      "description": "Permission de créer une condition par défaut"
+    },
+    "read_default_condition": {
+      "value": "Lire une condition par défaut",
+      "description": "Permission de voir les détails d'une condition par défaut"
+    },
+    "update_default_condition": {
+      "value": "Mettre à jour une condition par défaut",
+      "description": "Permission de mettre à jour une condition par défaut"
+    },
+    "delete_default_condition": {
+      "value": "Supprimer une condition par défaut",
+      "description": "Permission de supprimer une condition par défaut"
+    }
+  },
+  "payment_condition": {
+    "singular": "Condition de paiement",
+    "create_payment_condition": {
+      "value": "Créer une condition de paiement",
+      "description": "Permission de créer une condition de paiement"
+    },
+    "read_payment_condition": {
+      "value": "Lire une condition de paiement",
+      "description": "Permission de voir les détails d'une condition de paiement"
+    },
+    "update_payment_condition": {
+      "value": "Mettre à jour une condition de paiement",
+      "description": "Permission de mettre à jour une condition de paiement"
+    },
+    "delete_payment_condition": {
+      "value": "Supprimer une condition de paiement",
+      "description": "Permission de supprimer une condition de paiement"
+    }
+  },
+  "tax_withholding": {
+    "singular": "Retenue fiscale",
+    "create_tax_withholding": {
+      "value": "Créer une retenue fiscale",
+      "description": "Permission de créer une retenue fiscale"
+    },
+    "read_tax_withholding": {
+      "value": "Lire une retenue fiscale",
+      "description": "Permission de voir les détails d'une retenue fiscale"
+    },
+    "update_tax_withholding": {
+      "value": "Mettre à jour une retenue fiscale",
+      "description": "Permission de mettre à jour une retenue fiscale"
+    },
+    "delete_tax_withholding": {
+      "value": "Supprimer une retenue fiscale",
+      "description": "Permission de supprimer une retenue fiscale"
+    }
+  },
+  "tax": {
+    "singular": "Taxe",
+    "create_tax": {
+      "value": "Créer une taxe",
+      "description": "Permission de créer une taxe"
+    },
+    "read_tax": {
+      "value": "Lire une taxe",
+      "description": "Permission de voir les détails d'une taxe"
+    },
+    "update_tax": {
+      "value": "Mettre à jour une taxe",
+      "description": "Permission de mettre à jour une taxe"
+    },
+    "delete_tax": {
+      "value": "Supprimer une taxe",
+      "description": "Permission de supprimer une taxe"
+    }
+  },
+  "sequential": {
+    "singular": "Séquentiel",
+    "create_sequential": {
+      "value": "Créer un séquentiel",
+      "description": "Permission de créer un séquentiel"
+    },
+    "read_sequential": {
+      "value": "Lire un séquentiel",
+      "description": "Permission de voir les détails d'un séquentiel"
+    },
+    "update_sequential": {
+      "value": "Mettre à jour un séquentiel",
+      "description": "Permission de mettre à jour un séquentiel"
+    },
+    "delete_sequential": {
+      "value": "Supprimer un séquentiel",
+      "description": "Permission de supprimer un séquentiel"
+    }
+  },
+  "firm": {
+    "singular": "Entreprise",
+    "create_firm": {
+      "value": "Créer une entreprise",
+      "description": "Permission de créer une entreprise"
+    },
+    "read_firm": {
+      "value": "Lire une entreprise",
+      "description": "Permission de voir les détails d'une entreprise"
+    },
+    "update_firm": {
+      "value": "Mettre à jour une entreprise",
+      "description": "Permission de mettre à jour une entreprise"
+    },
+    "delete_firm": {
+      "value": "Supprimer une entreprise",
+      "description": "Permission de supprimer une entreprise"
+    }
+  },
+  "interlocutor": {
+    "singular": "Interlocuteur",
+    "create_interlocutor": {
+      "value": "Créer un interlocuteur",
+      "description": "Permission de créer un interlocuteur"
+    },
+    "read_interlocutor": {
+      "value": "Lire un interlocuteur",
+      "description": "Permission de voir les détails d'un interlocuteur"
+    },
+    "update_interlocutor": {
+      "value": "Mettre à jour un interlocuteur",
+      "description": "Permission de mettre à jour un interlocuteur"
+    },
+    "delete_interlocutor": {
+      "value": "Supprimer un interlocuteur",
+      "description": "Permission de supprimer un interlocuteur"
+    }
+  },
+  "selling_quotation": {
+    "singular": "Devis de vente",
+    "create_selling_quotation": {
+      "value": "Créer un devis de vente",
+      "description": "Permission de créer un devis de vente"
+    },
+    "read_selling_quotation": {
+      "value": "Lire un devis de vente",
+      "description": "Permission de voir les détails d'un devis de vente"
+    },
+    "update_selling_quotation": {
+      "value": "Mettre à jour un devis de vente",
+      "description": "Permission de mettre à jour un devis de vente"
+    },
+    "delete_selling_quotation": {
+      "value": "Supprimer un devis de vente",
+      "description": "Permission de supprimer un devis de vente"
+    }
+  },
+  "selling_invoice": {
+    "singular": "Facture de vente",
+    "create_selling_invoice": {
+      "value": "Créer une facture de vente",
+      "description": "Permission de créer une facture de vente"
+    },
+    "read_selling_invoice": {
+      "value": "Lire une facture de vente",
+      "description": "Permission de voir les détails d'une facture de vente"
+    },
+    "update_selling_invoice": {
+      "value": "Mettre à jour une facture de vente",
+      "description": "Permission de mettre à jour une facture de vente"
+    },
+    "delete_selling_invoice": {
+      "value": "Supprimer une facture de vente",
+      "description": "Permission de supprimer une facture de vente"
+    }
+  },
+  "selling_payment": {
+    "singular": "Paiement de vente",
+    "create_selling_payment": {
+      "value": "Créer un paiement de vente",
+      "description": "Permission de créer un paiement de vente"
+    },
+    "read_selling_payment": {
+      "value": "Lire un paiement de vente",
+      "description": "Permission de voir les détails d'un paiement de vente"
+    },
+    "update_selling_payment": {
+      "value": "Mettre à jour un paiement de vente",
+      "description": "Permission de mettre à jour un paiement de vente"
+    },
+    "delete_selling_payment": {
+      "value": "Supprimer un paiement de vente",
+      "description": "Permission de supprimer un paiement de vente"
+    }
+  }
+}

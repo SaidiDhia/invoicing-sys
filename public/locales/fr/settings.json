@@ -1,0 +1,208 @@
+{
+  "account": {
+    "singular": "Réglage du compte",
+    "description": "Les paramètres du compte fournissent une vue centralisée pour gérer les informations personnelles, accéder au cabinet et superviser les comptes bancaires liés."
+  },
+  "system": {
+    "singular": "Réglage du système",
+    "description": "Les réglage système fournit une interface centralisée permettant aux administrateurs de configurer et de gérer les paramètres système essentiels."
+  },
+  "user_management": {
+    "singular": "Gestion des utilisateurs",
+    "description": "Gérez les comptes d'utilisateurs, les rôles et les autorisations sans effort pour garantir un contrôle d'accès sécurisé et efficace."
+  },
+  "pdf": {},
+  "cabinet": {
+    "general_information": "Informations générales",
+    "financial_information": "Information Comptable",
+    "assets": "Ressources",
+    "attributes": {
+      "name": "Nom du cabinet",
+      "phone": "Téléphone",
+      "email": "E-mail",
+      "tax_number": "Numéro d'identification fiscale",
+      "currency": "Devise",
+      "activity": "Activité",
+      "logo": "Logo",
+      "signature": "Signature"
+    }
+  },
+  "bank_account": {
+    "action_add_failure": "Erreur lors de la création du compte bancaire",
+    "action_add_success": "Compte Bancaire ajouté avec succès",
+    "action_edit_failure": "Erreur lors de la modification du compte bancaire",
+    "action_edit_success": "Compte Bancaire modifié avec succès",
+    "action_remove_failure": "Erreur lors de la suppression du compte bancaire",
+    "action_remove_success": "Compte Bancaire supprimé avec succès",
+    "action_promote_failure": "Erreur lors de la promotion du compte bancaire",
+    "action_promote_success": "Compte Bancaire {{name}} promu avec succès",
+    "add_button_label": "Nouveau Compte Bancaire",
+    "attributes": {
+      "name": "Nom de la Banque",
+      "bic": "BIC/SWIFT",
+      "currency": "Devise",
+      "rib": "RIB",
+      "iban": "IBAN",
+      "isMain": "Banque Principale"
+    },
+    "card_description": "Cette section permet aux utilisateurs de gérer efficacement les comptes bancaires en effectuant les actions clés liées aux comptes bancaires enregistrés",
+    "hints": {
+      "create_dialog_hint": "Introduisez les détails pour créer une nouveau compte bancaire. Assurez-vous que tous les champs obligatoires sont remplis avant d'enregistrer.",
+      "update_dialog_hint": "Introduisez les détails pour mettre à jour le compte bancaire. Assurez-vous que tous les champs obligatoires sont remplis avant d'enregistrer."
+    },
+    "new": "Nouveau Compte Bancaire",
+    "update": "Mise à jour d'un Compte Bancaire",
+    "singular": "Compte Bancaire",
+    "plural": "Comptes Bancaires",
+    "promote_prompt": "Etes-vous sûr de vouloir promouvoir '<label>{{label}}</label>' comme compte principal ?"
+  },
+  "default_condition": {
+    "action_edit_failure": "Erreur lors de la modification des conditions par défaut",
+    "action_edit_success": "Conditions par défaut mises à jour avec succès",
+    "card_description": "Cette section permet aux utilisateurs de gérer efficacement les conditions par défaut en effectuant les actions clés liées aux conditions enregistrés",
+    "elements": {
+      "quotation": "Devis",
+      "invoice": "Factures"
+    },
+    "not_set": "Aucune condition par défaut n'est définie. Veuillez les configurer dans le menu des paramètres",
+    "section": {
+      "selling": "Les Conditions par défaut de Vente",
+      "buying": "Les Conditions par défaut d'Achat"
+    },
+    "singular": "Conditions Par défaut"
+  },
+  "activity": {
+    "attributes": {
+      "label": "Etiquette"
+    },
+    "add_button_label": "Nouvelle Activité",
+    "card_description": "Cette section permet aux utilisateurs de gérer efficacement les activités en réalisant les principales actions liées aux activités enregistrées.",
+    "new": "Nouvelle Activité",
+    "singular": "Activité",
+    "plural": "Activités"
+  },
+  "sequence": {
+    "attributes": {
+      "prefix": "Préfixe",
+      "dynamic_sequence": "Séquence Dynamique",
+      "next": "Numéro Suivant"
+    },
+    "elements": {
+      "quotation": "Devis",
+      "invoice": "Factures"
+    },
+    "card_description": "Cette section permet aux utilisateurs de gérer efficacement les séquences en effectuant les actions clés liées aux séquences prédéfinies",
+    "invoice_sequence": "Sequence des Factures",
+    "quotation_sequence": "Sequence des Devis",
+    "title": "Configuration des séquences de numérotation"
+  },
+  "payment_condition": {
+    "attributes": {
+      "label": "Etiquette",
+      "description": "Description"
+    },
+    "add_button_label": "Nouvelle Condition de Paiement",
+    "card_description": "Cette section permet aux utilisateurs de gérer efficacement les conditions de paiement en réalisant les principales actions liées aux conditions enregistrées.",
+    "new": "Nouvelle Condition de Paiement",
+    "singular": "Conditions de Paiement",
+    "plural": "Conditions de Paiement"
+  },
+  "withholding": {
+    "singular": "Retenue à la source",
+    "plural": "Retenues à la source",
+    "attributes": {
+      "label": "Etiquette",
+      "rate": "Taux"
+    },
+    "card_description": "Cette section permet aux utilisateurs de gérer efficacement les retenues à la source en réalisant les principales actions liées aux retenues",
+    "add_button_label": "Nouvelle Retenue à la source"
+  },
+  "tax": {
+    "attributes": {
+      "label": "Etiquette",
+      "value": "Valeur",
+      "type": "Type",
+      "is_special": "Spécial"
+    },
+    "types": {
+      "rate": "Pourcentage",
+      "fixed": "Montant fixe"
+    },
+    "add_button_label": "Nouvelle Taxe",
+    "card_description": "Cette section permet aux utilisateurs de gérer efficacement les taxes en réalisant les principales actions liées aux taxes enregistrées.",
+    "new": "Nouvelle Taxe",
+    "singular": "Taxe",
+    "plural": "Taxes"
+  },
+  "users": {
+    "singular": "Utilisateur",
+    "plural": "Utilisateurs",
+    "description": "Affichez, gérez et personnalisez les comptes utilisateurs pour rationaliser l'accès et garantir la sécurité.",
+    "attributes": {
+      "general": "Informations générales",
+      "account": "Informations sur le compte",
+      "id": "ID",
+      "username": "Nom d'utilisateur",
+      "email": "E-mail",
+      "first_name": "Prénom",
+      "no_first_name": "Prénom manquant",
+      "last_name": "Nom",
+      "no_last_name": "Nom manquant",
+      "date_of_birth": "Date de naissance",
+      "no_date_of_birth": "Date de naissance manquante",
+      "role": "Rôle",
+      "no_role": "Aucun rôle assigné",
+      "active": "Actif",
+      "password": "Nouveau Mot de passe",
+      "confirm_password": "Confirmez mot de passe"
+    },
+    "add_button_label": "Nouvel Utilisateur",
+    "new": "Nouvel Utilisateur",
+    "update": "Mise à jour d'un Utilisateur",
+    "update_password": "Changer le mot de passe",
+    "activate": "Activation d'un Utilisateur",
+    "deactivate": "Désactiver l'utilisateur",
+    "hints": {
+      "create_dialog_hint": "Entrez les détails pour créer un nouvel utilisateur. Assurez-vous que tous les champs obligatoires sont remplis avant de sauvegarder.",
+      "update_dialog_hint": "Entrez les détails pour mettre à jour l'utilisateur. Assurez-vous que tous les champs obligatoires sont remplis avant de sauvegarder.",
+      "activate_dialog_hint": "Cette action réactivera l'utilisateur et restaurera ses rôles et autorisations associés. Assurez-vous que cette action correspond aux modifications que vous souhaitez apporter.",
+      "deactivate_dialog_hint": "Cette action est irréversible et permanente. La désactivation de l'utilisateur supprimera tous les rôles et connexions associés, affectant ainsi son accès et ses autorisations. Veuillez procéder avec prudence.",
+      "update_password_hint": "Cochez cette option si vous souhaitez modifier le mot de passe de {{name}} {{surname}}"
+    },
+    "require_password": "Exiger la mise à jour du mot de passe",
+    "require_password_hint": "Les utilisateurs seront invités à mettre à jour leur mot de passe lors de leur prochaine connexion."
+  },
+  "roles": {
+    "singular": "Rôle",
+    "plural": "Rôles",
+    "description": "Définissez et attribuez des rôles pour rationaliser les autorisations et le contrôle d'accès pour les utilisateurs.",
+    "attributes": {
+      "label": "Etiquette",
+      "description": "Description",
+      "no_description": "Aucune Description",
+      "permissions": "Permissions",
+      "no_permissions": "Aucune Permission"
+    },
+    "add_button_label": "Nouveau Rôle",
+    "new": "Nouveau Rôle",
+    "update": "Mise à jour d'un Rôle",
+    "delete": "Supprimer le rôle",
+    "duplicate": "Dupliquer le rôle",
+    "hints": {
+      "create_dialog_hint": "Entrez les détails pour créer un nouveau rôle. Assurez-vous que tous les champs obligatoires sont remplis avant de sauvegarder.",
+      "update_dialog_hint": "Entrez les détails pour mettre à jour le rôle. Assurez-vous que tous les champs obligatoires sont remplis avant de sauvegarder.",
+      "delete_dialog_hint": "Cette action est permanente et ne peut pas être annulée. Toutes les associations avec ce rôle seront également supprimées.",
+      "duplicate_dialog_hint": "Cette action dupliquera le rôle, y compris toutes ses associations. Vous pouvez annuler cette action ultérieurement si nécessaire."
+    }
+  },
+  "permissions": {
+    "singular": "Permission",
+    "plural": "Permissions",
+    "description": "Définissez et gérez les autorisations pour contrôler l'accès aux fonctionnalités et aux ressources de manière sécurisée et efficace.",
+    "attributes": {
+      "label": "Etiquette",
+      "description": "Description",
+      "no_description": "Aucune Description"
+    }
+  }
+}

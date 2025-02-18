@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 20%;
+
+    --muted: 200 11% 91%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 88.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --primary: 187 69% 61%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 76 82% 54%;
+    --secondary-foreground: white;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 228, 50%, 6%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --card: 228, 50%, 8%;
+    --card-foreground: 213 31% 91%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --primary: 228 50% 28%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 43 95% 56%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 223 47% 11%;
+    --accent-foreground: 213 31% 91%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-400 rounded-lg;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-500;
+  }
+}
+
+html,
+body {
+  font-family: 'Verdana', system-ui, sans-serif;
+  overflow: hidden;
+  padding: 0;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input[type='date']::-moz-calendar-picker-indicator {
+  display: none;
+}
+
+input[type='date']::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

@@ -1,0 +1,107 @@
+{
+  "common": {
+    "singular": "Journal",
+    "plural": "Journaux",
+    "description": "Cette page offre une vue détaillée et une gestion des journaux système, permettant de surveiller les événements, de suivre les activités et de consulter les descriptions des actions enregistrées avec des horodatages précis.",
+    "live_switch_disconnected": "Déconnecté (Hors ligne)",
+    "no_new_logs": "Aucun nouveau journal",
+    "one_new_log": "1 nouveau journal",
+    "many_new_logs": "{{count}} nouveaux journaux",
+    "scroll_top": "Faire défiler en haut",
+    "attributes": {
+      "event": "Événement",
+      "context": "Contexte",
+      "logged_at": "Horodaté à",
+      "id": "ID"
+    }
+  },
+  "event_context": {
+    "user": "Utilisateur",
+    "role": "Rôle",
+    "permission": "Permission",
+    "firm": "Entreprise",
+    "interlocutor": "Interlocuteur",
+    "quotation": "Devis",
+    "invoice": "Facture",
+    "payment": "Paiement",
+    "activity": "Activité"
+  },
+  "event_names": {
+    "user_created": "Utilisateur Créé",
+    "user_updated": "Utilisateur Mis à Jour",
+    "user_deleted": "Utilisateur Supprimé",
+
+    "role_created": "Rôle Créé",
+    "role_updated": "Rôle Mis à Jour",
+    "role_deleted": "Rôle Supprimé",
+
+    "firm_created": "Entreprise Crée",
+    "firm_updated": "Entreprise Mise à Jour",
+    "firm_deleted": "Entreprise Supprimée",
+
+    "interlocutor_created": "Interlocuteur Créé",
+    "interlocutor_updated": "Interlocuteur Mis à Jour",
+    "interlocutor_deleted": "Interlocuteur Supprimé",
+    "interlocutor_promoted": "Interlocuteur Promoué",
+
+    "quotation_created": "Devis Créé",
+    "quotation_updated": "Devis Mis à Jour",
+    "quotation_deleted": "Devis Supprimé",
+    "quotation_printed": "Devis Imprimé",
+    "quotation_invoiced_marked": "Devis Facturé Marqué",
+    "quotation_invoiced": "Devis Facturé",
+    "quotation_duplicated": "Devis Dupliqué",
+
+    "invoice_created": "Facture Créée",
+    "invoice_updated": "Facture Mise à Jour",
+    "invoice_deleted": "Facture Supprimée",
+    "invoice_duplicated": "Facture Dupliquée",
+
+    "payment_created": "Paiement Créé",
+    "payment_updated": "Paiement Mis à Jour",
+    "payment_deleted": "Paiement Supprimé",
+
+    "activity_created": "Activité Crée",
+    "activity_updated": "Activité Mise à Jour",
+    "activity_deleted": "Activité Supprimée"
+  },
+  "events": {
+    "user_created": "Un nouvel enregistrement d'utilisateur <strong>{{user_name}}</strong> a été créé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "user_updated": "L'utilisateur <strong>{{user_name}}</strong> a été mis à jour avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "user_deleted": "L'utilisateur <strong>{{user_name}}</strong> a été supprimé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+
+    "role_created": "Un nouvel enregistrement de rôle <strong>{{role_label}}</strong> a été créé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "role_updated": "Le rôle <strong>{{role_label}}</strong> a été mis à jour avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "role_deleted": "Le rôle <strong>{{role_label}}</strong> a été supprimé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+
+    "firm_created": "Un nouvel enregistrement d'entreprise <strong>{{firm_name}}</strong> a été créé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "firm_updated": "L'entreprise <strong>{{firm_name}}</strong> a été mis à jour avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "firm_deleted": "L'entreprise <strong>{{firm_name}}</strong> a été supprimé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+
+    "interlocutor_created": "Un nouvel enregistrement d'interlocuteur <strong>{{interlocutor_name}}</strong> a été créé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "interlocutor_updated": "L'interlocuteur <strong>{{interlocutor_name}}</strong> a été mis à jour avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "interlocutor_deleted": "L'interlocuteur <strong>{{interlocutor_name}}</strong> a été supprimé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "interlocutor_promoted": "<strong>{{promoted}}</strong> a été promu interlocuteur principal dans <strong>{{firm_name}}</strong>, remplaçant <strong>{{demoted}}</strong>, par l'utilisateur <strong>{{username}}</strong>.",
+
+    "quotation_created": "Un nouvel enregistrement de devis <strong>{{quotation_seq}}</strong> a été créé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "quotation_updated": "Le devis <strong>{{quotation_seq}}</strong> a été mis à jour avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "quotation_deleted": "Le devis <strong>{{quotation_seq}}</strong> a été supprimé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "quotation_printed": "Le devis <strong>{{quotation_seq}}</strong> a été imprimé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "quotation_invoiced_marked": "Le devis <strong>{{quotation_seq}}</strong> a été marqué comme facturé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "quotation_invoiced": "Le devis <strong>{{quotation_seq}}</strong> a été facturé avec succès sous la facture <strong>{{invoice_seq}}</strong> par l'utilisateur <strong>{{username}}</strong>.",
+    "quotation_duplicated": "Le devis <strong>{{quotation_seq}}</strong> a été dupliqué avec succès en <strong>{{duplicate_seq}}</strong> par l'utilisateur <strong>{{username}}</strong>.",
+
+    "invoice_created": "Un nouvel enregistrement de facture <strong>{{invoice_seq}}</strong> a été créé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "invoice_updated": "La facture <strong>{{invoice_seq}}</strong> a été mise à jour avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "invoice_deleted": "La facture <strong>{{invoice_seq}}</strong> a été supprimé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "invoice_duplicated": "La facture <strong>{{invoice_seq}}</strong> a été dupliqué avec succès en <strong>{{duplicate_seq}}</strong> par l'utilisateur <strong>{{username}}</strong>.",
+
+    "payment_created": "Un nouveau paiement <strong>{{payment_seq}}</strong> a été créé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "payment_updated": "Le paiement <strong>{{payment_seq}}</strong> a été mis à jour avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "payment_deleted": "Le paiement <strong>{{payment_seq}}</strong> a été supprimé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+
+    "activity_created": "Un nouveau enregistrement d'activité <strong>{{activity_label}}</strong> a été créé avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "activity_updated": "L'activité <strong>{{activity_label}}</strong> a été mise à jour avec succès par l'utilisateur <strong>{{username}}</strong>.",
+    "activity_deleted": "L'activité <strong>{{activity_label}}</strong> a été supprimé avec succès par l'utilisateur <strong>{{username}}</strong>."
+  }
+}

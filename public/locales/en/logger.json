@@ -1,0 +1,107 @@
+{
+  "common": {
+    "singular": "Log",
+    "plural": "Logs",
+    "description": "This page provides a detailed view and management of system logs, allowing events monitoring, track activity, and review descriptions of logged actions with precise timestamps.",
+    "live_switch_disconnected": "Disconnected (Offline)",
+    "no_new_logs": "No new logs available",
+    "one_new_log": "1 new log available",
+    "many_new_logs": "{{count}} new logs available",
+    "scroll_top": "Scroll upwards",
+    "attributes": {
+      "event": "Event",
+      "context": "Context",
+      "logged_at": "Logged At",
+      "id": "ID"
+    }
+  },
+  "event_context": {
+    "user": "User",
+    "role": "Role",
+    "permission": "Permission",
+    "firm": "Firm",
+    "interlocutor": "Interlocutor",
+    "quotation": "Quotation",
+    "invoice": "Invoice",
+    "payment": "Payment",
+    "activity": "Activity"
+  },
+  "event_names": {
+    "user_created": "User Created",
+    "user_updated": "User Updated",
+    "user_deleted": "User Deleted",
+
+    "role_created": "Role Created",
+    "role_updated": "Role Updated",
+    "role_deleted": "Role Deleted",
+
+    "firm_created": "Firm Created",
+    "firm_updated": "Firm Updated",
+    "firm_deleted": "Firm Deleted",
+
+    "interlocutor_created": "Interlocutor Created",
+    "interlocutor_updated": "Interlocutor Updated",
+    "interlocutor_deleted": "Interlocutor Deleted",
+    "interlocutor_promoted": "Interlocutor Promoted",
+
+    "quotation_created": "Quotation Created",
+    "quotation_updated": "Quotation Updated",
+    "quotation_deleted": "Quotation Deleted",
+    "quotation_printed": "Quotation Printed",
+    "quotation_invoiced_marked": "Quotation Invoiced Marked",
+    "quotation_invoiced": "Quotation Invoiced",
+    "quotation_duplicated": "Quotation Duplicated",
+
+    "invoice_created": "Invoice Created",
+    "invoice_updated": "Invoice Updated",
+    "invoice_deleted": "Invoice Deleted",
+    "invoice_duplicated": "Invoice Duplicated",
+
+    "payment_created": "Payment Created",
+    "payment_updated": "Payment Updated",
+    "payment_deleted": "Payment Deleted",
+
+    "activity_created": "Activity Created",
+    "activity_updated": "Activity Updated",
+    "activity_deleted": "Activity Deleted"
+  },
+  "events": {
+    "user_created": "A new user record <strong>{{user_name}}</strong> was successfully created by user <strong>{{username}}</strong>.",
+    "user_updated": "The user <strong>{{user_name}}</strong> was successfully updated by user <strong>{{username}}</strong>.",
+    "user_deleted": "The user <strong>{{user_name}}</strong> was successfully deleted by user <strong>{{username}}</strong>.",
+
+    "role_created": "A new role record <strong>{{role_label}}</strong> was successfully created by user <strong>{{username}}</strong>.",
+    "role_updated": "The role <strong>{{role_label}}</strong> was successfully updated by user <strong>{{username}}</strong>.",
+    "role_deleted": "The role <strong>{{role_label}}</strong> was successfully deleted by user <strong>{{username}}</strong>.",
+
+    "firm_created": "A new firm record <strong>{{firm_name}}</strong> was successfully created by user <strong>{{username}}</strong>.",
+    "firm_updated": "The firm  <strong>{{firm_name}}</strong> was successfully updated by user  <strong>{{username}}</strong>.",
+    "firm_deleted": "The firm  <strong>{{firm_name}}</strong> was successfully deleted by user  <strong>{{username}}</strong>.",
+
+    "interlocutor_created": "A new interlocutror record <strong>{{interlocutor_name}}</strong> was successfully created by user  <strong>{{username}}</strong>.",
+    "interlocutor_updated": "The interlocutror <strong>{{interlocutor_name}}</strong> was successfully updated by user  <strong>{{username}}</strong>.",
+    "interlocutor_deleted": "The interlocutror <strong>{{interlocutor_name}}</strong> was successfully deleted by user  <strong>{{username}}</strong>.",
+    "interlocutor_promoted": " <strong>{{promoted}}</strong> has been promoted to the main interlocutor in <strong>{{firm_name}}</strong>, replacing  <strong>{{demoted}}</strong>, by user <strong>{{username}}</strong>.",
+
+    "quotation_created": "A new quotation record <strong>{{quotation_seq}}</strong> was successfully created by user <strong>{{username}}</strong>.",
+    "quotation_updated": "The quotation <strong>{{quotation_seq}}</strong> was successfully updated by user <strong>{{username}}</strong>.",
+    "quotation_deleted": "The quotation <strong>{{quotation_seq}}</strong> was successfully deleted by user <strong>{{username}}</strong>.",
+    "quotation_printed": "The quotation <strong>{{quotation_seq}}</strong> was successfully printed by user <strong>{{username}}</strong>.",
+    "quotation_invoiced_marked": "The quotation <strong>{{quotation_seq}}</strong> has been successfully marked as invoiced by user <strong>{{username}}</strong>.",
+    "quotation_invoiced": "The quotation <strong>{{quotation_seq}}</strong> has been successfully invoiced under invoice <strong>{{invoice_seq}}</strong> by user <strong>{{username}}</strong>.",
+    "quotation_duplicated": "The quotation <strong>{{quotation_seq}}</strong> has been successfully duplicated as <strong>{{duplicate_seq}}</strong> by user <strong>{{username}}</strong>.",
+
+    "invoice_created": "A new invoice record <strong>{{invoice_seq}}</strong> was successfully created by user <strong>{{username}}</strong>.",
+    "invoice_updated": "The invoice <strong>{{invoice_seq}}</strong> was successfully updated by user <strong>{{username}}</strong>.",
+    "invoice_deleted": "The invoice <strong>{{invoice_seq}}</strong> was successfully deleted by user <strong>{{username}}</strong>.",
+    "invoice_duplicated": "The invoice <strong>{{invoice_seq}}</strong> has been successfully duplicated as <strong>{{duplicate_seq}}</strong> by user <strong>{{username}}</strong>.",
+
+    "payment_created": "A new payment record <strong>{{payment_seq}}</strong> was successfully created by user <strong>{{username}}</strong>.",
+    "payment_updated": "The payment <strong>{{payment_seq}}</strong> was successfully updated by user <strong>{{username}}</strong>.",
+    "payment_deleted": "The payment <strong>{{payment_seq}}</strong> was successfully deleted by user <strong>{{username}}</strong>.",
+
+    "activity_created": "A new activity record <strong>{{activity_label}}</strong> was successfully created by user <strong>{{username}}</strong>.",
+    "activity_updated": "The activity <strong>{{activity_label}}</strong> was successfully updated by user <strong>{{username}}</strong>.",
+    "activity_deleted": "The activity <strong>{{activity_label}}</strong> was successfully deleted by user <strong>{{username}}</strong>."
+  }
+}
