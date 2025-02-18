@@ -1,8 +1,8 @@
-import axios from './axios';
+import axios from '../axios';
 import { differenceInDays, isAfter } from 'date-fns';
-import { DISCOUNT_TYPE } from '../types/enums/discount-types';
-import { upload } from './upload';
-import { api } from '.';
+import { DISCOUNT_TYPE } from '../../types/enums/discount-types';
+import { upload } from '../upload';
+import { api } from '..';
 import {
   CreateInvoiceDto,
   DateRange,
@@ -57,8 +57,8 @@ const findPaginated = async (
 ): Promise<PagedInvoice> => {
   const generalFilter = search
     ? Object.values(INVOICE_FILTER_ATTRIBUTES)
-        .map((key) => `${key}||$cont||${search}`)
-        .join('||$or||')
+      .map((key) => `${key}||$cont||${search}`)
+      .join('||$or||')
     : '';
   const firmCondition = firmId ? `firmId||$eq||${firmId}` : '';
   const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
@@ -66,7 +66,7 @@ const findPaginated = async (
 
   const response = await axios.get<PagedInvoice>(
     new String().concat(
-      'public/invoice/list?',
+      'public/selling-invoice/list?',
       `sort=${sortKey},${order}&`,
       `filter=${filters}&`,
       `limit=${size}&page=${page}&`,
@@ -100,13 +100,13 @@ const findOne = async (
     'articleInvoiceEntries.articleInvoiceEntryTaxes.tax'
   ]
 ): Promise<Invoice & { files: InvoiceUploadedFile[] }> => {
-  const response = await axios.get<Invoice>(`public/invoice/${id}?join=${relations.join(',')}`);
+  const response = await axios.get<Invoice>(`public/selling-invoice/${id}?join=${relations.join(',')}`);
   return { ...response.data, files: await getInvoiceUploads(response.data) };
 };
 
 const findByRange = async (id?: number): Promise<ResponseInvoiceRangeDto> => {
   const response = await axios.get<ResponseInvoiceRangeDto>(
-    `public/invoice/sequential-range/${id}`
+    `public/selling-invoice/sequential-range/${id}`
   );
   return response.data;
 };
@@ -117,7 +117,7 @@ const uploadInvoiceFiles = async (files: File[]): Promise<number[]> => {
 
 const create = async (invoice: CreateInvoiceDto, files: File[]): Promise<Invoice> => {
   const uploadIds = await uploadInvoiceFiles(files);
-  const response = await axios.post<Invoice>('public/invoice', {
+  const response = await axios.post<Invoice>('public/selling-invoice', {
     ...invoice,
     uploads: uploadIds.map((id) => {
       return { uploadId: id };
@@ -150,7 +150,7 @@ const getInvoiceUploads = async (invoice: Invoice): Promise<InvoiceUploadedFile[
 
 const download = async (id: number, template: string): Promise<any> => {
   const invoice = await findOne(id, []);
-  const response = await axios.get<string>(`public/invoice/${id}/download?template=${template}`, {
+  const response = await axios.get<string>(`public/selling-invoice/${id}/download?template=${template}`, {
     responseType: 'blob'
   });
   const blob = new Blob([response.data], { type: response.headers['content-type'] });
@@ -164,13 +164,13 @@ const download = async (id: number, template: string): Promise<any> => {
 };
 
 const duplicate = async (duplicateInvoiceDto: DuplicateInvoiceDto): Promise<Invoice> => {
-  const response = await axios.post<Invoice>('/public/invoice/duplicate', duplicateInvoiceDto);
+  const response = await axios.post<Invoice>('/public/selling-invoice/duplicate', duplicateInvoiceDto);
   return response.data;
 };
 
 const update = async (invoice: UpdateInvoiceDto, files: File[]): Promise<Invoice> => {
   const uploadIds = await uploadInvoiceFiles(files);
-  const response = await axios.put<Invoice>(`public/invoice/${invoice.id}`, {
+  const response = await axios.put<Invoice>(`public/selling-invoice/${invoice.id}`, {
     ...invoice,
     uploads: [
       ...(invoice.uploads || []),
@@ -183,7 +183,7 @@ const update = async (invoice: UpdateInvoiceDto, files: File[]): Promise<Invoice
 };
 
 const remove = async (id: number): Promise<Invoice> => {
-  const response = await axios.delete<Invoice>(`public/invoice/${id}`);
+  const response = await axios.delete<Invoice>(`public/selling-invoice/${id}`);
   return response.data;
 };
 
@@ -218,7 +218,7 @@ const validate = (invoice: Partial<Invoice>, dateRange?: DateRange): ToastValida
 
 const updateInvoicesSequentials = async (updatedSequenceDto: UpdateInvoiceSequentialNumber) => {
   const response = await axios.put<Invoice>(
-    `/public/invoice/update-invoice-sequences`,
+    `/public/selling-invoice/update-invoice-sequences`,
     updatedSequenceDto
   );
   return response.data;

@@ -7,9 +7,9 @@ import {
   ToastValidation,
   UpdatePaymentDto
 } from '@/types';
-import axios from './axios';
-import { upload } from './upload';
-import { api } from '.';
+import axios from '../axios';
+import { upload } from '../upload';
+import { api } from '..';
 
 const findOne = async (
   id: number,
@@ -22,7 +22,7 @@ const findOne = async (
     'uploads.upload'
   ]
 ): Promise<Payment & { files: PaymentUploadedFile[] }> => {
-  const response = await axios.get<Payment>(`public/payment/${id}?join=${relations.join(',')}`);
+  const response = await axios.get<Payment>(`public/selling-payment/${id}?join=${relations.join(',')}`);
   return { ...response.data, files: await getPaymentUploads(response.data) };
 };
 
@@ -38,8 +38,8 @@ const findPaginated = async (
 ): Promise<PagedPayment> => {
   const generalFilter = search
     ? Object.values(PAYMENT_FILTER_ATTRIBUTES)
-        .map((key) => `${key}||$cont||${search}`)
-        .join('||$or||')
+      .map((key) => `${key}||$cont||${search}`)
+      .join('||$or||')
     : '';
   const firmCondition = firmId ? `firmId||$eq||${firmId}` : '';
   const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
@@ -47,7 +47,7 @@ const findPaginated = async (
 
   const response = await axios.get<PagedPayment>(
     new String().concat(
-      'public/payment/list?',
+      'public/selling-payment/list?',
       `sort=${sortKey},${order}&`,
       `filter=${filters}&`,
       `limit=${size}&page=${page}&`,
@@ -63,7 +63,7 @@ const uploadPaymentFiles = async (files: File[]): Promise<number[]> => {
 
 const create = async (payment: CreatePaymentDto, files: File[] = []): Promise<Payment> => {
   const uploadIds = await uploadPaymentFiles(files);
-  const response = await axios.post<CreatePaymentDto>('public/payment', {
+  const response = await axios.post<CreatePaymentDto>('public/selling-payment', {
     ...payment,
     uploads: uploadIds.map((id) => {
       return { uploadId: id };
@@ -96,7 +96,7 @@ const getPaymentUploads = async (payment: Payment): Promise<PaymentUploadedFile[
 
 const update = async (payment: UpdatePaymentDto, files: File[] = []): Promise<Payment> => {
   const uploadIds = await uploadPaymentFiles(files);
-  const response = await axios.put<Payment>(`public/payment/${payment.id}`, {
+  const response = await axios.put<Payment>(`public/selling-payment/${payment.id}`, {
     ...payment,
     uploads: [
       ...(payment.uploads || []),
@@ -109,7 +109,7 @@ const update = async (payment: UpdatePaymentDto, files: File[] = []): Promise<Pa
 };
 
 const remove = async (id: number): Promise<Payment> => {
-  const response = await axios.delete<Payment>(`public/payment/${id}`);
+  const response = await axios.delete<Payment>(`public/selling-payment/${id}`);
   return response.data;
 };
 

@@ -6,8 +6,8 @@ import { Currency } from './currency';
 import { PaymentCondition } from './payment-condition';
 import { SOCIAL_TITLE } from './enums';
 import { PagedResponse } from './response';
-import { Quotation } from './quotation';
-import { Invoice } from './invoice';
+import { Quotation } from './quotations/selling-quotation';
+import { Invoice } from './invoices/selling-invoice';
 import { DatabaseEntity } from './response/DatabaseEntity';
 
 export interface Firm extends DatabaseEntity {
@@ -56,4 +56,4 @@ export interface UpdateFirmDto extends CreateFirmDto {
 
 export type FirmQueryKeyParams = { [P in keyof Firm]?: boolean };
 
-export interface PagedFirm extends PagedResponse<Firm> {}
+export interface PagedFirm extends PagedResponse<Firm> { }

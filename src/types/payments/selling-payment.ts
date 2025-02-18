@@ -1,9 +1,9 @@
-import { Currency } from './currency';
-import { Firm } from './firm';
-import { Invoice } from './invoice';
-import { PagedResponse } from './response';
-import { DatabaseEntity } from './response/DatabaseEntity';
-import { Upload } from './upload';
+import { Currency } from '../currency';
+import { Firm } from '../firm';
+import { Invoice } from '../invoices/selling-invoice';
+import { PagedResponse } from '../response';
+import { DatabaseEntity } from '../response/DatabaseEntity';
+import { Upload } from '../upload';
 
 export enum PAYMENT_MODE {
   Cash = 'payment.payment_mode.cash',
@@ -55,7 +55,7 @@ export interface UpdatePaymentDto extends CreatePaymentDto {
   id?: number;
 }
 
-export interface PagedPayment extends PagedResponse<Payment> {}
+export interface PagedPayment extends PagedResponse<Payment> { }
 
 export interface PaymentUploadedFile {
   upload: PaymentUpload;

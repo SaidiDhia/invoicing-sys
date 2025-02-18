@@ -1,8 +1,8 @@
-import axios from './axios';
+import axios from '../axios';
 import { differenceInDays } from 'date-fns';
-import { DISCOUNT_TYPE } from '../types/enums/discount-types';
-import { upload } from './upload';
-import { api } from '.';
+import { DISCOUNT_TYPE } from '../../types/enums/discount-types';
+import { upload } from '../upload';
+import { api } from '..';
 import {
   ArticleQuotationEntry,
   CreateQuotationDto,
@@ -56,8 +56,8 @@ const findPaginated = async (
 ): Promise<PagedQuotation> => {
   const generalFilter = search
     ? Object.values(QUOTATION_FILTER_ATTRIBUTES)
-        .map((key) => `${key}||$cont||${search}`)
-        .join('||$or||')
+      .map((key) => `${key}||$cont||${search}`)
+      .join('||$or||')
     : '';
   const firmCondition = firmId ? `firmId||$eq||${firmId}` : '';
   const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
@@ -65,7 +65,7 @@ const findPaginated = async (
 
   const response = await axios.get<PagedQuotation>(
     new String().concat(
-      'public/quotation/list?',
+      'public/selling-quotation/list?',
       `sort=${sortKey},${order}&`,
       `filter=${filters}&`,
       `limit=${size}&page=${page}&`,
@@ -77,7 +77,7 @@ const findPaginated = async (
 
 const findChoices = async (status: QUOTATION_STATUS): Promise<Quotation[]> => {
   const response = await axios.get<Quotation[]>(
-    `public/quotation/all?filter=status||$eq||${status}`
+    `public/buying-quotation/all?filter=status||$eq||${status}`
   );
   return response.data;
 };
@@ -103,7 +103,7 @@ const findOne = async (
     'articleQuotationEntries.articleQuotationEntryTaxes.tax'
   ]
 ): Promise<Quotation & { files: QuotationUploadedFile[] }> => {
-  const response = await axios.get<Quotation>(`public/quotation/${id}?join=${relations.join(',')}`);
+  const response = await axios.get<Quotation>(`public/buying-quotation/${id}?join=${relations.join(',')}`);
   return { ...response.data, files: await getQuotationUploads(response.data) };
 };
 
@@ -113,7 +113,7 @@ const uploadQuotationFiles = async (files: File[]): Promise<number[]> => {
 
 const create = async (quotation: CreateQuotationDto, files: File[]): Promise<Quotation> => {
   const uploadIds = await uploadQuotationFiles(files);
-  const response = await axios.post<Quotation>('public/quotation', {
+  const response = await axios.post<Quotation>('public/buying-quotation', {
     ...quotation,
     uploads: uploadIds.map((id) => {
       return { uploadId: id };
@@ -146,7 +146,7 @@ const getQuotationUploads = async (quotation: Quotation): Promise<QuotationUploa
 
 const download = async (id: number, template: string): Promise<any> => {
   const quotation = await findOne(id, []);
-  const response = await axios.get<string>(`public/quotation/${id}/download?template=${template}`, {
+  const response = await axios.get<string>(`public/buying-quotation/${id}/download?template=${template}`, {
     responseType: 'blob'
   });
   const blob = new Blob([response.data], { type: response.headers['content-type'] });
@@ -161,7 +161,7 @@ const download = async (id: number, template: string): Promise<any> => {
 
 const duplicate = async (duplicateQuotationDto: DuplicateQuotationDto): Promise<Quotation> => {
   const response = await axios.post<Quotation>(
-    '/public/quotation/duplicate',
+    '/public/buying-quotation/duplicate',
     duplicateQuotationDto
   );
   return response.data;
@@ -169,7 +169,7 @@ const duplicate = async (duplicateQuotationDto: DuplicateQuotationDto): Promise<
 
 const update = async (quotation: UpdateQuotationDto, files: File[]): Promise<Quotation> => {
   const uploadIds = await uploadQuotationFiles(files);
-  const response = await axios.put<Quotation>(`public/quotation/${quotation.id}`, {
+  const response = await axios.put<Quotation>(`public/buying-quotation/${quotation.id}`, {
     ...quotation,
     uploads: [
       ...(quotation.uploads || []),
@@ -182,12 +182,12 @@ const update = async (quotation: UpdateQuotationDto, files: File[]): Promise<Quo
 };
 
 const invoice = async (id?: number, createInvoice?: boolean): Promise<Quotation> => {
-  const response = await axios.put<Quotation>(`public/quotation/invoice/${id}/${createInvoice}`);
+  const response = await axios.put<Quotation>(`public/buying-quotation/invoice/${id}/${createInvoice}`);
   return response.data;
 };
 
 const remove = async (id: number): Promise<Quotation> => {
-  const response = await axios.delete<Quotation>(`public/quotation/${id}`);
+  const response = await axios.delete<Quotation>(`public/buying-quotation/${id}`);
   return response.data;
 };
 
@@ -204,7 +204,7 @@ const validate = (quotation: Partial<Quotation>): ToastValidation => {
 
 const updateQuotationsSequentials = async (updatedSequenceDto: UpdateQuotationSequentialNumber) => {
   const response = await axios.put<Quotation>(
-    `/public/quotation/update-quotation-sequences`,
+    `/public/buying-quotation/update-quotation-sequences`,
     updatedSequenceDto
   );
   return response.data;

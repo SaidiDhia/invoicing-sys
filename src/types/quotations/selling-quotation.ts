@@ -1,15 +1,15 @@
-import { Article } from './article';
-import { BankAccount } from './bank-account';
-import { Cabinet } from './cabinet';
-import { Currency } from './currency';
-import { DISCOUNT_TYPE } from './enums/discount-types';
-import { Firm } from './firm';
-import { Interlocutor } from './interlocutor';
-import { Invoice } from './invoice';
-import { PagedResponse } from './response';
-import { DatabaseEntity } from './response/DatabaseEntity';
-import { Tax } from './tax';
-import { Upload } from './upload';
+import { Article } from '../article';
+import { BankAccount } from '../bank-account';
+import { Cabinet } from '../cabinet';
+import { Currency } from '../currency';
+import { DISCOUNT_TYPE } from '../enums/discount-types';
+import { Firm } from '../firm';
+import { Interlocutor } from '../interlocutor';
+import { Invoice } from '../invoices/selling-invoice';
+import { PagedResponse } from '../response';
+import { DatabaseEntity } from '../response/DatabaseEntity';
+import { Tax } from '../tax';
+import { Upload } from '../upload';
 
 export enum QUOTATION_STATUS {
   Nonexistent = 'quotation.status.non_existent',
@@ -136,7 +136,7 @@ export interface DuplicateQuotationDto {
   includeFiles?: boolean;
 }
 
-export interface PagedQuotation extends PagedResponse<Quotation> {}
+export interface PagedQuotation extends PagedResponse<Quotation> { }
 
 export interface QuotationUploadedFile {
   upload: QuotationUpload;

@@ -1,16 +1,16 @@
-import { Article } from './article';
-import { Cabinet } from './cabinet';
-import { Currency } from './currency';
-import { DISCOUNT_TYPE } from './enums/discount-types';
-import { Firm } from './firm';
-import { Interlocutor } from './interlocutor';
-import { PaymentInvoiceEntry } from './payment';
-import { Quotation } from './quotation';
-import { PagedResponse } from './response';
-import { DatabaseEntity } from './response/DatabaseEntity';
-import { Tax } from './tax';
-import { TaxWithholding } from './tax-withholding';
-import { Upload } from './upload';
+import { Article } from '../article';
+import { Cabinet } from '../cabinet';
+import { Currency } from '../currency';
+import { DISCOUNT_TYPE } from '../enums/discount-types';
+import { Firm } from '../firm';
+import { Interlocutor } from '../interlocutor';
+import { PaymentInvoiceEntry } from '../payments/buying-payment';
+import { Quotation } from '../quotations/buying-quotation';
+import { PagedResponse } from '../response';
+import { DatabaseEntity } from '../response/DatabaseEntity';
+import { Tax } from '../tax';
+import { TaxWithholding } from '../tax-withholding';
+import { Upload } from '../upload';
 
 export enum INVOICE_STATUS {
   Nonexistent = 'invoice.status.non_existent',
@@ -145,7 +145,7 @@ export interface DuplicateInvoiceDto {
   includeFiles?: boolean;
 }
 
-export interface PagedInvoice extends PagedResponse<Invoice> {}
+export interface PagedInvoice extends PagedResponse<Invoice> { }
 
 export interface InvoiceUploadedFile {
   upload: InvoiceUpload;
