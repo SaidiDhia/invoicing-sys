@@ -3,12 +3,11 @@ import {
   BankAccount,
   Currency,
   Firm,
-  INVOICE_STATUS,
   Interlocutor,
-  Invoice,
-  InvoiceUploadedFile,
+  
   PaymentCondition
 } from '@/types';
+import {  INVOICE_STATUS,  InvoiceUploadedFile,Invoice} from '@/types/invoices/selling-invoice'
 import { DATE_FORMAT } from '@/types/enums/date-formats';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
 import { fromStringToSequentialObject } from '@/utils/string.utils';

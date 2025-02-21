@@ -1,8 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { cn } from '@/lib/utils';
-import { api } from '@/api';
-import { ArticleInvoiceEntry, CreateInvoiceDto, INVOICE_STATUS, QUOTATION_STATUS } from '@/types';
+import { api, buyingInvoice } from '@/api';
+import {
+  BUYING_INVOICE_STATUS,
+  BuyingArticleInvoiceEntry,
+  BuyingCreateInvoiceDto,
+} from '@/types/invoices/buying-invoice';
+import { QUOTATION_STATUS } from '@/types';
 import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
@@ -21,17 +26,11 @@ import useCurrency from '@/hooks/content/useCurrency';
 import { useTranslation } from 'react-i18next';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import useCabinet from '@/hooks/content/useCabinet';
-//import { InvoiceExtraOptions } from './form/InvoiceExtraOptions';
 import useDefaultCondition from '@/hooks/content/useDefaultCondition';
 import { ACTIVITY_TYPE } from '@/types/enums/activity-type';
 import { DOCUMENT_TYPE } from '@/types/enums/document-type';
-//import { InvoiceGeneralConditions } from './form/InvoiceGeneralConditions';
 import { useBreadcrumb } from '@/components/layout/BreadcrumbContext';
 import useQuotationChoices from '@/hooks/content/useQuotationChoice';
-//import { InvoiceGeneralInformation } from './form/InvoiceGeneralInformation';
-//import { InvoiceArticleManagement } from './form/InvoiceArticleManagement';
-//import { InvoiceFinancialInformation } from './form/InvoiceFinancialInformation';
-//import { InvoiceControlSection } from './form/InvoiceControlSection';
 import useTaxWithholding from '@/hooks/content/useTaxWitholding';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
@@ -41,7 +40,7 @@ import { InvoiceGeneralConditions } from './form/InvoiceGeneralConditions';
 import { InvoiceExtraOptions } from './form/InvoiceExtraOptions';
 import { InvoiceArticleManagement } from './form/InvoiceArticleManagement';
 import { InvoiceGeneralInformation } from './form/InvoiceGeneralInformation';
-import { InvoiceControlSection } from './form/InvoiceControlSection';
+import { BuyingInvoiceControlSection } from './form/InvoiceControlSection';
 
 interface InvoiceFormProps {
   className?: string;
@@ -49,10 +48,10 @@ interface InvoiceFormProps {
 }
 
 export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
-  //next-router
+  // Next.js router
   const router = useRouter();
 
-  //translations
+  // Translations
   const { t: tCommon, ready: commonReady } = useTranslation('common');
   const { t: tInvoicing, ready: invoicingReady } = useTranslation('invoicing');
 
@@ -61,25 +60,25 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
   const articleManager = useInvoiceArticleManager();
   const controlManager = useInvoiceControlManager();
 
-  //set page title in the breadcrumb
+  // Set page title in the breadcrumb
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
     setRoutes(
       !firmId
         ? [
-          { title: tCommon('menu.buying'), href: '/buying' },
-          { title: tInvoicing('invoice.plural'), href: '/buying/invoices' },
-          { title: tInvoicing('invoice.new') }
-        ]
+            { title: tCommon('menu.buying'), href: '/buying' },
+            { title: tInvoicing('invoice.plural'), href: '/buying/invoices' },
+            { title: tInvoicing('invoice.new') },
+          ]
         : [
-          { title: tCommon('menu.contacts'), href: '/contacts' },
-          { title: 'Entreprises', href: '/contacts/firms' },
-          {
-            title: `Entreprise N°${firmId}`,
-            href: `/contacts/firm/${firmId}?tab=entreprise`
-          },
-          { title: 'Nouvelle Facture' }
-        ]
+            { title: tCommon('menu.contacts'), href: '/contacts' },
+            { title: 'Entreprises', href: '/contacts/firms' },
+            {
+              title: `Entreprise N°${firmId}`,
+              href: `/contacts/firm/${firmId}?tab=entreprise`,
+            },
+            { title: 'Nouvelle Facture' },
+          ]
     );
   }, [router.locale, firmId]);
 
@@ -90,7 +89,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     'paymentCondition',
     'invoicingAddress',
     'deliveryAddress',
-    'currency'
+    'currency',
   ]);
   const { quotations, isFetchQuotationPending } = useQuotationChoices(QUOTATION_STATUS.Invoiced);
   const { cabinet, isFetchCabinetPending } = useCabinet();
@@ -103,52 +102,48 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
   );
   const { taxWithholdings, isFetchTaxWithholdingsPending } = useTaxWithholding();
   const { dateRange, isFetchInvoiceRangePending } = useInvoiceRangeDates(invoiceManager.id);
-  //websocket to listen for server changes related to sequence number
+  // Websocket to listen for server changes related to sequence number
   const { currentSequence, isInvoiceSequencePending } = useInvoiceSocket();
 
-  //handle Sequential Number
+  // Handle Sequential Number
   React.useEffect(() => {
     invoiceManager.set('sequentialNumber', currentSequence);
-    invoiceManager.set(
-      'bankAccount',
-      bankAccounts.find((a) => a.isMain)
-    );
+    invoiceManager.set('bankAccount', bankAccounts.find((a) => a.isMain));
     invoiceManager.set('currency', cabinet?.currency);
   }, [currentSequence]);
 
-  // perform calculations when the financialy Information are changed
+  // Perform calculations when the financial information changes
   const digitAfterComma = React.useMemo(() => {
     return invoiceManager.currency?.digitAfterComma || 3;
   }, [invoiceManager.currency]);
+
   React.useEffect(() => {
     const zero = dinero({ amount: 0, precision: digitAfterComma });
     const articles = articleManager.getArticles() || [];
-    const subTotal = articles?.reduce((acc, article) => {
+    const subTotal = articles.reduce((acc, article) => {
       return acc.add(
         dinero({
           amount: createDineroAmountFromFloatWithDynamicCurrency(
             article?.subTotal || 0,
             digitAfterComma
           ),
-          precision: digitAfterComma
+          precision: digitAfterComma,
         })
       );
     }, zero);
     invoiceManager.set('subTotal', subTotal.toUnit());
     // Calculate total
-    const total = articles?.reduce(
-      (acc, article) =>
-        acc.add(
-          dinero({
-            amount: createDineroAmountFromFloatWithDynamicCurrency(
-              article?.total || 0,
-              digitAfterComma
-            ),
-            precision: digitAfterComma
-          })
-        ),
-      zero
-    );
+    const total = articles.reduce((acc, article) => {
+      return acc.add(
+        dinero({
+          amount: createDineroAmountFromFloatWithDynamicCurrency(
+            article?.total || 0,
+            digitAfterComma
+          ),
+          precision: digitAfterComma,
+        })
+      );
+    }, zero);
 
     let finalTotal = total;
     // Apply discount
@@ -161,7 +156,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
           invoiceManager?.discount || 0,
           digitAfterComma
         ),
-        precision: digitAfterComma
+        precision: digitAfterComma,
       });
       finalTotal = total.subtract(discountAmount);
     }
@@ -171,7 +166,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
       if (tax) {
         const taxAmount = dinero({
           amount: createDineroAmountFromFloatWithDynamicCurrency(tax.value || 0, digitAfterComma),
-          precision: digitAfterComma
+          precision: digitAfterComma,
         });
         finalTotal = finalTotal.add(taxAmount);
       }
@@ -181,23 +176,24 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     articleManager.articles,
     invoiceManager.discount,
     invoiceManager.discountType,
-    invoiceManager.taxStampId
+    invoiceManager.taxStampId,
   ]);
 
-  //create invoice mutator
+  // Create invoice mutator
   const { mutate: createInvoice, isPending: isCreatePending } = useMutation({
-    mutationFn: (data: { invoice: CreateInvoiceDto; files: File[] }) =>
-      api.invoice.create(data.invoice, data.files),
+    mutationFn: (data: { buyingInvoice: BuyingCreateInvoiceDto; files: File[] }) =>
+      api.buyingInvoice.create(data.buyingInvoice, data.files),
     onSuccess: () => {
-      if (!firmId) router.push('/buying/invoices');
+      if (!firmId) router.push('/selling/invoices');
       else router.push(`/contacts/firm/${firmId}/?tab=invoices`);
       toast.success('Facture crée avec succès');
     },
     onError: (error) => {
       const message = getErrorMessage('invoicing', error, 'Erreur lors de la création de facture');
       toast.error(message);
-    }
+    },
   });
+
   const loading =
     isFetchFirmsPending ||
     isFetchTaxesPending ||
@@ -213,38 +209,38 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     !invoicingReady;
   const { value: debounceLoading } = useDebounce<boolean>(loading, 500);
 
-  //Reset Form
+  // Reset Form
   const globalReset = () => {
     invoiceManager.reset();
     articleManager.reset();
     controlManager.reset();
   };
-  //side effect to reset the form when the component is mounted
+
+  // Side effect to reset the form when the component is mounted
   React.useEffect(() => {
     globalReset();
     articleManager.add();
   }, []);
 
-  //create handler
-  const onSubmit = (status: INVOICE_STATUS) => {
-    const articlesDto: ArticleInvoiceEntry[] = articleManager.getArticles()?.map((article) => ({
+  // Create handler
+  const onSubmit = (status: BUYING_INVOICE_STATUS) => {
+    const articlesDto: BuyingArticleInvoiceEntry[] = articleManager.getArticles()?.map((article) => ({
       id: article?.id,
       article: {
         title: article?.article?.title || '',
         description: !controlManager.isArticleDescriptionHidden
           ? article?.article?.description || ''
-          : ''
+          : '',
       },
       quantity: article?.quantity || 0,
       unit_price: article?.unit_price || 0,
       discount: article?.discount || 0,
       discount_type:
         article?.discount_type === 'PERCENTAGE' ? DISCOUNT_TYPE.PERCENTAGE : DISCOUNT_TYPE.AMOUNT,
-      taxes: article?.articleInvoiceEntryTaxes?.map((entry) => {
-        return entry?.tax?.id;
-      })
+      taxes: article?.articleInvoiceEntryTaxes?.map((entry) => entry?.tax?.id),
     }));
-    const invoice: CreateInvoiceDto = {
+
+    const Buyinginvoice: BuyingCreateInvoiceDto = {
       date: invoiceManager?.date?.toString(),
       dueDate: invoiceManager?.dueDate?.toString(),
       object: invoiceManager?.object,
@@ -275,23 +271,24 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
         showArticleDescription: !controlManager?.isArticleDescriptionHidden,
         hasBankingDetails: !controlManager.isBankAccountDetailsHidden,
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden,
-        hasTaxWithholding: !controlManager.isTaxWithholdingHidden
-      }
+        hasTaxWithholding: !controlManager.isTaxWithholdingHidden,
+      },
     };
-    const validation = api.invoice.validate(invoice, dateRange);
+
+    const validation = api.buyingInvoice.validate(Buyinginvoice, dateRange);
     if (validation.message) {
       toast.error(validation.message);
     } else {
-      if (controlManager.isGeneralConditionsHidden) delete invoice.generalConditions;
+      if (controlManager.isGeneralConditionsHidden) delete Buyinginvoice.generalConditions;
       createInvoice({
-        invoice,
-        files: invoiceManager.uploadedFiles.filter((u) => !u.upload).map((u) => u.file)
+        buyingInvoice: Buyinginvoice,
+        files: invoiceManager.uploadedFiles.filter((u) => !u.upload).map((u) => u.file),
       });
       globalReset();
     }
   };
 
-  //component representation
+  // Component representation
   if (debounceLoading) return <Spinner className="h-screen" show={loading} />;
   return (
     <div className={cn('overflow-auto px-10 py-6', className)}>
@@ -330,7 +327,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
                     {/* Final Financial Information */}
                     <InvoiceFinancialInformation
                       subTotal={invoiceManager.subTotal}
-                      status={INVOICE_STATUS.Nonexistent}
+                      status={BUYING_INVOICE_STATUS.Nonexistent}
                       currency={invoiceManager.currency}
                       taxes={taxes.filter((tax) => !tax.isRate)}
                       taxWithholdings={taxWithholdings}
@@ -347,14 +344,14 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
             <Card className="border-0">
               <CardContent className="p-5">
                 {/* Control Section */}
-                <InvoiceControlSection
+                <BuyingInvoiceControlSection
                   bankAccounts={bankAccounts}
                   currencies={currencies}
                   quotations={quotations}
                   taxWithholdings={taxWithholdings}
-                  handleSubmitDraft={() => onSubmit(INVOICE_STATUS.Draft)}
-                  handleSubmitValidated={() => onSubmit(INVOICE_STATUS.Validated)}
-                  handleSubmitSent={() => onSubmit(INVOICE_STATUS.Sent)}
+                  handleSubmitDraft={() => onSubmit(BUYING_INVOICE_STATUS.Draft)}
+                  handleSubmitValidated={() => onSubmit(BUYING_INVOICE_STATUS.Validated)}
+                  handleSubmitSent={() => onSubmit(BUYING_INVOICE_STATUS.Sent)}
                   reset={globalReset}
                   loading={debounceLoading}
                 />

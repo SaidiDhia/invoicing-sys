@@ -2,7 +2,9 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { ArticleInvoiceEntry, Currency, InvoiceTaxEntry, Tax } from '@/types';
+import { ArticleInvoiceEntry,  InvoiceTaxEntry} from '@/types/invoices/selling-invoice';
+import {  Currency, Tax } from '@/types';
+
 import {
   Select,
   SelectTrigger,

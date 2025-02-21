@@ -12,7 +12,7 @@ import { Tax } from '../tax';
 import { TaxWithholding } from '../tax-withholding';
 import { Upload } from '../upload';
 
-export enum INVOICE_STATUS {
+export enum BUYING_INVOICE_STATUS {
   Nonexistent = 'invoice.status.non_existent',
   Draft = 'invoice.status.draft',
   Validated = 'invoice.status.validated',
@@ -23,14 +23,14 @@ export enum INVOICE_STATUS {
   Expired = 'invoice.status.expired'
 }
 
-export interface InvoiceTaxEntry extends DatabaseEntity {
+export interface BuyingInvoiceTaxEntry extends DatabaseEntity {
   id?: number;
   articleInvoiceEntryId?: number;
   tax?: Tax;
   taxId?: number;
 }
 
-export interface ArticleInvoiceEntry extends DatabaseEntity {
+export interface BuyingArticleInvoiceEntry extends DatabaseEntity {
   id?: number;
   invoiceId?: number;
   article?: Article;
@@ -39,14 +39,14 @@ export interface ArticleInvoiceEntry extends DatabaseEntity {
   quantity?: number;
   discount?: number;
   discount_type?: DISCOUNT_TYPE;
-  articleInvoiceEntryTaxes?: InvoiceTaxEntry[];
+  articleInvoiceEntryTaxes?: BuyingInvoiceTaxEntry[];
   subTotal?: number;
   total?: number;
 }
 
-export interface CreateArticleInvoiceEntry
+export interface BuyingCreateArticleInvoiceEntry
   extends Omit<
-    ArticleInvoiceEntry,
+    BuyingArticleInvoiceEntry,
     | 'id'
     | 'invoiceId'
     | 'subTotal'
@@ -60,7 +60,7 @@ export interface CreateArticleInvoiceEntry
   taxes?: number[];
 }
 
-export interface InvoiceMetaData extends DatabaseEntity {
+export interface BuyingInvoiceMetaData extends DatabaseEntity {
   id?: number;
   showInvoiceAddress?: boolean;
   showDeliveryAddress?: boolean;
@@ -72,21 +72,21 @@ export interface InvoiceMetaData extends DatabaseEntity {
   hasTaxWithholding?: boolean;
 }
 
-export interface InvoiceUpload extends DatabaseEntity {
+export interface BuyingInvoiceUpload extends DatabaseEntity {
   id?: number;
   invoiceId?: number;
-  invoice?: Invoice;
+  invoice?: BuyingInvoice;
   uploadId?: number;
   upload?: Upload;
 }
 
-export interface Invoice extends DatabaseEntity {
+export interface BuyingInvoice extends DatabaseEntity {
   id?: number;
   sequential?: string;
   object?: string;
   date?: string;
   dueDate?: string;
-  status?: INVOICE_STATUS;
+  status?: BUYING_INVOICE_STATUS;
   generalConditions?: string;
   defaultCondition?: boolean;
   total?: number;
@@ -107,9 +107,9 @@ export interface Invoice extends DatabaseEntity {
   notes?: string;
   quotationId?: number;
   quotation?: Quotation;
-  articleInvoiceEntries?: ArticleInvoiceEntry[];
-  invoiceMetaData?: InvoiceMetaData;
-  uploads?: InvoiceUpload[];
+  articleInvoiceEntries?: BuyingArticleInvoiceEntry[];
+  invoiceMetaData?: BuyingInvoiceMetaData;
+  uploads?: BuyingInvoiceUpload[];
   payments?: PaymentInvoiceEntry[];
   taxStamp?: Tax;
   taxStampId?: number;
@@ -118,9 +118,9 @@ export interface Invoice extends DatabaseEntity {
   taxWithholdingAmount?: number;
 }
 
-export interface CreateInvoiceDto
+export interface BuyingCreateInvoiceDto
   extends Omit<
-    Invoice,
+    BuyingInvoice,
     | 'id'
     | 'createdAt'
     | 'updatedAt'
@@ -132,27 +132,27 @@ export interface CreateInvoiceDto
     | 'sequential'
     | 'bankAccount'
   > {
-  articleInvoiceEntries?: CreateArticleInvoiceEntry[];
+  articleInvoiceEntries?: BuyingCreateArticleInvoiceEntry[];
   files?: File[];
 }
 
-export interface UpdateInvoiceDto extends CreateInvoiceDto {
+export interface BuyingUpdateInvoiceDto extends BuyingCreateInvoiceDto {
   id?: number;
 }
 
-export interface DuplicateInvoiceDto {
+export interface BuyingDuplicateInvoiceDto {
   id?: number;
   includeFiles?: boolean;
 }
 
-export interface PagedInvoice extends PagedResponse<Invoice> { }
+export interface BuyingPagedInvoice extends PagedResponse<BuyingInvoice> { }
 
-export interface InvoiceUploadedFile {
-  upload: InvoiceUpload;
+export interface BuyingInvoiceUploadedFile {
+  upload: BuyingInvoiceUpload;
   file: File;
 }
 
-export interface ResponseInvoiceRangeDto {
-  next?: Invoice;
-  previous?: Invoice;
+export interface BuyingResponseInvoiceRangeDto {
+  next?: BuyingInvoice;
+  previous?: BuyingInvoice;
 }

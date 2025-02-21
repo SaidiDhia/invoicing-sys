@@ -1,5 +1,6 @@
 import React from 'react';
-import { Currency, INVOICE_STATUS, Tax, TaxWithholding } from '@/types';
+import { Currency, Tax, TaxWithholding } from '@/types';
+import {INVOICE_STATUS } from '@/types/invoices/selling-invoice';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

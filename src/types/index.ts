@@ -11,7 +11,15 @@ export * from './currency';
 export * from './default-condition';
 export * from './firm';
 export * from './interlocutor';
-export * from './invoices/selling-invoice';
+export type {
+    ArticleInvoiceEntry as SellingArticleInvoiceEntry,
+    CreateArticleInvoiceEntry as SellingCreateArticleInvoiceEntry,
+    CreateInvoiceDto as SellingCreateInvoiceDto,
+    DuplicateInvoiceDto as SellingDuplicateInvoiceDto,
+    INVOICE_STATUS as SellingInvoiceStatus,
+    Invoice as SellingInvoice
+} from './invoices/selling-invoice';
+export * from './invoices/buying-invoice';
 export * from './logger';
 export * from './payments/selling-payment';
 export * from './payment-condition';

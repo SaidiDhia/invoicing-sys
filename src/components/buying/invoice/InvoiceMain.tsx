@@ -7,7 +7,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { api } from '@/api';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/utils/errors';
-import { DuplicateInvoiceDto } from '@/types';
+import { BuyingDuplicateInvoiceDto } from '@/types/invoices/buying-invoice';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useInvoiceManager } from './hooks/useInvoiceManager';
 import { InvoiceDeleteDialog } from './dialogs/InvoiceDeleteDialog';
@@ -69,7 +69,7 @@ export const InvoiceMain: React.FC<InvoiceMainProps> = ({ className }) => {
       debouncedSearchTerm
     ],
     queryFn: () =>
-      api.invoice.findPaginated(
+      api.buyingInvoice.findPaginated(
         debouncedPage,
         debouncedSize,
         debouncedSortDetails.order ? 'ASC' : 'DESC',
@@ -117,7 +117,7 @@ export const InvoiceMain: React.FC<InvoiceMainProps> = ({ className }) => {
 
   //Duplicate Invoice
   const { mutate: duplicateInvoice, isPending: isDuplicationPending } = useMutation({
-    mutationFn: (duplicateInvoiceDto: DuplicateInvoiceDto) =>
+    mutationFn: (duplicateInvoiceDto: BuyingDuplicateInvoiceDto) =>
       api.invoice.duplicate(duplicateInvoiceDto),
     onSuccess: async (data) => {
       toast.success(tInvoicing('invoice.action_duplicate_success'));

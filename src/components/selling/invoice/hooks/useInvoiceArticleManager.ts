@@ -1,4 +1,5 @@
-import { ArticleInvoiceEntry, Tax } from '@/types';
+import { ArticleInvoiceEntry } from '@/types/invoices/selling-invoice';
+import { Tax } from '@/types';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
 import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';

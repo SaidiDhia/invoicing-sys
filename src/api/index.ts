@@ -26,6 +26,8 @@ import { firmInterlocutorEntry } from './firm-interlocutor-entry';
 export * from './firm-interlocutor-entry';
 import { interlocutor } from './interlocutor';
 export * from './interlocutor';
+import { buyingInvoice } from './invoices/buying-invoice';
+export * from './invoices/buying-invoice';
 import { invoice } from './invoices/selling-invoice';
 export * from './invoices/selling-invoice';
 import { payment } from './payments/selling-payment';
@@ -65,6 +67,7 @@ export const api = {
   firm,
   firmInterlocutorEntry,
   interlocutor,
+  buyingInvoice,
   invoice,
   payment,
   paymentCondition,

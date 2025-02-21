@@ -1,5 +1,6 @@
 import React from 'react';
-import { Currency, INVOICE_STATUS, Tax, TaxWithholding } from '@/types';
+import { Currency,  Tax, TaxWithholding } from '@/types';
+import { BUYING_INVOICE_STATUS } from '@/types/invoices/buying-invoice';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,7 +21,7 @@ import { ciel } from '@/utils/number.utils';
 
 interface InvoiceFinancialInformationProps {
   className?: string;
-  status: INVOICE_STATUS;
+  status: BUYING_INVOICE_STATUS;
   subTotal?: number;
   discount?: number;
   currency?: Currency;
@@ -192,7 +193,7 @@ export const InvoiceFinancialInformation = ({
           </div>
         </div>
       )}
-      {[INVOICE_STATUS.PartiallyPaid, INVOICE_STATUS.Unpaid, INVOICE_STATUS.Sent].includes(
+      {[BUYING_INVOICE_STATUS.PartiallyPaid, BUYING_INVOICE_STATUS.Unpaid, BUYING_INVOICE_STATUS.Sent].includes(
         status
       ) && (
         <div>

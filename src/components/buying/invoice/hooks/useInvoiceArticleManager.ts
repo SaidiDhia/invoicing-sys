@@ -1,24 +1,25 @@
-import { ArticleInvoiceEntry, Tax } from '@/types';
+import { Tax } from '@/types';
+import { BuyingArticleInvoiceEntry } from '@/types/invoices/buying-invoice';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
 import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';
 
-type InvoicePseudoItem = { id: string; article: ArticleInvoiceEntry & { total?: number } };
+type InvoicePseudoItem = { id: string; article: BuyingArticleInvoiceEntry & { total?: number } };
 
 export type InvoiceArticleManager = {
   articles: InvoicePseudoItem[];
   taxSummary: { tax: Tax; amount: number }[];
-  add: (article?: ArticleInvoiceEntry) => void;
-  update: (id: string, article: ArticleInvoiceEntry) => void;
+  add: (article?: BuyingArticleInvoiceEntry) => void;
+  update: (id: string, article: BuyingArticleInvoiceEntry) => void;
   delete: (id: string) => void;
-  setArticles: (articles: ArticleInvoiceEntry[]) => void;
+  setArticles: (articles: BuyingArticleInvoiceEntry[]) => void;
   reset: () => void;
-  getArticles: () => (ArticleInvoiceEntry & { total: number })[];
+  getArticles: () => (BuyingArticleInvoiceEntry & { total: number })[];
   //feature
   removeArticleDescription: () => void;
 };
 
-const calculateForInvoice = (article: ArticleInvoiceEntry) => {
+const calculateForInvoice = (article: BuyingArticleInvoiceEntry) => {
   const quantity = article?.quantity || 0;
   const unit_price = article?.unit_price || 0;
   const discount = article?.discount || 0;
@@ -121,7 +122,7 @@ export const useInvoiceArticleManager = create<InvoiceArticleManager>()((set, ge
   articles: [],
   taxSummary: [],
 
-  add: (article: ArticleInvoiceEntry = {}) => {
+  add: (article: BuyingArticleInvoiceEntry = {}) => {
     const { subTotal, total } = calculateForInvoice(article);
 
     set((state) => ({
@@ -146,7 +147,7 @@ export const useInvoiceArticleManager = create<InvoiceArticleManager>()((set, ge
     }));
   },
 
-  update: (id: string, article: ArticleInvoiceEntry) => {
+  update: (id: string, article: BuyingArticleInvoiceEntry) => {
     const { subTotal, total } = calculateForInvoice(article);
 
     set((state) => ({
@@ -172,7 +173,7 @@ export const useInvoiceArticleManager = create<InvoiceArticleManager>()((set, ge
     }));
   },
 
-  setArticles: (articles: ArticleInvoiceEntry[]) => {
+  setArticles: (articles: BuyingArticleInvoiceEntry[]) => {
     set({
       articles: articles.map((article) => {
         const { subTotal, total } = calculateForInvoice(article);

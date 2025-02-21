@@ -22,12 +22,12 @@ import { useRouter } from 'next/router';
 import {
   BankAccount,
   Currency,
-  DuplicateInvoiceDto,
-  INVOICE_STATUS,
+  
   PaymentInvoiceEntry,
   Quotation,
   TaxWithholding
 } from '@/types';
+import {DuplicateInvoiceDto,INVOICE_STATUS,} from '@/types/invoices/selling-invoice'
 import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/hooks/useInvoiceManager';;
 import { useInvoiceArticleManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/hooks/useInvoiceArticleManager';
 import { useInvoiceControlManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/hooks/useInvoiceControlManager';

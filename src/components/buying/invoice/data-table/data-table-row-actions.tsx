@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Invoice } from '@/types';
+import { BuyingInvoice } from '@/types/invoices/buying-invoice';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -17,7 +17,7 @@ import { useInvoiceManager } from '../hooks/useInvoiceManager';
 import { useInvoiceActions } from './ActionsContext';
 
 interface DataTableRowActionsProps {
-  row: Row<Invoice>;
+  row: Row<BuyingInvoice>;
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {

@@ -3,19 +3,20 @@ import { differenceInDays, isAfter } from 'date-fns';
 import { DISCOUNT_TYPE } from '../../types/enums/discount-types';
 import { upload } from '../upload';
 import { api } from '..';
+import {DateRange,ToastValidation,UpdateInvoiceSequentialNumber}  from '@/types';
 import {
   CreateInvoiceDto,
-  DateRange,
+  
   DuplicateInvoiceDto,
   INVOICE_STATUS,
   Invoice,
   InvoiceUploadedFile,
   PagedInvoice,
   ResponseInvoiceRangeDto,
-  ToastValidation,
+  
   UpdateInvoiceDto,
-  UpdateInvoiceSequentialNumber
-} from '@/types';
+  
+} from '@/types/invoices/selling-invoice';
 import { INVOICE_FILTER_ATTRIBUTES } from '@/constants/invoice.filter-attributes';
 
 const factory = (): CreateInvoiceDto => {

@@ -6,9 +6,9 @@ import {
   INVOICE_STATUS,
   Invoice,
   InvoiceUploadedFile,
-  QUOTATION_STATUS,
   UpdateInvoiceDto
-} from '@/types';
+} from '@/types/invoices/selling-invoice';
+import {  QUOTATION_STATUS,} from '@/types'
 import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';

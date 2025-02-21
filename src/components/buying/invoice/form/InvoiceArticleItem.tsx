@@ -2,7 +2,8 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { ArticleInvoiceEntry, Currency, InvoiceTaxEntry, Tax } from '@/types';
+import { BuyingArticleInvoiceEntry,  BuyingInvoiceTaxEntry} from '@/types/invoices/buying-invoice';
+import {Currency, Tax } from '@/types'
 import {
   Select,
   SelectTrigger,
@@ -19,8 +20,8 @@ import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
 
 interface InvoiceArticleItemProps {
   className?: string;
-  article: ArticleInvoiceEntry;
-  onChange: (item: ArticleInvoiceEntry) => void;
+  article: BuyingArticleInvoiceEntry;
+  onChange: (item: BuyingArticleInvoiceEntry) => void;
   showDescription?: boolean;
   currency?: Currency;
   taxes: Tax[];
@@ -135,7 +136,7 @@ export const InvoiceArticleItem: React.FC<InvoiceArticleItemProps> = ({
     }
     onChange({
       ...article,
-      articleInvoiceEntryTaxes: [...(article.articleInvoiceEntryTaxes || []), {} as InvoiceTaxEntry]
+      articleInvoiceEntryTaxes: [...(article.articleInvoiceEntryTaxes || []), {} as BuyingInvoiceTaxEntry]
     });
   };
 

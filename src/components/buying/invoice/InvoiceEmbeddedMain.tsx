@@ -7,7 +7,7 @@ import { getErrorMessage } from '@/utils/errors';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { DataTable } from './data-table/data-table';
-import { DuplicateInvoiceDto } from '@/types';
+import { BuyingDuplicateInvoiceDto } from '@/types/invoices/buying-invoice';
 import ContentSection from '@/components/common/ContentSection';
 import { cn } from '@/lib/utils';
 import { BreadcrumbRoute, useBreadcrumb } from '@/components/layout/BreadcrumbContext';
@@ -127,7 +127,7 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
 
   //Duplicate Invoice
   const { mutate: duplicateInvoice, isPending: isDuplicationPending } = useMutation({
-    mutationFn: (duplicateInvoiceDto: DuplicateInvoiceDto) =>
+    mutationFn: (duplicateInvoiceDto: BuyingDuplicateInvoiceDto) =>
       api.invoice.duplicate(duplicateInvoiceDto),
     onSuccess: async (data) => {
       toast.success(tInvoicing('invoice.action_duplicate_success'));

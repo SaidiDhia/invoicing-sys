@@ -7,7 +7,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { api } from '@/api';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/utils/errors';
-import { DuplicateInvoiceDto } from '@/types';
+import { DuplicateInvoiceDto } from '@/types/invoices/selling-invoice';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useInvoiceManager } from './hooks/useInvoiceManager';
 import { InvoiceDeleteDialog } from './dialogs/InvoiceDeleteDialog';

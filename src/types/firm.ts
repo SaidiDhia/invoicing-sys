@@ -8,6 +8,8 @@ import { SOCIAL_TITLE } from './enums';
 import { PagedResponse } from './response';
 import { Quotation } from './quotations/selling-quotation';
 import { Invoice } from './invoices/selling-invoice';
+import {  BuyingInvoice } from './invoices/buying-invoice';
+
 import { DatabaseEntity } from './response/DatabaseEntity';
 
 export interface Firm extends DatabaseEntity {
@@ -33,6 +35,7 @@ export interface Firm extends DatabaseEntity {
   notes?: string;
   quotations?: Quotation[];
   invoices?: Invoice[];
+  invoicesF?: BuyingInvoice[];
 }
 
 export interface CreateFirmDto

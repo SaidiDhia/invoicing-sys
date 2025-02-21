@@ -1,14 +1,14 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { api } from '@/api';
+import { api, buyingInvoice } from '@/api';
 import {
-  ArticleInvoiceEntry,
-  INVOICE_STATUS,
-  Invoice,
-  InvoiceUploadedFile,
-  QUOTATION_STATUS,
-  UpdateInvoiceDto
-} from '@/types';
+  BuyingArticleInvoiceEntry,
+  BUYING_INVOICE_STATUS,
+  BuyingInvoice,
+  BuyingInvoiceUploadedFile,
+  BuyingUpdateInvoiceDto
+} from '@/types/invoices/buying-invoice';
+import { QUOTATION_STATUS } from '@/types';
 import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
@@ -39,7 +39,7 @@ import useQuotationChoices from '@/hooks/content/useQuotationChoice';
 import { InvoiceGeneralInformation } from './form/InvoiceGeneralInformation';
 import { InvoiceArticleManagement } from './form/InvoiceArticleManagement';
 import { InvoiceFinancialInformation } from './form/InvoiceFinancialInformation';
-import { InvoiceControlSection } from './form/InvoiceControlSection';
+import { BuyingInvoiceControlSection } from './form/InvoiceControlSection';
 import useTaxWithholding from '@/hooks/content/useTaxWitholding';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
@@ -71,7 +71,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     refetch: refetchInvoice
   } = useQuery({
     queryKey: ['invoice', invoiceId],
-    queryFn: () => api.invoice.findOne(parseInt(invoiceId))
+    queryFn: () => api.buyingInvoice.findOne(parseInt(invoiceId))
   });
   const invoice = React.useMemo(() => {
     return invoiceResp || null;
@@ -90,7 +90,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
 
   //recognize if the form can be edited
   const editMode = React.useMemo(() => {
-    const editModeStatuses = [INVOICE_STATUS.Validated, INVOICE_STATUS.Draft];
+    const editModeStatuses = [BUYING_INVOICE_STATUS.Validated, BUYING_INVOICE_STATUS.Draft];
     return invoice?.status && editModeStatuses.includes(invoice?.status);
   }, [invoice]);
 
@@ -196,7 +196,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   ]);
 
   //full invoice setter across multiple stores
-  const setInvoiceData = (data: Partial<Invoice & { files: InvoiceUploadedFile[] }>) => {
+  const setInvoiceData = (data: Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>) => {
     //invoice infos
     data && invoiceManager.setInvoice(data, firms, bankAccounts);
     data?.quotation && quotationManager.set('sequential', data?.quotation?.sequential);
@@ -216,7 +216,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
 
   //initialized value to detect changement whiie modifying the invoice
   const { isDisabled, globalReset } = useInitializedState({
-    data: invoice || ({} as Partial<Invoice & { files: InvoiceUploadedFile[] }>),
+    data: invoice || ({} as Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>),
     getCurrentData: () => {
       return {
         invoice: invoiceManager.getInvoice(),
@@ -224,7 +224,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
         controls: controlManager.getControls()
       };
     },
-    setFormData: (data: Partial<Invoice & { files: InvoiceUploadedFile[] }>) => {
+    setFormData: (data: Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>) => {
       setInvoiceData(data);
     },
     resetData: () => {
@@ -237,8 +237,8 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
 
   //update invoice mutator
   const { mutate: updateInvoice, isPending: isUpdatingPending } = useMutation({
-    mutationFn: (data: { invoice: UpdateInvoiceDto; files: File[] }) =>
-      api.invoice.update(data.invoice, data.files),
+    mutationFn: (data: { invoice: BuyingUpdateInvoiceDto; files: File[] }) =>
+      api.buyingInvoice.update(data.invoice, data.files),
     onSuccess: () => {
       refetchInvoice();
       toast.success('Facture modifié avec succès');
@@ -254,8 +254,8 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   });
 
   //update handler
-  const onSubmit = (status: INVOICE_STATUS) => {
-    const articlesDto: ArticleInvoiceEntry[] = articleManager.getArticles()?.map((article) => ({
+  const onSubmit = (status: BUYING_INVOICE_STATUS) => {
+    const articlesDto: BuyingArticleInvoiceEntry[] = articleManager.getArticles()?.map((article) => ({
       article: {
         title: article?.article?.title,
         description: controlManager.isArticleDescriptionHidden ? '' : article?.article?.description
@@ -267,7 +267,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
         article?.discount_type === 'PERCENTAGE' ? DISCOUNT_TYPE.PERCENTAGE : DISCOUNT_TYPE.AMOUNT,
       taxes: article?.articleInvoiceEntryTaxes?.map((entry) => entry?.tax?.id) || []
     }));
-    const invoice: UpdateInvoiceDto = {
+    const invoice: BuyingUpdateInvoiceDto = {
       id: invoiceManager?.id,
       date: invoiceManager?.date?.toString(),
       dueDate: invoiceManager?.dueDate?.toString(),
@@ -304,7 +304,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
       },
       uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
-    const validation = api.invoice.validate(invoice, dateRange);
+    const validation = api.buyingInvoice.validate(invoice, dateRange);
     if (validation.message) {
       toast.error(validation.message, { position: validation.position || 'bottom-right' });
     } else {
@@ -375,7 +375,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
           <ScrollArea className=" max-h-[calc(100vh-120px)] border rounded-lg">
             <Card className="border-0">
               <CardContent className="p-5">
-                <InvoiceControlSection
+                <BuyingInvoiceControlSection
                   status={invoiceManager.status}
                   isDataAltered={isDisabled}
                   bankAccounts={bankAccounts}
@@ -384,9 +384,9 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
                   payments={invoice?.payments || []}
                   taxWithholdings={taxWithholdings}
                   handleSubmit={() => onSubmit(invoiceManager.status)}
-                  handleSubmitDraft={() => onSubmit(INVOICE_STATUS.Draft)}
-                  handleSubmitValidated={() => onSubmit(INVOICE_STATUS.Validated)}
-                  handleSubmitSent={() => onSubmit(INVOICE_STATUS.Sent)}
+                  handleSubmitDraft={() => onSubmit(BUYING_INVOICE_STATUS.Draft)}
+                  handleSubmitValidated={() => onSubmit(BUYING_INVOICE_STATUS.Validated)}
+                  handleSubmitSent={() => onSubmit(BUYING_INVOICE_STATUS.Sent)}
                   loading={debounceFetching}
                   reset={globalReset}
                   edit={editMode}

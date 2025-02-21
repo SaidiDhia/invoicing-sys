@@ -22,12 +22,11 @@ import { useRouter } from 'next/router';
 import {
   BankAccount,
   Currency,
-  DuplicateInvoiceDto,
-  INVOICE_STATUS,
   PaymentInvoiceEntry,
   Quotation,
   TaxWithholding
 } from '@/types';
+import { BUYING_INVOICE_STATUS, BuyingDuplicateInvoiceDto } from '@/types/invoices/buying-invoice';
 import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceManager';;
 import { useInvoiceArticleManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceArticleManager';
 import { useInvoiceControlManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceControlManager';
@@ -36,7 +35,7 @@ import { InvoiceActionDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/
 import { InvoiceDuplicateDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/dialogs/InvoiceDuplicateDialog';
 import { InvoiceDownloadDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/dialogs/InvoiceDownloadDialog';
 import { InvoiceDeleteDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/dialogs/InvoiceDeleteDialog';
-import { INVOICE_LIFECYCLE_ACTIONS } from '@/constants/invoice.lifecycle';
+import { BUYING_INVOICE_LIFECYCLE_ACTIONS } from '@/constants/buyinginvoice.lifecycle';
 import { InvoicePaymentList } from './InvoicePaymentList';
 import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
 
@@ -49,13 +48,13 @@ interface InvoiceLifecycle {
   loading: boolean;
   when: {
     membership: 'IN' | 'OUT';
-    set: (INVOICE_STATUS | undefined)[];
+    set: (BUYING_INVOICE_STATUS | undefined)[];
   };
 }
 
 interface InvoiceControlSectionProps {
   className?: string;
-  status?: INVOICE_STATUS;
+  status?: BUYING_INVOICE_STATUS;
   isDataAltered?: boolean;
   bankAccounts: BankAccount[];
   currencies: Currency[];
@@ -72,7 +71,7 @@ interface InvoiceControlSectionProps {
   edit?: boolean;
 }
 
-export const InvoiceControlSection = ({
+export const BuyingInvoiceControlSection = ({
   className,
   status = undefined,
   isDataAltered,
@@ -126,7 +125,7 @@ export const InvoiceControlSection = ({
 
   //Duplicate Invoice
   const { mutate: duplicateInvoice, isPending: isDuplicationPending } = useMutation({
-    mutationFn: (duplicateInvoiceDto: DuplicateInvoiceDto) =>
+    mutationFn: (duplicateInvoiceDto: BuyingDuplicateInvoiceDto) =>
       api.invoice.duplicate(duplicateInvoiceDto),
     onSuccess: async (data) => {
       toast.success(tInvoicing('invoice.action_duplicate_success'));
@@ -157,7 +156,7 @@ export const InvoiceControlSection = ({
 
   const buttonsWithHandlers: InvoiceLifecycle[] = [
     {
-      ...INVOICE_LIFECYCLE_ACTIONS.save,
+      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.save,
       key: 'save',
       onClick: () => {
         setActionName(tCommon('commands.save'));
@@ -170,7 +169,7 @@ export const InvoiceControlSection = ({
       loading: false
     },
     {
-      ...INVOICE_LIFECYCLE_ACTIONS.draft,
+      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.draft,
       key: 'draft',
       onClick: () => {
         setActionName(tCommon('commands.save'));
@@ -183,7 +182,7 @@ export const InvoiceControlSection = ({
       loading: false
     },
     {
-      ...INVOICE_LIFECYCLE_ACTIONS.validated,
+      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.validated,
       key: 'validated',
       onClick: () => {
         setActionName(tCommon('commands.validate'));
@@ -196,7 +195,7 @@ export const InvoiceControlSection = ({
       loading: false
     },
     {
-      ...INVOICE_LIFECYCLE_ACTIONS.sent,
+      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.sent,
       key: 'sent',
       onClick: () => {
         setActionName(tCommon('commands.send'));
@@ -209,7 +208,7 @@ export const InvoiceControlSection = ({
       loading: false
     },
     {
-      ...INVOICE_LIFECYCLE_ACTIONS.duplicate,
+      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.duplicate,
       key: 'duplicate',
       onClick: () => {
         setDuplicateDialog(true);
@@ -217,13 +216,13 @@ export const InvoiceControlSection = ({
       loading: false
     },
     {
-      ...INVOICE_LIFECYCLE_ACTIONS.download,
+      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.download,
       key: 'download',
       onClick: () => setDownloadDialog(true),
       loading: false
     },
     {
-      ...INVOICE_LIFECYCLE_ACTIONS.delete,
+      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.delete,
       key: 'delete',
       onClick: () => {
         setDeleteDialog(true);
@@ -231,7 +230,7 @@ export const InvoiceControlSection = ({
       loading: false
     },
     {
-      ...INVOICE_LIFECYCLE_ACTIONS.reset,
+      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.reset,
       key: 'reset',
       onClick: () => {
         setActionName(tCommon('commands.initialize'));
@@ -370,10 +369,10 @@ export const InvoiceControlSection = ({
         {/* Payment list */}
         {status &&
           [
-            INVOICE_STATUS.Sent,
-            INVOICE_STATUS.Unpaid,
-            INVOICE_STATUS.Paid,
-            INVOICE_STATUS.PartiallyPaid
+            BUYING_INVOICE_STATUS.Sent,
+            BUYING_INVOICE_STATUS.Unpaid,
+            BUYING_INVOICE_STATUS.Paid,
+            BUYING_INVOICE_STATUS.PartiallyPaid
           ].includes(status) &&
           payments.length != 0 && (
             <InvoicePaymentList className="border-b" payments={payments} currencies={currencies} />

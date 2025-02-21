@@ -10,7 +10,8 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { ArticleInvoiceEntry, Currency, Tax } from '@/types';
+import { Currency, Tax } from '@/types';
+import { ArticleInvoiceEntry,} from '@/types/invoices/selling-invoice';
 import { Plus, X } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

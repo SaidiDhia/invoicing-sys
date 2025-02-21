@@ -3,12 +3,10 @@ import {
   BankAccount,
   Currency,
   Firm,
-  INVOICE_STATUS,
   Interlocutor,
-  Invoice,
-  InvoiceUploadedFile,
   PaymentCondition
 } from '@/types';
+import { BUYING_INVOICE_STATUS, BuyingInvoiceUploadedFile, BuyingInvoice, } from '@/types/invoices/buying-invoice'
 import { DATE_FORMAT } from '@/types/enums/date-formats';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
 import { fromStringToSequentialObject } from '@/utils/string.utils';
@@ -36,9 +34,9 @@ type InvoiceManager = {
   bankAccount?: BankAccount;
   currency?: Currency;
   notes: string;
-  status: INVOICE_STATUS;
+  status: BUYING_INVOICE_STATUS;
   generalConditions: string;
-  uploadedFiles: InvoiceUploadedFile[];
+  uploadedFiles: BuyingInvoiceUploadedFile[];
   quotationId?: number;
   taxStampId?: number;
   taxWithholdingId?: number;
@@ -50,7 +48,7 @@ type InvoiceManager = {
   set: (name: keyof InvoiceManager, value: any) => void;
   getInvoice: () => Partial<InvoiceManager>;
   setInvoice: (
-    invoice: Partial<Invoice & { files: InvoiceUploadedFile[] }>,
+    invoice: Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>,
     firms: Firm[],
     bankAccounts: BankAccount[]
   ) => void;
@@ -102,7 +100,7 @@ const initialState: Omit<
   bankAccount: api?.bankAccount?.factory() || undefined,
   currency: api?.currency?.factory() || undefined,
   notes: '',
-  status: INVOICE_STATUS.Nonexistent,
+  status: BUYING_INVOICE_STATUS.Nonexistent,
   generalConditions: '',
   isInterlocutorInFirm: false,
   uploadedFiles: [],
@@ -191,7 +189,7 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
     };
   },
   setInvoice: (
-    invoice: Partial<Invoice & { files: InvoiceUploadedFile[] }>,
+    invoice: Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>,
     firms: Firm[],
     bankAccounts: BankAccount[]
   ) => {

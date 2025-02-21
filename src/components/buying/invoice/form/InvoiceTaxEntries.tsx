@@ -10,7 +10,8 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { ArticleInvoiceEntry, Currency, Tax } from '@/types';
+import {  Currency, Tax } from '@/types';
+import { BuyingArticleInvoiceEntry } from '@/types/invoices/buying-invoice';
 import { Plus, X } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +36,7 @@ const TaxDisplay = ({ tax, currency }: TaxDisplayProps) => {
 
 interface InvoiceTaxEntriesProps {
   className?: string;
-  article: ArticleInvoiceEntry;
+  article: BuyingArticleInvoiceEntry;
   taxes: Tax[];
   selectedTaxIds: (number | undefined)[];
   currency?: Currency;

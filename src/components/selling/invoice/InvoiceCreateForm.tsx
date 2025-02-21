@@ -2,7 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { cn } from '@/lib/utils';
 import { api } from '@/api';
-import { ArticleInvoiceEntry, CreateInvoiceDto, INVOICE_STATUS, QUOTATION_STATUS } from '@/types';
+import {  QUOTATION_STATUS } from '@/types';
+import {INVOICE_STATUS, ArticleInvoiceEntry,CreateInvoiceDto } from '@/types/invoices/selling-invoice'
 import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';

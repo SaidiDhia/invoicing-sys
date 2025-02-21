@@ -23,25 +23,45 @@ export enum EVENT_TYPE {
   INTERLOCUTOR_DELETED = 'interlocutor_deleted',
   INTERLOCUTOR_PROMOTED = 'interlocutor_promoted',
 
-  //Selling Quotation
-  SELLING_QUOTATION_CREATED = 'quotation_created',
-  SELLING_QUOTATION_UPDATED = 'quotation_updated',
-  SELLING_QUOTATION_DELETED = 'quotation_deleted',
-  SELLING_QUOTATION_PRINTED = 'quotation_printed',
-  SELLING_QUOTATION_INVOICED = 'quotation_invoiced',
-  SELLING_QUOTATION_DUPLICATED = 'quotation_duplicated',
+//Selling Quotation
+SELLING_QUOTATION_CREATED = 'quotation_created',
+SELLING_QUOTATION_UPDATED = 'quotation_updated',
+SELLING_QUOTATION_DELETED = 'quotation_deleted',
+SELLING_QUOTATION_PRINTED = 'quotation_printed',
+SELLING_QUOTATION_INVOICED = 'quotation_invoiced',
+SELLING_QUOTATION_DUPLICATED = 'quotation_duplicated',
 
-  //Selling Invoice
-  SELLING_INVOICE_CREATED = 'invoice_created',
-  SELLING_INVOICE_UPDATED = 'invoice_updated',
-  SELLING_INVOICE_DELETED = 'invoice_deleted',
-  SELLING_INVOICE_PRINTED = 'invoice_printed',
-  SELLING_INVOICE_DUPLICATED = 'invoice_duplicated',
+//Selling Invoice
+SELLING_INVOICE_CREATED = 'invoice_created',
+SELLING_INVOICE_UPDATED = 'invoice_updated',
+SELLING_INVOICE_DELETED = 'invoice_deleted',
+SELLING_INVOICE_PRINTED = 'invoice_printed',
+SELLING_INVOICE_DUPLICATED = 'invoice_duplicated',
 
-  //Selling Payment
-  SELLING_PAYMENT_CREATED = 'payment_created',
-  SELLING_PAYMENT_UPDATED = 'payment_updated',
-  SELLING_PAYMENT_DELETED = 'payment_deleted',
+//Selling Payment
+SELLING_PAYMENT_CREATED = 'payment_created',
+SELLING_PAYMENT_UPDATED = 'payment_updated',
+SELLING_PAYMENT_DELETED = 'payment_deleted',
+
+//buying Quotation
+buying_QUOTATION_CREATED = 'quotation_created',
+buying_QUOTATION_UPDATED = 'quotation_updated',
+buying_QUOTATION_DELETED = 'quotation_deleted',
+buying_QUOTATION_PRINTED = 'quotation_printed',
+buying_QUOTATION_INVOICED = 'quotation_invoiced',
+buying_QUOTATION_DUPLICATED = 'quotation_duplicated',
+
+//buying Invoice
+buying_INVOICE_CREATED = 'invoice_created',
+buying_INVOICE_UPDATED = 'invoice_updated',
+buying_INVOICE_DELETED = 'invoice_deleted',
+buying_INVOICE_PRINTED = 'invoice_printed',
+buying_INVOICE_DUPLICATED = 'invoice_duplicated',
+
+//buying Payment
+buying_PAYMENT_CREATED = 'payment_created',
+buying_PAYMENT_UPDATED = 'payment_updated',
+buying_PAYMENT_DELETED = 'payment_deleted',
 
   //Content
   ACTIVITY_CREATED = 'activity_created',

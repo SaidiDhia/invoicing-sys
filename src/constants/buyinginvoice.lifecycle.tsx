@@ -1,14 +1,14 @@
-import { INVOICE_STATUS } from '@/types/invoices/selling-invoice';
+import { BUYING_INVOICE_STATUS } from '@/types/invoices/buying-invoice';
 import { Archive, Copy, FilePlus, Printer, Save, Send, Trash, X } from 'lucide-react';
 
 export interface InvoiceLifecycle {
   label: string;
   variant: 'default' | 'outline';
   icon: React.ReactNode;
-  when: { set: (INVOICE_STATUS | undefined)[]; membership: 'IN' | 'OUT' };
+  when: { set: (BUYING_INVOICE_STATUS | undefined)[]; membership: 'IN' | 'OUT' };
 }
 
-export const INVOICE_LIFECYCLE_ACTIONS: Record<string, InvoiceLifecycle> = {
+export const BUYING_INVOICE_LIFECYCLE_ACTIONS: Record<string, InvoiceLifecycle> = {
   save: {
     label: 'commands.save',
     variant: 'default',
@@ -32,7 +32,7 @@ export const INVOICE_LIFECYCLE_ACTIONS: Record<string, InvoiceLifecycle> = {
     icon: <FilePlus className="h-5 w-5" />,
     when: {
       membership: 'IN',
-      set: [undefined, INVOICE_STATUS.Draft, INVOICE_STATUS.Sent]
+      set: [undefined, BUYING_INVOICE_STATUS.Draft, BUYING_INVOICE_STATUS.Sent]
     }
   },
   sent: {
@@ -41,7 +41,7 @@ export const INVOICE_LIFECYCLE_ACTIONS: Record<string, InvoiceLifecycle> = {
     icon: <Send className="h-5 w-5" />,
     when: {
       membership: 'IN',
-      set: [undefined, INVOICE_STATUS.Draft, INVOICE_STATUS.Validated]
+      set: [undefined, BUYING_INVOICE_STATUS.Draft, BUYING_INVOICE_STATUS.Validated]
     }
   },
   duplicate: {

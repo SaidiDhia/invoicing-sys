@@ -5,7 +5,7 @@ import { Currency } from '../currency';
 import { DISCOUNT_TYPE } from '../enums/discount-types';
 import { Firm } from '../firm';
 import { Interlocutor } from '../interlocutor';
-import { Invoice } from '../invoices/buying-invoice';
+import { BuyingInvoice } from '../invoices/buying-invoice';
 import { PagedResponse } from '../response';
 import { DatabaseEntity } from '../response/DatabaseEntity';
 import { Tax } from '../tax';
@@ -104,7 +104,7 @@ export interface Quotation extends DatabaseEntity {
   articleQuotationEntries?: ArticleQuotationEntry[];
   quotationMetaData?: QuotationMetaData;
   uploads?: QuotationUpload[];
-  invoices: Invoice[];
+  invoices: BuyingInvoice[];
 }
 
 export interface CreateQuotationDto
