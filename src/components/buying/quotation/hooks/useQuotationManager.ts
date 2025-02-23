@@ -5,12 +5,10 @@ import {
   Firm,
   Interlocutor,
   PaymentCondition,
-  QUOTATION_STATUS,
-  Quotation,
-  QuotationUploadedFile
 } from '@/types';
 import { DATE_FORMAT } from '@/types/enums/date-formats';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
+import { BUYING_QUOTATION_STATUS, BuyingQuotation, BuyingQuotationUpload, BuyingQuotationUploadedFile } from '@/types/quotations/buying-quotation';
 import { fromStringToSequentialObject } from '@/utils/string.utils';
 import { create } from 'zustand';
 
@@ -22,6 +20,11 @@ type QuotationManager = {
     next: number;
     prefix: string;
   };
+
+  referenceDoc?: BuyingQuotationUpload;
+  referenceDocFile?: File;
+  referenceDocId?: number;
+  
   sequential: string;
   date: Date | undefined;
   dueDate: Date | undefined;
@@ -35,9 +38,9 @@ type QuotationManager = {
   bankAccount?: BankAccount;
   currency?: Currency;
   notes: string;
-  status: QUOTATION_STATUS;
+  status: BUYING_QUOTATION_STATUS;
   generalConditions: string;
-  uploadedFiles: QuotationUploadedFile[];
+  uploadedFiles: BuyingQuotationUploadedFile[];
   // utility data
   isInterlocutorInFirm: boolean;
   // methods
@@ -46,7 +49,7 @@ type QuotationManager = {
   set: (name: keyof QuotationManager, value: any) => void;
   getQuotation: () => Partial<QuotationManager>;
   setQuotation: (
-    quotation: Partial<Quotation & { files: QuotationUploadedFile[] }>,
+    quotation: Partial<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }>,
     firms?: Firm[],
     bankAccounts?: BankAccount[]
   ) => void;
@@ -97,10 +100,14 @@ const initialState: Omit<
   bankAccount: api?.bankAccount?.factory() || undefined,
   currency: api?.currency?.factory() || undefined,
   notes: '',
-  status: QUOTATION_STATUS.Nonexistent,
+  status: BUYING_QUOTATION_STATUS.Nonexistent,
   generalConditions: '',
   isInterlocutorInFirm: false,
-  uploadedFiles: []
+  uploadedFiles: [],
+
+  referenceDoc: undefined,
+  referenceDocFile: undefined,
+  referenceDocId: undefined,
 };
 
 export const useQuotationManager = create<QuotationManager>((set, get) => ({
@@ -179,7 +186,7 @@ export const useQuotationManager = create<QuotationManager>((set, get) => ({
     };
   },
   setQuotation: (
-    quotation: Partial<Quotation & { files: QuotationUploadedFile[] }>,
+    quotation: Partial<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }>,
     firms?: Firm[],
     bankAccounts?: BankAccount[]
   ) => {
@@ -199,7 +206,10 @@ export const useQuotationManager = create<QuotationManager>((set, get) => ({
       notes: quotation?.notes,
       generalConditions: quotation?.generalConditions,
       status: quotation?.status,
-      uploadedFiles: quotation?.files || []
+      uploadedFiles: quotation?.files || [],
+
+      referenceDoc: quotation.referenceDoc,
+      referenceDocId: quotation.referenceDocId
     }));
   },
   reset: () => set({ ...initialState })

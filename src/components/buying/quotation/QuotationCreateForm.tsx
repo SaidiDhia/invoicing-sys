@@ -2,7 +2,6 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { cn } from '@/lib/utils';
 import { api } from '@/api';
-import { ArticleQuotationEntry, CreateQuotationDto, QUOTATION_STATUS } from '@/types';
 import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
@@ -33,6 +32,8 @@ import { QuotationFinancialInformation } from './form/QuotationFinancialInformat
 import { QuotationControlSection } from './form/QuotationControlSection';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
+import { BUYING_QUOTATION_STATUS, BuyingArticleQuotationEntry, CreateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
+import { QuotationRefrenceDocument } from './form/QuotationReferenceDocument';
 
 interface QuotationFormProps {
   className?: string;
@@ -159,8 +160,8 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
 
   //create quotation mutator
   const { mutate: createQuotation, isPending: isCreatePending } = useMutation({
-    mutationFn: (data: { quotation: CreateQuotationDto; files: File[] }) =>
-      api.quotation.create(data.quotation, data.files),
+    mutationFn: (data: { quotation: CreateBuyingQuotationDto; files: File[] }) =>
+      api.buyingQuotation.create(data.quotation, data.files),
     onSuccess: () => {
       if (!firmId) router.push('/buying/quotations');
       else router.push(`/contacts/firm/${firmId}/?tab=quotations`);
@@ -195,8 +196,8 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
   }, []);
 
   //create handler
-  const onSubmit = (status: QUOTATION_STATUS) => {
-    const articlesDto: ArticleQuotationEntry[] = articleManager.getArticles()?.map((article) => ({
+  const onSubmit = (status: BUYING_QUOTATION_STATUS) => {
+    const articlesDto: BuyingArticleQuotationEntry[] = articleManager.getArticles()?.map((article) => ({
       id: article?.id,
       article: {
         title: article?.article?.title,
@@ -211,7 +212,7 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
         return entry?.tax?.id;
       })
     }));
-    const quotation: CreateQuotationDto = {
+    const quotation: CreateBuyingQuotationDto = {
       date: quotationManager?.date?.toString(),
       dueDate: quotationManager?.dueDate?.toString(),
       object: quotationManager?.object,
@@ -239,9 +240,12 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
         showArticleDescription: !controlManager?.isArticleDescriptionHidden,
         hasBankingDetails: !controlManager.isBankAccountDetailsHidden,
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden
-      }
+      },
+
+      referenceDocId:quotationManager?.referenceDocId,
+      referenceDocFile:quotationManager?.referenceDocFile,
     };
-    const validation = api.quotation.validate(quotation);
+    const validation = api.buyingQuotation.validate(quotation);
     if (validation.message) {
       toast.error(validation.message);
     } else {
@@ -265,6 +269,8 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
           <ScrollArea className=" max-h-[calc(100vh-120px)] border rounded-lg">
             <Card className="border-0">
               <CardContent className="p-5">
+                {/* Reference Document */}
+                <QuotationRefrenceDocument className="my-5" />
                 {/* General Information */}
                 <QuotationGeneralInformation
                   className="my-5"
@@ -312,9 +318,9 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
                   bankAccounts={bankAccounts}
                   currencies={currencies}
                   invoices={[]}
-                  handleSubmitDraft={() => onSubmit(QUOTATION_STATUS.Draft)}
-                  handleSubmitValidated={() => onSubmit(QUOTATION_STATUS.Validated)}
-                  handleSubmitSent={() => onSubmit(QUOTATION_STATUS.Sent)}
+                  handleSubmitDraft={() => onSubmit(BUYING_QUOTATION_STATUS.Draft)}
+                  handleSubmitValidated={() => onSubmit(BUYING_QUOTATION_STATUS.Validated)}
+                  handleSubmitSent={() => onSubmit(BUYING_QUOTATION_STATUS.Sent)}
                   reset={globalReset}
                   loading={debounceLoading}
                 />

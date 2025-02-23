@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import { Invoice } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableRowActions } from './data-table-row-actions';
@@ -7,6 +6,7 @@ import { DataTableColumnHeader } from './data-table-column-header';
 import { transformDate, transformDateTime } from '@/utils/date.utils';
 import { NextRouter } from 'next/router';
 import { INVOICE_FILTER_ATTRIBUTES } from '@/constants/invoice.filter-attributes';
+import { BuyingInvoice } from '@/types/invoices/buying-invoice';
 
 // Function to get the columns for the invoice data table
 export const getInvoiceColumns = (
@@ -14,7 +14,7 @@ export const getInvoiceColumns = (
   router: NextRouter, // Next.js router
   firmId?: number, // Optional firm ID
   interlocutorId?: number // Optional interlocutor ID
-): ColumnDef<Invoice>[] => {
+): ColumnDef<BuyingInvoice>[] => {
   const translationNamespace = 'invoicing';
   // eslint-disable-next-line prettier/prettier
 
@@ -24,7 +24,7 @@ export const getInvoiceColumns = (
   };
 
   // Column definition for the firm
-  const firmColumn: ColumnDef<Invoice> = {
+  const firmColumn: ColumnDef<BuyingInvoice> = {
     accessorKey: 'firm',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -45,7 +45,7 @@ export const getInvoiceColumns = (
   };
 
   // Column definition for the interlocutor
-  const interlocutorColumn: ColumnDef<Invoice> = {
+  const interlocutorColumn: ColumnDef<BuyingInvoice> = {
     accessorKey: 'interlocutor',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -66,7 +66,7 @@ export const getInvoiceColumns = (
   };
 
   // Array of column definitions for the invoice data table
-  const columns: ColumnDef<Invoice>[] = [
+  const columns: ColumnDef<BuyingInvoice>[] = [
     {
       accessorKey: 'number',
       header: ({ column }) => (

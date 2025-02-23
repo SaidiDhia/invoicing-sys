@@ -62,6 +62,7 @@
     "singular": "File",
     "plural": "Files",
     "drag_files_sentance": "Drag&drop files here, or click to select files",
+    "drag_single_file_sentance": "Drag&drop file here, or click to select file",
     "multiple_files_max_size_sentence": "You can upload {{count}} files (up to {{size}} each)",
     "single_file_max_size_sentence": "You can upload a file with size up to {{size}}",
     "no_selected_file": "No Selected Files",

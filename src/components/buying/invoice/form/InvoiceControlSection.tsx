@@ -22,22 +22,22 @@ import { useRouter } from 'next/router';
 import {
   BankAccount,
   Currency,
-  PaymentInvoiceEntry,
-  Quotation,
   TaxWithholding
 } from '@/types';
-import { BUYING_INVOICE_STATUS, BuyingDuplicateInvoiceDto } from '@/types/invoices/buying-invoice';
-import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceManager';;
-import { useInvoiceArticleManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceArticleManager';
-import { useInvoiceControlManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceControlManager';
-import { useMutation } from '@tanstack/react-query';
-import { InvoiceActionDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/dialogs/InvoiceActionDialog';
-import { InvoiceDuplicateDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/dialogs/InvoiceDuplicateDialog';
-import { InvoiceDownloadDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/dialogs/InvoiceDownloadDialog';
-import { InvoiceDeleteDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/dialogs/InvoiceDeleteDialog';
-import { BUYING_INVOICE_LIFECYCLE_ACTIONS } from '@/constants/buyinginvoice.lifecycle';
+import {  BUYING_INVOICE_STATUS, DuplicateBuyingInvoiceDto,}from '@/types/invoices/buying-invoice'
+import { BUYING_INVOICE_LIFECYCLE_ACTIONS } from '@/constants/buying-invoice.lifecycle';
 import { InvoicePaymentList } from './InvoicePaymentList';
 import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
+import { BuyingQuotation } from '@/types/quotations/buying-quotation';
+import { BuyingPaymentInvoiceEntry } from '@/types/payments/buying-payment';
+import { useInvoiceArticleManager } from '../hooks/useInvoiceArticleManager';
+import { useInvoiceManager } from '../hooks/useInvoiceManager';
+import { useInvoiceControlManager } from '../hooks/useInvoiceControlManager';
+import { useMutation } from '@tanstack/react-query';
+import { InvoiceDeleteDialog } from '../dialogs/InvoiceDeleteDialog';
+import { InvoiceDuplicateDialog } from '../dialogs/InvoiceDuplicateDialog';
+import { InvoiceDownloadDialog } from '../dialogs/InvoiceDownloadDialog';
+import { InvoiceActionDialog } from '../dialogs/InvoiceActionDialog';
 
 interface InvoiceLifecycle {
   label: string;
@@ -58,8 +58,8 @@ interface InvoiceControlSectionProps {
   isDataAltered?: boolean;
   bankAccounts: BankAccount[];
   currencies: Currency[];
-  quotations: Quotation[];
-  payments?: PaymentInvoiceEntry[];
+  quotations: BuyingQuotation[];
+  payments?: BuyingPaymentInvoiceEntry[];
   taxWithholdings?: TaxWithholding[];
   handleSubmit?: () => void;
   handleSubmitDraft: () => void;
@@ -125,7 +125,7 @@ export const BuyingInvoiceControlSection = ({
 
   //Duplicate Invoice
   const { mutate: duplicateInvoice, isPending: isDuplicationPending } = useMutation({
-    mutationFn: (duplicateInvoiceDto: BuyingDuplicateInvoiceDto) =>
+    mutationFn: (duplicateInvoiceDto: DuplicateBuyingInvoiceDto) =>
       api.invoice.duplicate(duplicateInvoiceDto),
     onSuccess: async (data) => {
       toast.success(tInvoicing('invoice.action_duplicate_success'));
@@ -341,7 +341,7 @@ export const BuyingInvoiceControlSection = ({
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      {quotations?.map((q: Quotation) => {
+                      {quotations?.map((q: BuyingQuotation) => {
                         return (
                           <SelectItem key={q.id} value={q?.id?.toString() || ''}>
                             <span className="font-bold">{q?.sequential}</span>

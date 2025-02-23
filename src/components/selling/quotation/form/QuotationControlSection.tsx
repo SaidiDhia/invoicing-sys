@@ -1,6 +1,6 @@
 import React from 'react';
 import { api } from '@/api';
-import { BankAccount, Currency, DuplicateQuotationDto, Invoice, QUOTATION_STATUS } from '@/types';
+import { BankAccount, Currency, DuplicateQuotationDto, QUOTATION_STATUS } from '@/types';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -32,6 +32,7 @@ import { QUOTATION_LIFECYCLE_ACTIONS } from '@/constants/quotation.lifecycle';
 import { QuotationInvoiceDialog } from '../dialogs/QuotationInvoiceDialog';
 import { QuotationInvoiceList } from './QuotationInvoiceList';
 import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
+import { Invoice } from '@/types/invoices/selling-invoice';
 
 interface QuotationLifecycle {
   label: string;

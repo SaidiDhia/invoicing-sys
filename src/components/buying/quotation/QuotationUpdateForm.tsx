@@ -1,13 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { api } from '@/api';
-import {
-  ArticleQuotationEntry,
-  QUOTATION_STATUS,
-  Quotation,
-  QuotationUploadedFile,
-  UpdateQuotationDto
-} from '@/types';
+
 import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
@@ -39,6 +33,8 @@ import { QuotationFinancialInformation } from './form/QuotationFinancialInformat
 import { QuotationControlSection } from './form/QuotationControlSection';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
+import { BUYING_QUOTATION_STATUS, BuyingArticleQuotationEntry, BuyingQuotation, BuyingQuotationUploadedFile, UpdateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
+import { QuotationRefrenceDocument } from './form/QuotationReferenceDocument';
 
 interface QuotationFormProps {
   className?: string;
@@ -65,7 +61,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
     refetch: refetchQuotation
   } = useQuery({
     queryKey: ['quotation', quotationId],
-    queryFn: () => api.quotation.findOne(parseInt(quotationId))
+    queryFn: () => api.buyingQuotation.findOne(parseInt(quotationId))
   });
   const quotation = React.useMemo(() => {
     return quotationResp || null;
@@ -84,7 +80,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
 
   //recognize if the form can be edited
   const editMode = React.useMemo(() => {
-    const editModeStatuses = [QUOTATION_STATUS.Validated, QUOTATION_STATUS.Draft];
+    const editModeStatuses = [BUYING_QUOTATION_STATUS.Validated, BUYING_QUOTATION_STATUS.Draft];
     return quotation?.status && editModeStatuses.includes(quotation?.status);
   }, [quotation]);
 
@@ -167,9 +163,14 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
   }, [articleManager.articles, quotationManager.discount, quotationManager.discountType]);
 
   //full quotation setter across multiple stores
-  const setQuotationData = (data: Partial<Quotation & { files: QuotationUploadedFile[] }>) => {
+  const setQuotationData = (data: Partial<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }>) => {
     //quotation infos
-    data && quotationManager.setQuotation(data, firms, bankAccounts);
+
+    data && quotationManager.setQuotation({
+      ...data,
+      referenceDoc: data.referenceDoc,
+      referenceDocId: data.referenceDocId
+    }, firms, bankAccounts);
 
     //quotation meta infos
     controlManager.setControls({
@@ -185,7 +186,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
 
   //initialized value to detect changement whiie modifying the quotation
   const { isDisabled, globalReset } = useInitializedState({
-    data: quotation || ({} as Partial<Quotation & { files: QuotationUploadedFile[] }>),
+    data: quotation || ({} as Partial<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }>),
     getCurrentData: () => {
       return {
         quotation: quotationManager.getQuotation(),
@@ -193,7 +194,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
         controls: controlManager.getControls()
       };
     },
-    setFormData: (data: Partial<Quotation & { files: QuotationUploadedFile[] }>) => {
+    setFormData: (data: Partial<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }>) => {
       setQuotationData(data);
     },
     resetData: () => {
@@ -206,10 +207,10 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
 
   //update quotation mutator
   const { mutate: updateQuotation, isPending: isUpdatingPending } = useMutation({
-    mutationFn: (data: { quotation: UpdateQuotationDto; files: File[] }) =>
-      api.quotation.update(data.quotation, data.files),
+    mutationFn: (data: { quotation: UpdateBuyingQuotationDto; files: File[] }) =>
+      api.buyingQuotation.update(data.quotation, data.files),
     onSuccess: (data) => {
-      if (data.status == QUOTATION_STATUS.Invoiced) {
+      if (data.status == BUYING_QUOTATION_STATUS.Invoiced) {
         toast.success('Devis facturé avec succès');
         // router.push(`/buying/invoice/${data.invoiceId}`);
       } else {
@@ -224,8 +225,8 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
   });
 
   //update handler
-  const onSubmit = (status: QUOTATION_STATUS) => {
-    const articlesDto: ArticleQuotationEntry[] = articleManager.getArticles()?.map((article) => ({
+  const onSubmit = (status: BUYING_QUOTATION_STATUS) => {
+    const articlesDto: BuyingArticleQuotationEntry[] = articleManager.getArticles()?.map((article) => ({
       article: {
         title: article?.article?.title,
         description: controlManager.isArticleDescriptionHidden ? '' : article?.article?.description
@@ -238,7 +239,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
       taxes: article?.articleQuotationEntryTaxes?.map((entry) => entry?.tax?.id) || []
     }));
 
-    const quotation: UpdateQuotationDto = {
+    const quotation: UpdateBuyingQuotationDto = {
       id: quotationManager?.id,
       date: quotationManager?.date?.toString(),
       dueDate: quotationManager?.dueDate?.toString(),
@@ -268,9 +269,12 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
         hasBankingDetails: !controlManager.isBankAccountDetailsHidden,
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden
       },
+      referenceDocId: quotationManager.referenceDocId,
+      referenceDoc: quotationManager.referenceDoc,
+
       uploads: quotationManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
-    const validation = api.quotation.validate(quotation);
+    const validation = api.buyingQuotation.validate(quotation);
     if (validation.message) {
       toast.error(validation.message, { position: validation.position || 'bottom-right' });
     } else {
@@ -292,6 +296,9 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
           <ScrollArea className=" max-h-[calc(100vh-120px)] border rounded-lg">
             <Card className="border-0">
               <CardContent className="p-5">
+                {/* Reference Document */}
+                <QuotationRefrenceDocument className="my-5" />
+                {/* General Information */}
                 <QuotationGeneralInformation
                   className="my-5"
                   firms={firms}
@@ -346,11 +353,11 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
                   currencies={currencies}
                   invoices={quotation?.invoices || []}
                   handleSubmit={() => onSubmit(quotationManager.status)}
-                  handleSubmitDraft={() => onSubmit(QUOTATION_STATUS.Draft)}
-                  handleSubmitValidated={() => onSubmit(QUOTATION_STATUS.Validated)}
-                  handleSubmitSent={() => onSubmit(QUOTATION_STATUS.Sent)}
-                  handleSubmitAccepted={() => onSubmit(QUOTATION_STATUS.Accepted)}
-                  handleSubmitRejected={() => onSubmit(QUOTATION_STATUS.Rejected)}
+                  handleSubmitDraft={() => onSubmit(BUYING_QUOTATION_STATUS.Draft)}
+                  handleSubmitValidated={() => onSubmit(BUYING_QUOTATION_STATUS.Validated)}
+                  handleSubmitSent={() => onSubmit(BUYING_QUOTATION_STATUS.Sent)}
+                  handleSubmitAccepted={() => onSubmit(BUYING_QUOTATION_STATUS.Accepted)}
+                  handleSubmitRejected={() => onSubmit(BUYING_QUOTATION_STATUS.Rejected)}
                   loading={debounceFetching}
                   refetch={refetchQuotation}
                   reset={globalReset}

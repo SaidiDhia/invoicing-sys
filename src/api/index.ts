@@ -38,6 +38,8 @@ import { permission } from './permission';
 export * from './permission';
 import { quotation } from './quotations/selling-quotation';
 export * from './quotations/selling-quotation';
+import { buyingQuotation } from './quotations/buying-quotation';
+export * from './quotations/buying-quotation';
 import { role } from './role';
 export * from './role';
 import { tax } from './tax';
@@ -73,6 +75,7 @@ export const api = {
   paymentCondition,
   permission,
   quotation,
+  buyingQuotation,
   role,
   tax,
   taxWithholding,

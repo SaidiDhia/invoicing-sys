@@ -14,10 +14,10 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
-import { useInvoiceArticleManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceArticleManager';
-import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceManager';
-import { useInvoiceControlManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceControlManager';
 import { ciel } from '@/utils/number.utils';
+import { useInvoiceArticleManager } from '../hooks/useInvoiceArticleManager';
+import { useInvoiceManager } from '../hooks/useInvoiceManager';
+import { useInvoiceControlManager } from '../hooks/useInvoiceControlManager';
 
 interface InvoiceFinancialInformationProps {
   className?: string;

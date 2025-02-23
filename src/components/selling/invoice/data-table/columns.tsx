@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import { Invoice } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableRowActions } from './data-table-row-actions';
@@ -7,6 +6,7 @@ import { DataTableColumnHeader } from './data-table-column-header';
 import { transformDate, transformDateTime } from '@/utils/date.utils';
 import { NextRouter } from 'next/router';
 import { INVOICE_FILTER_ATTRIBUTES } from '@/constants/invoice.filter-attributes';
+import { Invoice } from '@/types/invoices/selling-invoice';
 
 // Function to get the columns for the invoice data table
 export const getInvoiceColumns = (

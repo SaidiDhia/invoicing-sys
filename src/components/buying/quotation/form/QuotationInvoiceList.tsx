@@ -6,13 +6,13 @@ import {
 } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { Invoice } from '@/types';
+import { BuyingInvoice } from '@/types/invoices/buying-invoice';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
 interface QuotationInvoiceListProps {
   className?: string;
-  invoices: Invoice[];
+  invoices: BuyingInvoice[];
 }
 
 export const QuotationInvoiceList = ({ className, invoices }: QuotationInvoiceListProps) => {

@@ -8,10 +8,10 @@ import { FileUploader } from '@/components/ui/file-uploader';
 import { Textarea } from '@/components/ui/textarea';
 import { Files, NotebookTabs } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceManager';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import React from 'react';
+import { useInvoiceManager } from '../hooks/useInvoiceManager';
 
 interface InvoiceExtraOptionsProps {
   className?: string;

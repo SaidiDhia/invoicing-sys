@@ -223,7 +223,7 @@ export function FileUploader(props: FileUploaderProps) {
                 </div>
                 <div className="flex flex-col gap-px">
                   <p className="font-medium text-muted-foreground">
-                    {tCommon('files.drag_files_sentance')}
+                    {maxFileCount > 1 ? tCommon('files.drag_files_sentance'):tCommon('files.drag_single_file_sentance')}
                   </p>
                   <p className="text-sm text-muted-foreground/70">
                     {maxFileCount > 1

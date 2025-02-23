@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { QUOTATION_STATUS, Quotation } from '@/types';
+import { QUOTATION_STATUS, Quotation } from '@/types/quotations/selling-quotation';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,

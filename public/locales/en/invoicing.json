@@ -30,7 +30,9 @@
       "notes": "Notes",
       "files": "Files",
       "no_date": "Missing Date",
-      "no_due_date": "Missing Due Date"
+      "no_due_date": "Missing Due Date",
+
+      "reference_doc": "Reference Document"
     },
     "card_description": "This section provides a clear and organized view of all your quotations.",
     "errors": {

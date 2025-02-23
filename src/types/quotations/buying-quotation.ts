@@ -11,7 +11,7 @@ import { DatabaseEntity } from '../response/DatabaseEntity';
 import { Tax } from '../tax';
 import { Upload } from '../upload';
 
-export enum QUOTATION_STATUS {
+export enum BUYING_QUOTATION_STATUS {
   Nonexistent = 'quotation.status.non_existent',
   Expired = 'quotation.status.expired',
   Draft = 'quotation.status.draft',
@@ -22,14 +22,14 @@ export enum QUOTATION_STATUS {
   Invoiced = 'quotation.status.invoiced'
 }
 
-export interface QuotationTaxEntry extends DatabaseEntity {
+export interface BuyingQuotationTaxEntry extends DatabaseEntity {
   id?: number;
   articleQuotationEntryId?: number;
   tax?: Tax;
   taxId?: number;
 }
 
-export interface ArticleQuotationEntry extends DatabaseEntity {
+export interface BuyingArticleQuotationEntry extends DatabaseEntity {
   id?: number;
   quotationId?: number;
   article?: Article;
@@ -38,14 +38,14 @@ export interface ArticleQuotationEntry extends DatabaseEntity {
   quantity?: number;
   discount?: number;
   discount_type?: DISCOUNT_TYPE;
-  articleQuotationEntryTaxes?: QuotationTaxEntry[];
+  articleQuotationEntryTaxes?: BuyingQuotationTaxEntry[];
   subTotal?: number;
   total?: number;
 }
 
-export interface CreateArticleQuotationEntry
+export interface CreateBuyingArticleQuotationEntry
   extends Omit<
-    ArticleQuotationEntry,
+  BuyingArticleQuotationEntry,
     | 'id'
     | 'quotationId'
     | 'subTotal'
@@ -59,7 +59,7 @@ export interface CreateArticleQuotationEntry
   taxes?: number[];
 }
 
-export interface QuotationMetaData extends DatabaseEntity {
+export interface BuyingQuotationMetaData extends DatabaseEntity {
   id?: number;
   showInvoiceAddress?: boolean;
   showDeliveryAddress?: boolean;
@@ -69,21 +69,21 @@ export interface QuotationMetaData extends DatabaseEntity {
   taxSummary?: { taxId: number; amount: number }[];
 }
 
-export interface QuotationUpload extends DatabaseEntity {
+export interface BuyingQuotationUpload extends DatabaseEntity {
   id?: number;
   quotationId?: number;
-  quotation?: Quotation;
+  quotation?: BuyingQuotation;
   uploadId?: number;
   upload?: Upload;
 }
 
-export interface Quotation extends DatabaseEntity {
+export interface BuyingQuotation extends DatabaseEntity {
   id?: number;
   sequential?: string;
   object?: string;
   date?: string;
   dueDate?: string;
-  status?: QUOTATION_STATUS;
+  status?: BUYING_QUOTATION_STATUS;
   generalConditions?: string;
   defaultCondition?: boolean;
   total?: number;
@@ -101,15 +101,20 @@ export interface Quotation extends DatabaseEntity {
   interlocutorId?: number;
   interlocutor?: Interlocutor;
   notes?: string;
-  articleQuotationEntries?: ArticleQuotationEntry[];
-  quotationMetaData?: QuotationMetaData;
-  uploads?: QuotationUpload[];
+  articleQuotationEntries?: BuyingArticleQuotationEntry[];
+  quotationMetaData?: BuyingQuotationMetaData;
+  uploads?: BuyingQuotationUpload[];
   invoices: BuyingInvoice[];
+
+  referenceDoc?:BuyingQuotationUpload;
+  referenceDocId?:number;
+  referenceDocFile?:File | null;
+
 }
 
-export interface CreateQuotationDto
+export interface CreateBuyingQuotationDto
   extends Omit<
-    Quotation,
+  BuyingQuotation,
     | 'id'
     | 'createdAt'
     | 'updatedAt'
@@ -122,23 +127,26 @@ export interface CreateQuotationDto
     | 'bankAccount'
     | 'invoices'
   > {
-  articleQuotationEntries?: CreateArticleQuotationEntry[];
+  articleQuotationEntries?: CreateBuyingArticleQuotationEntry[];
   files?: File[];
+  referenceDocId?: number;
+  referenceDocFile?: File;
 }
 
-export interface UpdateQuotationDto extends CreateQuotationDto {
+export interface UpdateBuyingQuotationDto extends CreateBuyingQuotationDto {
   id?: number;
   createInvoice?: boolean;
 }
 
-export interface DuplicateQuotationDto {
+export interface DuplicateBuyingQuotationDto {
   id?: number;
   includeFiles?: boolean;
 }
 
-export interface PagedQuotation extends PagedResponse<Quotation> { }
+export interface PagedBuyingQuotation extends PagedResponse<BuyingQuotation> { }
 
-export interface QuotationUploadedFile {
-  upload: QuotationUpload;
+export interface BuyingQuotationUploadedFile {
+  upload: BuyingQuotationUpload;
   file: File;
+  
 }

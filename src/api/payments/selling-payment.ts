@@ -1,15 +1,10 @@
 import { PAYMENT_FILTER_ATTRIBUTES } from '@/constants/payment-filter.attributes';
-import {
-  CreatePaymentDto,
-  PagedPayment,
-  Payment,
-  PaymentUploadedFile,
-  ToastValidation,
-  UpdatePaymentDto
-} from '@/types';
+
 import axios from '../axios';
 import { upload } from '../upload';
 import { api } from '..';
+import { CreatePaymentDto, PagedPayment, Payment, PaymentUploadedFile, UpdatePaymentDto } from '@/types/payments/selling-payment';
+import { ToastValidation } from '@/types';
 
 const findOne = async (
   id: number,

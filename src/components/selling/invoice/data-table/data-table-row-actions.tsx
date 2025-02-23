@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { Invoice } from '@/types';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -15,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { Copy, Download, Settings2, Telescope, Trash2 } from 'lucide-react';
 import { useInvoiceManager } from '../hooks/useInvoiceManager';
 import { useInvoiceActions } from './ActionsContext';
+import { Invoice } from '@/types/invoices/selling-invoice';
 
 interface DataTableRowActionsProps {
   row: Row<Invoice>;

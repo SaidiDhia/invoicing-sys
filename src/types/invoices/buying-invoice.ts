@@ -4,8 +4,9 @@ import { Currency } from '../currency';
 import { DISCOUNT_TYPE } from '../enums/discount-types';
 import { Firm } from '../firm';
 import { Interlocutor } from '../interlocutor';
-import { PaymentInvoiceEntry } from '../payments/buying-payment';
-import { Quotation } from '../quotations/buying-quotation';
+import { BuyingPaymentInvoiceEntry } from '../payments/buying-payment';
+import { BuyingQuotation } from '../quotations/buying-quotation';
+
 import { PagedResponse } from '../response';
 import { DatabaseEntity } from '../response/DatabaseEntity';
 import { Tax } from '../tax';
@@ -44,7 +45,7 @@ export interface BuyingArticleInvoiceEntry extends DatabaseEntity {
   total?: number;
 }
 
-export interface BuyingCreateArticleInvoiceEntry
+export interface CreateBuyingArticleInvoiceEntry
   extends Omit<
     BuyingArticleInvoiceEntry,
     | 'id'
@@ -106,19 +107,23 @@ export interface BuyingInvoice extends DatabaseEntity {
   interlocutor?: Interlocutor;
   notes?: string;
   quotationId?: number;
-  quotation?: Quotation;
+  quotation?: BuyingQuotation;
   articleInvoiceEntries?: BuyingArticleInvoiceEntry[];
   invoiceMetaData?: BuyingInvoiceMetaData;
   uploads?: BuyingInvoiceUpload[];
-  payments?: PaymentInvoiceEntry[];
+  payments?: BuyingPaymentInvoiceEntry[];
   taxStamp?: Tax;
   taxStampId?: number;
   taxWithholding?: TaxWithholding;
   taxWithholdingId?: number;
   taxWithholdingAmount?: number;
+
+  referenceDoc?:BuyingInvoiceUpload;
+  referenceDocId?:number;
+  referenceDocFile?:File | null;
 }
 
-export interface BuyingCreateInvoiceDto
+export interface CreateBuyingInvoiceDto
   extends Omit<
     BuyingInvoice,
     | 'id'
@@ -132,27 +137,30 @@ export interface BuyingCreateInvoiceDto
     | 'sequential'
     | 'bankAccount'
   > {
-  articleInvoiceEntries?: BuyingCreateArticleInvoiceEntry[];
+  articleInvoiceEntries?: CreateBuyingArticleInvoiceEntry[];
   files?: File[];
+
+  referenceDocId?: number;
+  referenceDocFile?: File;
 }
 
-export interface BuyingUpdateInvoiceDto extends BuyingCreateInvoiceDto {
+export interface UpdateBuyingInvoiceDto extends CreateBuyingInvoiceDto {
   id?: number;
 }
 
-export interface BuyingDuplicateInvoiceDto {
+export interface DuplicateBuyingInvoiceDto {
   id?: number;
   includeFiles?: boolean;
 }
 
-export interface BuyingPagedInvoice extends PagedResponse<BuyingInvoice> { }
+export interface PagedBuyingInvoice extends PagedResponse<BuyingInvoice> { }
 
 export interface BuyingInvoiceUploadedFile {
   upload: BuyingInvoiceUpload;
   file: File;
 }
 
-export interface BuyingResponseInvoiceRangeDto {
+export interface ResponseBuyingInvoiceRangeDto {
   next?: BuyingInvoice;
   previous?: BuyingInvoice;
 }

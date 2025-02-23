@@ -27,18 +27,18 @@ import {
   Quotation,
   TaxWithholding
 } from '@/types';
-import {DuplicateInvoiceDto,INVOICE_STATUS,} from '@/types/invoices/selling-invoice'
-import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/hooks/useInvoiceManager';;
-import { useInvoiceArticleManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/hooks/useInvoiceArticleManager';
-import { useInvoiceControlManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/hooks/useInvoiceControlManager';
+import {DuplicateInvoiceDto,INVOICE_STATUS,} from '@/types/invoices/selling-invoice';
 import { useMutation } from '@tanstack/react-query';
-import { InvoiceActionDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/dialogs/InvoiceActionDialog';
-import { InvoiceDuplicateDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/dialogs/InvoiceDuplicateDialog';
-import { InvoiceDownloadDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/dialogs/InvoiceDownloadDialog';
-import { InvoiceDeleteDialog } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/dialogs/InvoiceDeleteDialog';
 import { INVOICE_LIFECYCLE_ACTIONS } from '@/constants/invoice.lifecycle';
 import { InvoicePaymentList } from './InvoicePaymentList';
 import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
+import { useInvoiceManager } from '../hooks/useInvoiceManager';
+import { useInvoiceControlManager } from '../hooks/useInvoiceControlManager';
+import { useInvoiceArticleManager } from '../hooks/useInvoiceArticleManager';
+import { InvoiceDuplicateDialog } from '../dialogs/InvoiceDuplicateDialog';
+import { InvoiceDownloadDialog } from '../dialogs/InvoiceDownloadDialog';
+import { InvoiceDeleteDialog } from '../dialogs/InvoiceDeleteDialog';
+import { InvoiceActionDialog } from '../dialogs/InvoiceActionDialog';
 
 interface InvoiceLifecycle {
   label: string;

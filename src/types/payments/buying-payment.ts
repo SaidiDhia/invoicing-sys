@@ -1,11 +1,11 @@
 import { Currency } from '@/types/currency';
 import { Firm } from '@/types/firm';
-import { Invoice } from '@/types/invoices/buying-invoice';
 import { PagedResponse } from '@/types/response';
 import { DatabaseEntity } from '@/types/response/DatabaseEntity';
 import { Upload } from '@/types/upload';
+import { BuyingInvoice } from '../invoices/buying-invoice';
 
-export enum PAYMENT_MODE {
+export enum BUYING_PAYMENT_MODE {
     Cash = 'payment.payment_mode.cash',
     CreditCard = 'payment.payment_mode.credit_card',
     Check = 'payment.payment_mode.check',
@@ -13,51 +13,51 @@ export enum PAYMENT_MODE {
     WireTransfer = 'payment.payment_mode.wire_transfer'
 }
 
-export interface PaymentUpload extends DatabaseEntity {
+export interface BuyingPaymentUpload extends DatabaseEntity {
     id?: number;
     paymentId?: number;
-    payment?: Payment;
+    payment?: BuyingPayment;
     uploadId?: number;
     upload?: Upload;
 }
 
-export interface PaymentInvoiceEntry extends DatabaseEntity {
+export interface BuyingPaymentInvoiceEntry extends DatabaseEntity {
     id?: number;
     invoiceId?: number;
-    invoice?: Invoice;
+    invoice?: BuyingInvoice;
     paymentId?: number;
-    payment?: Payment;
+    payment?: BuyingPayment;
     amount?: number;
 }
 
-export interface Payment extends DatabaseEntity {
+export interface BuyingPayment extends DatabaseEntity {
     id?: number;
     amount?: number;
     fee?: number;
     convertionRate?: number;
     date?: string;
-    mode?: PAYMENT_MODE;
+    mode?: BUYING_PAYMENT_MODE;
     notes?: string;
-    uploads?: PaymentUpload[];
-    invoices?: PaymentInvoiceEntry[];
+    uploads?: BuyingPaymentUpload[];
+    invoices?: BuyingPaymentInvoiceEntry[];
     currency?: Currency;
     currencyId?: number;
     firm?: Firm;
     firmId?: number;
 }
 
-export interface CreatePaymentDto
-    extends Omit<Payment, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'isDeletionRestricted'> {
+export interface CreateBuyingPaymentDto
+    extends Omit<BuyingPayment, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'isDeletionRestricted'> {
     files?: File[];
 }
 
-export interface UpdatePaymentDto extends CreatePaymentDto {
+export interface UpdateBuyingPaymentDto extends CreateBuyingPaymentDto {
     id?: number;
 }
 
-export interface PagedPayment extends PagedResponse<Payment> { }
+export interface PagedBuyingPayment extends PagedResponse<BuyingPayment> { }
 
-export interface PaymentUploadedFile {
-    upload: PaymentUpload;
+export interface BuyingPaymentUploadedFile {
+    upload: BuyingPaymentUpload;
     file: File;
 }

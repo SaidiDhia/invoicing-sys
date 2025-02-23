@@ -10,12 +10,13 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Currency, Firm, INVOICE_STATUS, PAYMENT_MODE } from '@/types';
+import { Currency, Firm, PAYMENT_MODE } from '@/types';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import React from 'react';
 import { CalendarDatePicker } from '@/components/ui/calendar-day-picker';
 import { usePaymentInvoiceManager } from '../hooks/usePaymentInvoiceManager';
+import { INVOICE_STATUS } from '@/types/invoices/selling-invoice';
 
 interface PaymentGeneralInformationProps {
   className?: string;

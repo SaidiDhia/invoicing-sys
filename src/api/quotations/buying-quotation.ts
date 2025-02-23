@@ -3,25 +3,16 @@ import { differenceInDays } from 'date-fns';
 import { DISCOUNT_TYPE } from '../../types/enums/discount-types';
 import { upload } from '../upload';
 import { api } from '..';
-import {
-  ArticleQuotationEntry,
-  CreateQuotationDto,
-  DuplicateQuotationDto,
-  PagedQuotation,
-  QUOTATION_STATUS,
-  Quotation,
-  QuotationUploadedFile,
-  ToastValidation,
-  UpdateQuotationDto,
-  UpdateQuotationSequentialNumber
-} from '@/types';
-import { QUOTATION_FILTER_ATTRIBUTES } from '@/constants/quotation.filter-attributes';
 
-const factory = (): CreateQuotationDto => {
+import { QUOTATION_FILTER_ATTRIBUTES } from '@/constants/quotation.filter-attributes';
+import { BUYING_QUOTATION_STATUS, BuyingQuotation, BuyingQuotationUploadedFile, CreateBuyingQuotationDto, DuplicateBuyingQuotationDto, PagedBuyingQuotation, UpdateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
+import {  ToastValidation, UpdateQuotationSequentialNumber } from '@/types';
+
+const factory = (): CreateBuyingQuotationDto => {
   return {
     date: '',
     dueDate: '',
-    status: QUOTATION_STATUS.Draft,
+    status: BUYING_QUOTATION_STATUS.Draft,
     generalConditions: '',
     total: 0,
     subTotal: 0,
@@ -40,7 +31,9 @@ const factory = (): CreateQuotationDto => {
       showArticleDescription: true,
       taxSummary: []
     },
-    files: []
+    files: [],
+    referenceDocId:0,
+    referenceDocFile:undefined,
   };
 };
 
@@ -53,7 +46,7 @@ const findPaginated = async (
   relations: string[] = ['firm', 'interlocutor'],
   firmId?: number,
   interlocutorId?: number
-): Promise<PagedQuotation> => {
+): Promise<PagedBuyingQuotation> => {
   const generalFilter = search
     ? Object.values(QUOTATION_FILTER_ATTRIBUTES)
       .map((key) => `${key}||$cont||${search}`)
@@ -63,9 +56,9 @@ const findPaginated = async (
   const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
   const filters = [generalFilter, firmCondition, interlocutorCondition].filter(Boolean).join(',');
 
-  const response = await axios.get<PagedQuotation>(
+  const response = await axios.get<PagedBuyingQuotation>(
     new String().concat(
-      'public/selling-quotation/list?',
+      'public/buying-quotation/list?',
       `sort=${sortKey},${order}&`,
       `filter=${filters}&`,
       `limit=${size}&page=${page}&`,
@@ -75,8 +68,8 @@ const findPaginated = async (
   return response.data;
 };
 
-const findChoices = async (status: QUOTATION_STATUS): Promise<Quotation[]> => {
-  const response = await axios.get<Quotation[]>(
+const findChoices = async (status: BUYING_QUOTATION_STATUS): Promise<BuyingQuotation[]> => {
+  const response = await axios.get<BuyingQuotation[]>(
     `public/buying-quotation/all?filter=status||$eq||${status}`
   );
   return response.data;
@@ -102,8 +95,8 @@ const findOne = async (
     'articleQuotationEntries.articleQuotationEntryTaxes',
     'articleQuotationEntries.articleQuotationEntryTaxes.tax'
   ]
-): Promise<Quotation & { files: QuotationUploadedFile[] }> => {
-  const response = await axios.get<Quotation>(`public/buying-quotation/${id}?join=${relations.join(',')}`);
+): Promise<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }> => {
+  const response = await axios.get<BuyingQuotation>(`public/buying-quotation/${id}?join=${relations.join(',')}`);
   return { ...response.data, files: await getQuotationUploads(response.data) };
 };
 
@@ -111,10 +104,18 @@ const uploadQuotationFiles = async (files: File[]): Promise<number[]> => {
   return files && files?.length > 0 ? await upload.uploadFiles(files) : [];
 };
 
-const create = async (quotation: CreateQuotationDto, files: File[]): Promise<Quotation> => {
+const create = async (quotation: CreateBuyingQuotationDto, files: File[]): Promise<BuyingQuotation> => {
+  
+  let referenceDocId = quotation.referenceDocId;
+  if (quotation.referenceDocFile) {
+    const [uploadId] = await uploadQuotationFiles([quotation.referenceDocFile]);
+    referenceDocId = uploadId;
+  }
+  
   const uploadIds = await uploadQuotationFiles(files);
-  const response = await axios.post<Quotation>('public/buying-quotation', {
+  const response = await axios.post<BuyingQuotation>('public/buying-quotation', {
     ...quotation,
+    referenceDocId,
     uploads: uploadIds.map((id) => {
       return { uploadId: id };
     })
@@ -122,7 +123,7 @@ const create = async (quotation: CreateQuotationDto, files: File[]): Promise<Quo
   return response.data;
 };
 
-const getQuotationUploads = async (quotation: Quotation): Promise<QuotationUploadedFile[]> => {
+const getQuotationUploads = async (quotation: BuyingQuotation): Promise<BuyingQuotationUploadedFile[]> => {
   if (!quotation?.uploads) return [];
 
   const uploads = await Promise.all(
@@ -141,7 +142,7 @@ const getQuotationUploads = async (quotation: Quotation): Promise<QuotationUploa
     .sort(
       (a, b) =>
         new Date(a.upload.createdAt ?? 0).getTime() - new Date(b.upload.createdAt ?? 0).getTime()
-    ) as QuotationUploadedFile[];
+    ) as BuyingQuotationUploadedFile[];
 };
 
 const download = async (id: number, template: string): Promise<any> => {
@@ -159,18 +160,26 @@ const download = async (id: number, template: string): Promise<any> => {
   return response;
 };
 
-const duplicate = async (duplicateQuotationDto: DuplicateQuotationDto): Promise<Quotation> => {
-  const response = await axios.post<Quotation>(
+const duplicate = async (duplicateQuotationDto: DuplicateBuyingQuotationDto): Promise<BuyingQuotation> => {
+  const response = await axios.post<BuyingQuotation>(
     '/public/buying-quotation/duplicate',
     duplicateQuotationDto
   );
   return response.data;
 };
 
-const update = async (quotation: UpdateQuotationDto, files: File[]): Promise<Quotation> => {
+const update = async (quotation: UpdateBuyingQuotationDto, files: File[]): Promise<BuyingQuotation> => {
+  
+  let referenceDocId = quotation.referenceDocId;
+  if (quotation.referenceDocFile) {
+    const [uploadId] = await uploadQuotationFiles([quotation.referenceDocFile]);
+    referenceDocId = uploadId;
+  }
+
   const uploadIds = await uploadQuotationFiles(files);
-  const response = await axios.put<Quotation>(`public/buying-quotation/${quotation.id}`, {
+  const response = await axios.put<BuyingQuotation>(`public/buying-quotation/${quotation.id}`, {
     ...quotation,
+    referenceDocId,
     uploads: [
       ...(quotation.uploads || []),
       ...uploadIds.map((id) => {
@@ -181,20 +190,25 @@ const update = async (quotation: UpdateQuotationDto, files: File[]): Promise<Quo
   return response.data;
 };
 
-const invoice = async (id?: number, createInvoice?: boolean): Promise<Quotation> => {
-  const response = await axios.put<Quotation>(`public/buying-quotation/invoice/${id}/${createInvoice}`);
+const invoice = async (id?: number, createInvoice?: boolean): Promise<BuyingQuotation> => {
+  const response = await axios.put<BuyingQuotation>(`public/buying-quotation/invoice/${id}/${createInvoice}`);
   return response.data;
 };
 
-const remove = async (id: number): Promise<Quotation> => {
-  const response = await axios.delete<Quotation>(`public/buying-quotation/${id}`);
+const remove = async (id: number): Promise<BuyingQuotation> => {
+  const response = await axios.delete<BuyingQuotation>(`public/buying-quotation/${id}`);
   return response.data;
 };
 
-const validate = (quotation: Partial<Quotation>): ToastValidation => {
+const validate = (quotation: Partial<BuyingQuotation>): ToastValidation => {
   if (!quotation.date) return { message: 'La date est obligatoire' };
   if (!quotation.dueDate) return { message: "L'échéance est obligatoire" };
   if (!quotation.object) return { message: "L'objet est obligatoire" };
+  
+  if (!quotation.referenceDocId && !quotation.referenceDocFile) {
+    return { message: 'Le document de référence est obligatoire' };
+  }
+
   if (differenceInDays(new Date(quotation.date), new Date(quotation.dueDate)) >= 0)
     return { message: "L'échéance doit être supérieure à la date" };
   if (!quotation.firmId || !quotation.interlocutorId)
@@ -203,14 +217,14 @@ const validate = (quotation: Partial<Quotation>): ToastValidation => {
 };
 
 const updateQuotationsSequentials = async (updatedSequenceDto: UpdateQuotationSequentialNumber) => {
-  const response = await axios.put<Quotation>(
+  const response = await axios.put<BuyingQuotation>(
     `/public/buying-quotation/update-quotation-sequences`,
     updatedSequenceDto
   );
   return response.data;
 };
 
-export const quotation = {
+export const buyingQuotation = {
   factory,
   findPaginated,
   findOne,

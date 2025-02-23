@@ -22,12 +22,12 @@ import { Check, X } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/other/useMediaQuery';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { QUOTATION_STATUS } from '@/types';
+import { BUYING_QUOTATION_STATUS } from '@/types/quotations/buying-quotation';
 
 interface QuotationInvoiceDialogProps {
   className?: string;
   id?: number;
-  status: QUOTATION_STATUS;
+  status: BUYING_QUOTATION_STATUS;
   sequential: string;
   open: boolean;
   invoice: (id: number, createInvoice: boolean) => void;
@@ -70,7 +70,7 @@ export const QuotationInvoiceDialog: React.FC<QuotationInvoiceDialogProps> = ({
       <Button
         className="w-1/2 flex gap-2"
         onClick={() => {
-          if (id) invoice(id, status != QUOTATION_STATUS.Invoiced ? !invoiceMark : true);
+          if (id) invoice(id, status != BUYING_QUOTATION_STATUS.Invoiced ? !invoiceMark : true);
           onClose();
         }}>
         <Check /> Facturer
@@ -94,7 +94,7 @@ export const QuotationInvoiceDialog: React.FC<QuotationInvoiceDialogProps> = ({
         <DialogContent className={cn('max-w-[25vw] p-8', className)}>
           <DialogHeader>
             <DialogTitle>{header}</DialogTitle>
-            {status != QUOTATION_STATUS.Invoiced && (
+            {status != BUYING_QUOTATION_STATUS.Invoiced && (
               <DialogDescription className="flex gap-2 pt-4 items-center px-2">
                 {content}
               </DialogDescription>
@@ -109,7 +109,7 @@ export const QuotationInvoiceDialog: React.FC<QuotationInvoiceDialogProps> = ({
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>{header}</DrawerTitle>
-          {status != QUOTATION_STATUS.Invoiced && (
+          {status != BUYING_QUOTATION_STATUS.Invoiced && (
             <DrawerDescription className="flex gap-2 items-center p-4">{content}</DrawerDescription>
           )}
         </DrawerHeader>

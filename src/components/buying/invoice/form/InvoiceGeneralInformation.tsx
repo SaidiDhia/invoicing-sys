@@ -10,15 +10,15 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import React from 'react';
-import { AddressDetails } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/invoicing-commons/AddressDetails';
 import { cn } from '@/lib/utils';
 import { SequenceInput } from '@/components/invoicing-commons/SequenceInput';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceManager';
 import { UneditableCalendarDayPicker } from '@/components/ui/uneditable/uneditable-calendar-day-picker';
 import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
 import { DatePicker } from '@/components/ui/date-picker';
+import { useInvoiceManager } from '../hooks/useInvoiceManager';
+import { AddressDetails } from '@/components/invoicing-commons/AddressDetails';
 
 interface InvoiceGeneralInformationProps {
   className?: string;

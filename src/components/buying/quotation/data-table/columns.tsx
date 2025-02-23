@@ -1,4 +1,3 @@
-import { Quotation } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableRowActions } from './data-table-row-actions';
@@ -7,18 +6,19 @@ import { transformDate, transformDateTime } from '@/utils/date.utils';
 import { NextRouter } from 'next/router';
 import { QUOTATION_FILTER_ATTRIBUTES } from '@/constants/quotation.filter-attributes';
 import { firm } from '@/api';
+import { BuyingQuotation } from '@/types/quotations/buying-quotation';
 
 export const getQuotationColumns = (
   t: Function,
   router: NextRouter,
   firmId?: number,
   interlocutorId?: number
-): ColumnDef<Quotation>[] => {
+): ColumnDef<BuyingQuotation>[] => {
   const translationNamespace = 'invoicing';
   const translate = (value: string, namespace: string = '') => {
     return t(value, { ns: namespace || translationNamespace });
   };
-  const firmColumn: ColumnDef<Quotation> = {
+  const firmColumn: ColumnDef<BuyingQuotation> = {
     accessorKey: 'firm',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -38,7 +38,7 @@ export const getQuotationColumns = (
     enableHiding: true
   };
 
-  const interlocutorColumn: ColumnDef<Quotation> = {
+  const interlocutorColumn: ColumnDef<BuyingQuotation> = {
     accessorKey: 'interlocutor',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -58,7 +58,7 @@ export const getQuotationColumns = (
     enableHiding: true
   };
 
-  const columns: ColumnDef<Quotation>[] = [
+  const columns: ColumnDef<BuyingQuotation>[] = [
     {
       accessorKey: 'number',
       header: ({ column }) => (

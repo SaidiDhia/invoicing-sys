@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { ArticleQuotationEntry, Currency, QuotationTaxEntry, Tax } from '@/types';
+import {  Currency, Tax } from '@/types';
 import {
   Select,
   SelectTrigger,
@@ -16,11 +16,12 @@ import { useTranslation } from 'react-i18next';
 import { Textarea } from '@/components/ui/textarea';
 import { QuotationTaxEntries } from './QuotationTaxEntries';
 import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
+import { BuyingArticleQuotationEntry, BuyingQuotationTaxEntry } from '@/types/quotations/buying-quotation';
 
 interface QuotationArticleItemProps {
   className?: string;
-  article: ArticleQuotationEntry;
-  onChange: (item: ArticleQuotationEntry) => void;
+  article: BuyingArticleQuotationEntry;
+  onChange: (item: BuyingArticleQuotationEntry) => void;
   showDescription?: boolean;
   currency?: Currency;
   taxes: Tax[];
@@ -130,14 +131,14 @@ export const QuotationArticleItem: React.FC<QuotationArticleItemProps> = ({
 
   const handleAddTax = () => {
     if ((article.articleQuotationEntryTaxes?.length || 0) >= taxes.length) {
-      toast.warn(tInvoicing('quotation.errors.surpassed_tax_limit'));
+      toast.warning(tInvoicing('quotation.errors.surpassed_tax_limit'));
       return;
     }
     onChange({
       ...article,
       articleQuotationEntryTaxes: [
         ...(article.articleQuotationEntryTaxes || []),
-        {} as QuotationTaxEntry
+        {} as BuyingQuotationTaxEntry
       ]
     });
   };

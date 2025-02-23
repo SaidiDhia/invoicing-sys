@@ -3,16 +3,14 @@ import { differenceInDays, isAfter } from 'date-fns';
 import { DISCOUNT_TYPE } from '../../types/enums/discount-types';
 import { upload } from '../upload';
 import { api } from '..';
-import {
 
-  DateRange,
-  ToastValidation,
-  UpdateInvoiceSequentialNumber
-} from '@/types';
-import { BuyingCreateInvoiceDto, BuyingDuplicateInvoiceDto, BUYING_INVOICE_STATUS, BuyingInvoice, BuyingResponseInvoiceRangeDto, BuyingPagedInvoice, BuyingUpdateInvoiceDto, BuyingInvoiceUploadedFile, } from '@/types/invoices/buying-invoice';
 import { INVOICE_FILTER_ATTRIBUTES } from '@/constants/invoice.filter-attributes';
+import { BUYING_INVOICE_STATUS, BuyingInvoice, BuyingInvoiceUploadedFile, CreateBuyingInvoiceDto, DuplicateBuyingInvoiceDto, PagedBuyingInvoice, ResponseBuyingInvoiceRangeDto, UpdateBuyingInvoiceDto } from '@/types/invoices/buying-invoice';
+import { ToastValidation, UpdateInvoiceSequentialNumber } from '@/types';
 
-const factory = (): BuyingCreateInvoiceDto => {
+import { DateRange } from 'react-day-picker';
+
+const factory = (): CreateBuyingInvoiceDto => {
   return {
     date: '',
     dueDate: '',
@@ -48,7 +46,7 @@ const findPaginated = async (
   relations: string[] = ['firm', 'interlocutor'],
   firmId?: number,
   interlocutorId?: number
-): Promise<BuyingPagedInvoice> => {
+): Promise<PagedBuyingInvoice> => {
   const generalFilter = search
     ? Object.values(INVOICE_FILTER_ATTRIBUTES)
       .map((key) => `${key}||$cont||${search}`)
@@ -58,7 +56,7 @@ const findPaginated = async (
   const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
   const filters = [generalFilter, firmCondition, interlocutorCondition].filter(Boolean).join(',');
 
-  const response = await axios.get<BuyingPagedInvoice>(
+  const response = await axios.get<PagedBuyingInvoice>(
     new String().concat(
       'public/buying-invoice/list?',
       `sort=${sortKey},${order}&`,
@@ -98,8 +96,8 @@ const findOne = async (
   return { ...response.data, files: await getInvoiceUploads(response.data) };
 };
 
-const findByRange = async (id?: number): Promise<BuyingResponseInvoiceRangeDto> => {
-  const response = await axios.get<BuyingResponseInvoiceRangeDto>(
+const findByRange = async (id?: number): Promise<ResponseBuyingInvoiceRangeDto> => {
+  const response = await axios.get<ResponseBuyingInvoiceRangeDto>(
     `public/buying-invoice/sequential-range/${id}`
   );
   return response.data;
@@ -109,7 +107,7 @@ const uploadInvoiceFiles = async (files: File[]): Promise<number[]> => {
   return files && files?.length > 0 ? await upload.uploadFiles(files) : [];
 };
 
-const create = async (invoice: BuyingCreateInvoiceDto, files: File[]): Promise<BuyingInvoice> => {
+const create = async (invoice: CreateBuyingInvoiceDto, files: File[]): Promise<BuyingInvoice> => {
   const uploadIds = await uploadInvoiceFiles(files);
   const response = await axios.post<BuyingInvoice>('public/buying-invoice', {
     ...invoice,
@@ -157,12 +155,12 @@ const download = async (id: number, template: string): Promise<any> => {
   return response;
 };
 
-const duplicate = async (duplicateInvoiceDto: BuyingDuplicateInvoiceDto): Promise<BuyingInvoice> => {
+const duplicate = async (duplicateInvoiceDto: DuplicateBuyingInvoiceDto): Promise<BuyingInvoice> => {
   const response = await axios.post<BuyingInvoice>('/public/buying-invoice/duplicate', duplicateInvoiceDto);
   return response.data;
 };
 
-const update = async (invoice: BuyingUpdateInvoiceDto, files: File[]): Promise<BuyingInvoice> => {
+const update = async (invoice: UpdateBuyingInvoiceDto, files: File[]): Promise<BuyingInvoice> => {
   const uploadIds = await uploadInvoiceFiles(files);
   const response = await axios.put<BuyingInvoice>(`public/buying-invoice/${invoice.id}`, {
     ...invoice,
@@ -197,6 +195,9 @@ const validate = (invoice: Partial<BuyingInvoice>, dateRange?: DateRange): Toast
     invoiceDate.getTime() !== dateRange.to.getTime()
   ) {
     return { message: `La date doit être avant ou égale à ${dateRange.to.toLocaleDateString()}` };
+  }
+  if (!invoice.referenceDocId && !invoice.referenceDocFile) {
+    return { message: 'Le document de référence est obligatoire' };
   }
   if (!invoice.dueDate) return { message: "L'échéance est obligatoire" };
   if (!invoice.object) return { message: "L'objet est obligatoire" };

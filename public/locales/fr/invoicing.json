@@ -30,7 +30,10 @@
       "notes": "Remarques",
       "files": "Pièces jointes",
       "no_date": "Date manquante",
-      "no_due_date": "Date d'échéance manquante"
+      "no_due_date": "Date d'échéance manquante",
+
+      "reference_doc": "Document de Reference"
+
     },
     "card_description": "Cette section fournit une vue claire et organisée de tous vos devis.",
     "errors": {

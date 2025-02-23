@@ -6,7 +6,7 @@ import {
   Interlocutor,
   PaymentCondition
 } from '@/types';
-import { BUYING_INVOICE_STATUS, BuyingInvoiceUploadedFile, BuyingInvoice, } from '@/types/invoices/buying-invoice'
+import { BUYING_INVOICE_STATUS, BuyingInvoiceUploadedFile, BuyingInvoice, BuyingInvoiceUpload, } from '@/types/invoices/buying-invoice'
 import { DATE_FORMAT } from '@/types/enums/date-formats';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
 import { fromStringToSequentialObject } from '@/utils/string.utils';
@@ -20,6 +20,11 @@ type InvoiceManager = {
     next: number;
     prefix: string;
   };
+
+  referenceDoc?: BuyingInvoiceUpload;
+  referenceDocFile?: File;
+  referenceDocId?: number;
+
   sequential: string;
   date: Date | undefined;
   dueDate: Date | undefined;
@@ -106,7 +111,11 @@ const initialState: Omit<
   uploadedFiles: [],
   quotationId: undefined,
   taxStampId: undefined,
-  taxWithholdingId: undefined
+  taxWithholdingId: undefined,
+
+  referenceDoc: undefined,
+  referenceDocFile: undefined,
+  referenceDocId: undefined,
 };
 
 export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
@@ -214,7 +223,11 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
       taxStampId: invoice?.taxStampId,
       amountPaid: invoice?.amountPaid,
       taxWithholdingId: invoice?.taxWithholdingId,
-      taxWithholdingAmount: invoice?.taxWithholdingAmount
+      taxWithholdingAmount: invoice?.taxWithholdingAmount,
+
+
+      referenceDoc: invoice.referenceDoc,
+      referenceDocId: invoice.referenceDocId
     }));
   },
   reset: () => set({ ...initialState })

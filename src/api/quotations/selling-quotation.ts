@@ -3,19 +3,10 @@ import { differenceInDays } from 'date-fns';
 import { DISCOUNT_TYPE } from '../../types/enums/discount-types';
 import { upload } from '../upload';
 import { api } from '..';
-import {
-  ArticleQuotationEntry,
-  CreateQuotationDto,
-  DuplicateQuotationDto,
-  PagedQuotation,
-  QUOTATION_STATUS,
-  Quotation,
-  QuotationUploadedFile,
-  ToastValidation,
-  UpdateQuotationDto,
-  UpdateQuotationSequentialNumber
-} from '@/types';
+
 import { QUOTATION_FILTER_ATTRIBUTES } from '@/constants/quotation.filter-attributes';
+import { CreateQuotationDto, DuplicateQuotationDto, PagedQuotation, Quotation, QUOTATION_STATUS, QuotationUploadedFile, UpdateQuotationDto } from '@/types/quotations/selling-quotation';
+import { ToastValidation, UpdateQuotationSequentialNumber } from '@/types';
 
 const factory = (): CreateQuotationDto => {
   return {

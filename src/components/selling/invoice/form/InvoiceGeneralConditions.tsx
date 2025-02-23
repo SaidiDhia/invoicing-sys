@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 
-import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/selling/invoice/hooks/useInvoiceManager';
 import React from 'react';
+import { useInvoiceManager } from '../hooks/useInvoiceManager';
 
 interface InvoiceGeneralConditionsProps {
   className?: string;

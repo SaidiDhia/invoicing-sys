@@ -29,9 +29,9 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { InvoiceArticleItem } from './InvoiceArticleItem';
-import { useInvoiceArticleManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceArticleManager';;
 import { useTranslation } from 'react-i18next';
-import { useInvoiceManager } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/components/buying/invoice/hooks/useInvoiceManager';
+import { useInvoiceArticleManager } from '../hooks/useInvoiceArticleManager';
+import { useInvoiceManager } from '../hooks/useInvoiceManager';
 
 interface InvoiceArticleManagementProps {
   className?: string;

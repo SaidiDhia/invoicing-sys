@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { QUOTATION_STATUS, Quotation } from '@/types';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -15,9 +14,10 @@ import { useTranslation } from 'react-i18next';
 import { Copy, Download, FileCheck, Settings2, Telescope, Trash2 } from 'lucide-react';
 import { useQuotationManager } from '../hooks/useQuotationManager';
 import { useQuotationActions } from './ActionsContext';
+import { BUYING_QUOTATION_STATUS, BuyingQuotation } from '@/types/quotations/buying-quotation';
 
 interface DataTableRowActionsProps {
-  row: Row<Quotation>;
+  row: Row<BuyingQuotation>;
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
@@ -64,15 +64,15 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           }}>
           <Copy className="h-5 w-5 mr-2" /> {tCommon('commands.duplicate')}
         </DropdownMenuItem>
-        {(quotation.status == QUOTATION_STATUS.Draft ||
-          quotation.status == QUOTATION_STATUS.Validated ||
-          quotation.status == QUOTATION_STATUS.Sent) && (
+        {(quotation.status == BUYING_QUOTATION_STATUS.Draft ||
+          quotation.status == BUYING_QUOTATION_STATUS.Validated ||
+          quotation.status == BUYING_QUOTATION_STATUS.Sent) && (
           <DropdownMenuItem onClick={() => router.push('/buying/quotation/' + quotation.id)}>
             <Settings2 className="h-5 w-5 mr-2" /> {tCommon('commands.modify')}
           </DropdownMenuItem>
         )}
-        {(quotation.status == QUOTATION_STATUS.Accepted ||
-          quotation.status == QUOTATION_STATUS.Invoiced) && (
+        {(quotation.status == BUYING_QUOTATION_STATUS.Accepted ||
+          quotation.status == BUYING_QUOTATION_STATUS.Invoiced) && (
           <DropdownMenuItem
             onClick={() => {
               targetQuotation();
@@ -81,7 +81,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             <FileCheck className="h-5 w-5 mr-2" /> {tCommon('commands.to_invoice')}
           </DropdownMenuItem>
         )}
-        {quotation.status != QUOTATION_STATUS.Sent && (
+        {quotation.status != BUYING_QUOTATION_STATUS.Sent && (
           <DropdownMenuItem
             onClick={() => {
               targetQuotation();

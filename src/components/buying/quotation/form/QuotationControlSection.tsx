@@ -1,6 +1,6 @@
 import React from 'react';
 import { api } from '@/api';
-import { BankAccount, Currency, DuplicateQuotationDto, Invoice, QUOTATION_STATUS } from '@/types';
+import { BankAccount, Currency} from '@/types';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -28,12 +28,13 @@ import { QuotationDeleteDialog } from '../dialogs/QuotationDeleteDialog';
 import { useQuotationControlManager } from '../hooks/useQuotationControlManager';
 import { QuotationActionDialog } from '../dialogs/QuotationActionDialog';
 import { useQuotationArticleManager } from '../hooks/useQuotationArticleManager';
-import { QUOTATION_LIFECYCLE_ACTIONS } from '@/constants/quotation.lifecycle';
+import { QUOTATION_LIFECYCLE_ACTIONS } from '@/constants/buying-quotation.lifecycle';
 import { QuotationInvoiceDialog } from '../dialogs/QuotationInvoiceDialog';
 import { QuotationInvoiceList } from './QuotationInvoiceList';
 import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
-
-interface QuotationLifecycle {
+import { BUYING_QUOTATION_STATUS, DuplicateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
+import { BuyingInvoice } from "@/types/invoices/buying-invoice";
+interface BuyingQuotationLifecycle {
   label: string;
   key: string;
   variant: 'default' | 'outline';
@@ -42,17 +43,17 @@ interface QuotationLifecycle {
   loading: boolean;
   when: {
     membership: 'IN' | 'OUT';
-    set: (QUOTATION_STATUS | undefined)[];
+    set: (BUYING_QUOTATION_STATUS | undefined)[];
   };
 }
 
 interface QuotationControlSectionProps {
   className?: string;
-  status?: QUOTATION_STATUS;
+  status?: BUYING_QUOTATION_STATUS;
   isDataAltered?: boolean;
   bankAccounts: BankAccount[];
   currencies: Currency[];
-  invoices: Invoice[];
+  invoices: BuyingInvoice[];
   handleSubmit?: () => void;
   handleSubmitDraft: () => void;
   handleSubmitValidated: () => void;
@@ -103,7 +104,7 @@ export const QuotationControlSection = ({
   //Download Quotation
   const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
     mutationFn: (data: { id: number; template: string }) =>
-      api.quotation.download(data.id, data.template),
+      api.buyingQuotation.download(data.id, data.template),
     onSuccess: () => {
       toast.success(tInvoicing('quotation.action_download_success'));
       setDownloadDialog(false);
@@ -120,8 +121,8 @@ export const QuotationControlSection = ({
 
   //Duplicate Quotation
   const { mutate: duplicateQuotation, isPending: isDuplicationPending } = useMutation({
-    mutationFn: (duplicateQuotationDto: DuplicateQuotationDto) =>
-      api.quotation.duplicate(duplicateQuotationDto),
+    mutationFn: (duplicateQuotationDto: DuplicateBuyingQuotationDto) =>
+      api.buyingQuotation.duplicate(duplicateQuotationDto),
     onSuccess: async (data) => {
       toast.success(tInvoicing('quotation.action_duplicate_success'));
       await router.push('/buying/quotation/' + data.id);
@@ -139,7 +140,7 @@ export const QuotationControlSection = ({
 
   //Delete Quotation
   const { mutate: removeQuotation, isPending: isDeletePending } = useMutation({
-    mutationFn: (id: number) => api.quotation.remove(id),
+    mutationFn: (id: number) => api.buyingQuotation.remove(id),
     onSuccess: () => {
       toast.success(tInvoicing('quotation.action_remove_success'));
       router.push('/buying/quotations');
@@ -155,7 +156,7 @@ export const QuotationControlSection = ({
   //Invoice quotation
   const { mutate: invoiceQuotation, isPending: isInvoicingPending } = useMutation({
     mutationFn: (data: { id?: number; createInvoice: boolean }) =>
-      api.quotation.invoice(data.id, data.createInvoice),
+      api.buyingQuotation.invoice(data.id, data.createInvoice),
     onSuccess: (data) => {
       toast.success('Devis facturé avec succès');
       refetch?.();
@@ -167,7 +168,7 @@ export const QuotationControlSection = ({
     }
   });
 
-  const buttonsWithHandlers: QuotationLifecycle[] = [
+  const buttonsWithHandlers: BuyingQuotationLifecycle[] = [
     {
       ...QUOTATION_LIFECYCLE_ACTIONS.save,
       key: 'save',
@@ -353,13 +354,13 @@ export const QuotationControlSection = ({
             <Label className="text-base my-2 text-center">
               <span className="font-bold">{tInvoicing('quotation.attributes.status')} :</span>
               <span className="font-extrabold text-gray-500 ml-2 mr-1">{tInvoicing(status)}</span>
-              {status === QUOTATION_STATUS.Invoiced && invoices?.length != 0 && (
+              {status === BUYING_QUOTATION_STATUS.Invoiced && invoices?.length != 0 && (
                 <span className="font-extrabold text-gray-500">({invoices?.length})</span>
               )}
             </Label>
           )}
           {/* quotation lifecycle actions */}
-          {buttonsWithHandlers.map((lifecycle: QuotationLifecycle) => {
+          {buttonsWithHandlers.map((lifecycle: BuyingQuotationLifecycle) => {
             const idisplay = lifecycle.when?.set?.includes(status);
             const display = lifecycle.when?.membership == 'IN' ? idisplay : !idisplay;
             const disabled =
@@ -381,7 +382,7 @@ export const QuotationControlSection = ({
           })}
         </div>
         {/* Invoice list */}
-        {status === QUOTATION_STATUS.Invoiced && invoices.length != 0 && (
+        {status === BUYING_QUOTATION_STATUS.Invoiced && invoices.length != 0 && (
           <QuotationInvoiceList className="border-b" invoices={invoices} />
         )}
         <div className={cn('w-full mt-5 border-b')}>

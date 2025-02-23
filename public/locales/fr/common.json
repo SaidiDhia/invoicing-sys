@@ -62,6 +62,8 @@
     "singular": "Fichier",
     "plural": "Fichiers",
     "drag_files_sentance": "Faites glisser et déposez les fichiers ici ou cliquez pour sélectionner les fichiers",
+    "drag_single_file_sentance": "Faites glisser et déposez le fichier ici ou cliquez pour sélectionner le fichier",
+
     "multiple_files_max_size_sentence": "Vous pouvez télécharger {{count}} fichiers (jusqu'à {{size}} chacun)",
     "single_file_max_size_sentence": "Vous pouvez télécharger un fichier d'une taille maximale de {{size}}",
     "no_selected_file": "Aucun fichier sélectionné",

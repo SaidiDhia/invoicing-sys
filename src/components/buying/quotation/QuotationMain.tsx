@@ -15,8 +15,8 @@ import { useQuotationManager } from './hooks/useQuotationManager';
 import { QuotationActionsContext } from './data-table/ActionsContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useBreadcrumb } from '@/components/layout/BreadcrumbContext';
-import { DuplicateQuotationDto } from '@/types';
 import { QuotationInvoiceDialog } from './dialogs/QuotationInvoiceDialog';
+import { DuplicateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
 
 interface QuotationMainProps {
   className?: string;
@@ -71,7 +71,7 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
       debouncedSearchTerm
     ],
     queryFn: () =>
-      api.quotation.findPaginated(
+      api.buyingQuotation.findPaginated(
         debouncedPage,
         debouncedSize,
         debouncedSortDetails.order ? 'ASC' : 'DESC',
@@ -106,7 +106,7 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
 
   //Remove Quotation
   const { mutate: removeQuotation, isPending: isDeletePending } = useMutation({
-    mutationFn: (id: number) => api.quotation.remove(id),
+    mutationFn: (id: number) => api.buyingQuotation.remove(id),
     onSuccess: () => {
       if (quotations?.length == 1 && page > 1) setPage(page - 1);
       toast.success(tInvoicing('quotation.action_remove_success'));
@@ -122,8 +122,8 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
 
   //Duplicate Quotation
   const { mutate: duplicateQuotation, isPending: isDuplicationPending } = useMutation({
-    mutationFn: (duplicateQuotationDto: DuplicateQuotationDto) =>
-      api.quotation.duplicate(duplicateQuotationDto),
+    mutationFn: (duplicateQuotationDto: DuplicateBuyingQuotationDto) =>
+      api.buyingQuotation.duplicate(duplicateQuotationDto),
     onSuccess: async (data) => {
       toast.success(tInvoicing('quotation.action_duplicate_success'));
       await router.push('/buying/quotation/' + data.id);
@@ -139,7 +139,7 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
   //Download Quotation
   const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
     mutationFn: (data: { id: number; template: string }) =>
-      api.quotation.download(data.id, data.template),
+      api.buyingQuotation.download(data.id, data.template),
     onSuccess: () => {
       toast.success(tInvoicing('quotation.action_download_success'));
       setDownloadDialog(false);
@@ -154,7 +154,7 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
   //Invoice quotation
   const { mutate: invoiceQuotation, isPending: isInvoicingPending } = useMutation({
     mutationFn: (data: { id?: number; createInvoice: boolean }) =>
-      api.quotation.invoice(data.id, data.createInvoice),
+      api.buyingQuotation.invoice(data.id, data.createInvoice),
     onSuccess: (data) => {
       toast.success('Devis facturé avec succès');
       refetchQuotations();

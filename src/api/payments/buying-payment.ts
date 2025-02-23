@@ -1,15 +1,10 @@
 import { PAYMENT_FILTER_ATTRIBUTES } from '@/constants/payment-filter.attributes';
-import {
-  CreatePaymentDto,
-  PagedPayment,
-  Payment,
-  PaymentUploadedFile,
-  ToastValidation,
-  UpdatePaymentDto
-} from '@/types';
+
 import axios from '../axios';
 import { upload } from '../upload';
 import { api } from '..';
+import { BuyingPayment, BuyingPaymentUploadedFile, CreateBuyingPaymentDto, PagedBuyingPayment, UpdateBuyingPaymentDto } from '@/types/payments/buying-payment';
+import { ToastValidation } from '@/types';
 
 const findOne = async (
   id: number,
@@ -21,8 +16,8 @@ const findOne = async (
     'uploads',
     'uploads.upload'
   ]
-): Promise<Payment & { files: PaymentUploadedFile[] }> => {
-  const response = await axios.get<Payment>(`public/buying-payment/${id}?join=${relations.join(',')}`);
+): Promise<BuyingPayment & { files: BuyingPaymentUploadedFile[] }> => {
+  const response = await axios.get<BuyingPayment>(`public/buying-payment/${id}?join=${relations.join(',')}`);
   return { ...response.data, files: await getPaymentUploads(response.data) };
 };
 
@@ -35,7 +30,7 @@ const findPaginated = async (
   relations: string[] = [],
   firmId?: number,
   interlocutorId?: number
-): Promise<PagedPayment> => {
+): Promise<PagedBuyingPayment> => {
   const generalFilter = search
     ? Object.values(PAYMENT_FILTER_ATTRIBUTES)
       .map((key) => `${key}||$cont||${search}`)
@@ -45,7 +40,7 @@ const findPaginated = async (
   const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
   const filters = [generalFilter, firmCondition, interlocutorCondition].filter(Boolean).join(',');
 
-  const response = await axios.get<PagedPayment>(
+  const response = await axios.get<PagedBuyingPayment>(
     new String().concat(
       'public/buying-payment/list?',
       `sort=${sortKey},${order}&`,
@@ -61,9 +56,9 @@ const uploadPaymentFiles = async (files: File[]): Promise<number[]> => {
   return files && files?.length > 0 ? await upload.uploadFiles(files) : [];
 };
 
-const create = async (payment: CreatePaymentDto, files: File[] = []): Promise<Payment> => {
+const create = async (payment: CreateBuyingPaymentDto, files: File[] = []): Promise<BuyingPayment> => {
   const uploadIds = await uploadPaymentFiles(files);
-  const response = await axios.post<CreatePaymentDto>('public/buying-payment', {
+  const response = await axios.post<CreateBuyingPaymentDto>('public/buying-payment', {
     ...payment,
     uploads: uploadIds.map((id) => {
       return { uploadId: id };
@@ -72,7 +67,7 @@ const create = async (payment: CreatePaymentDto, files: File[] = []): Promise<Pa
   return response.data;
 };
 
-const getPaymentUploads = async (payment: Payment): Promise<PaymentUploadedFile[]> => {
+const getPaymentUploads = async (payment: BuyingPayment): Promise<BuyingPaymentUploadedFile[]> => {
   if (!payment?.uploads) return [];
 
   const uploads = await Promise.all(
@@ -91,12 +86,12 @@ const getPaymentUploads = async (payment: Payment): Promise<PaymentUploadedFile[
     .sort(
       (a, b) =>
         new Date(a.upload.createdAt ?? 0).getTime() - new Date(b.upload.createdAt ?? 0).getTime()
-    ) as PaymentUploadedFile[];
+    ) as BuyingPaymentUploadedFile[];
 };
 
-const update = async (payment: UpdatePaymentDto, files: File[] = []): Promise<Payment> => {
+const update = async (payment: UpdateBuyingPaymentDto, files: File[] = []): Promise<BuyingPayment> => {
   const uploadIds = await uploadPaymentFiles(files);
-  const response = await axios.put<Payment>(`public/buying-payment/${payment.id}`, {
+  const response = await axios.put<BuyingPayment>(`public/buying-payment/${payment.id}`, {
     ...payment,
     uploads: [
       ...(payment.uploads || []),
@@ -108,12 +103,12 @@ const update = async (payment: UpdatePaymentDto, files: File[] = []): Promise<Pa
   return response.data;
 };
 
-const remove = async (id: number): Promise<Payment> => {
-  const response = await axios.delete<Payment>(`public/buying-payment/${id}`);
+const remove = async (id: number): Promise<BuyingPayment> => {
+  const response = await axios.delete<BuyingPayment>(`public/buying-payment/${id}`);
   return response.data;
 };
 
-const validate = (payment: Partial<Payment>, used: number, paid: number): ToastValidation => {
+const validate = (payment: Partial<BuyingPayment>, used: number, paid: number): ToastValidation => {
   if (!payment.date) return { message: 'La date doit être définie' };
   if (!payment?.amount || payment?.amount <= 0)
     return { message: 'Le montant doit être supérieur à 0' };
@@ -125,4 +120,4 @@ const validate = (payment: Partial<Payment>, used: number, paid: number): ToastV
   return { message: '', position: 'bottom-right' };
 };
 
-export const payment = { findOne, findPaginated, create, update, remove, validate };
+export const buyingPayment = { findOne, findPaginated, create, update, remove, validate };

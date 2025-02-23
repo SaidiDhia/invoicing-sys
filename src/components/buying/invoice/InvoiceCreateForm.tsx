@@ -5,9 +5,8 @@ import { api, buyingInvoice } from '@/api';
 import {
   BUYING_INVOICE_STATUS,
   BuyingArticleInvoiceEntry,
-  BuyingCreateInvoiceDto,
+  CreateBuyingInvoiceDto,
 } from '@/types/invoices/buying-invoice';
-import { QUOTATION_STATUS } from '@/types';
 import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
@@ -30,17 +29,19 @@ import useDefaultCondition from '@/hooks/content/useDefaultCondition';
 import { ACTIVITY_TYPE } from '@/types/enums/activity-type';
 import { DOCUMENT_TYPE } from '@/types/enums/document-type';
 import { useBreadcrumb } from '@/components/layout/BreadcrumbContext';
-import useQuotationChoices from '@/hooks/content/useQuotationChoice';
+import useQuotationChoices from '@/hooks/content/useBuyingQuotationChoice';
 import useTaxWithholding from '@/hooks/content/useTaxWitholding';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
-import useInvoiceRangeDates from '@/hooks/content/useInvoiceRangeDates';
+import useInvoiceRangeDates from '@/hooks/content/useBuyingInvoiceRangeDates';
 import { InvoiceFinancialInformation } from './form/InvoiceFinancialInformation';
 import { InvoiceGeneralConditions } from './form/InvoiceGeneralConditions';
 import { InvoiceExtraOptions } from './form/InvoiceExtraOptions';
 import { InvoiceArticleManagement } from './form/InvoiceArticleManagement';
 import { InvoiceGeneralInformation } from './form/InvoiceGeneralInformation';
 import { BuyingInvoiceControlSection } from './form/InvoiceControlSection';
+import { InvoiceRefrenceDocument } from './form/InvoiceReferenceDocument';
+import { BUYING_QUOTATION_STATUS } from '@/types/quotations/buying-quotation';
 
 interface InvoiceFormProps {
   className?: string;
@@ -91,7 +92,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     'deliveryAddress',
     'currency',
   ]);
-  const { quotations, isFetchQuotationPending } = useQuotationChoices(QUOTATION_STATUS.Invoiced);
+  const { quotations, isFetchQuotationPending } = useQuotationChoices(BUYING_QUOTATION_STATUS.Invoiced);
   const { cabinet, isFetchCabinetPending } = useCabinet();
   const { taxes, isFetchTaxesPending } = useTax();
   const { currencies, isFetchCurrenciesPending } = useCurrency();
@@ -181,7 +182,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
 
   // Create invoice mutator
   const { mutate: createInvoice, isPending: isCreatePending } = useMutation({
-    mutationFn: (data: { buyingInvoice: BuyingCreateInvoiceDto; files: File[] }) =>
+    mutationFn: (data: { buyingInvoice: CreateBuyingInvoiceDto; files: File[] }) =>
       api.buyingInvoice.create(data.buyingInvoice, data.files),
     onSuccess: () => {
       if (!firmId) router.push('/selling/invoices');
@@ -240,7 +241,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
       taxes: article?.articleInvoiceEntryTaxes?.map((entry) => entry?.tax?.id),
     }));
 
-    const Buyinginvoice: BuyingCreateInvoiceDto = {
+    const Buyinginvoice: CreateBuyingInvoiceDto = {
       date: invoiceManager?.date?.toString(),
       dueDate: invoiceManager?.dueDate?.toString(),
       object: invoiceManager?.object,
@@ -273,6 +274,9 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden,
         hasTaxWithholding: !controlManager.isTaxWithholdingHidden,
       },
+
+      referenceDocId:invoiceManager?.referenceDocId,
+      referenceDocFile:invoiceManager?.referenceDocFile,
     };
 
     const validation = api.buyingInvoice.validate(Buyinginvoice, dateRange);
@@ -299,6 +303,10 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
           <ScrollArea className=" max-h-[calc(100vh-120px)] border rounded-lg">
             <Card className="border-0">
               <CardContent className="p-5">
+
+                {/* Reference Document */}
+
+                <InvoiceRefrenceDocument className='my-5'/>
                 {/* General Information */}
                 <InvoiceGeneralInformation
                   className="my-5"
