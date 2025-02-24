@@ -63,8 +63,6 @@ export interface CreateBuyingArticleInvoiceEntry
 
 export interface BuyingInvoiceMetaData extends DatabaseEntity {
   id?: number;
-  showInvoiceAddress?: boolean;
-  showDeliveryAddress?: boolean;
   showArticleDescription?: boolean;
   hasBankingDetails?: boolean;
   hasGeneralConditions?: boolean;

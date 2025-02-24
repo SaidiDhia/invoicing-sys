@@ -26,8 +26,6 @@ const factory = (): CreateBuyingInvoiceDto => {
     notes: '',
     articleInvoiceEntries: [],
     invoiceMetaData: {
-      showDeliveryAddress: true,
-      showInvoiceAddress: true,
       hasBankingDetails: true,
       hasGeneralConditions: true,
       showArticleDescription: true,
@@ -85,8 +83,6 @@ const findOne = async (
     'payments',
     'payments.payment',
     'taxWithholding',
-    'firm.deliveryAddress',
-    'firm.invoicingAddress',
     'articleInvoiceEntries',
     'firm.interlocutorsToFirm',
     'articleInvoiceEntries.article',

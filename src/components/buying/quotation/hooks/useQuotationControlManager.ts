@@ -2,8 +2,6 @@ import { create } from 'zustand';
 
 export type QuotationControlManager = {
   isBankAccountDetailsHidden: boolean;
-  isInvoiceAddressHidden: boolean;
-  isDeliveryAddressHidden: boolean;
   isGeneralConditionsHidden: boolean;
   isArticleDescriptionHidden: boolean;
   toggle: (field: keyof QuotationControlManager) => void;
@@ -20,8 +18,6 @@ export type QuotationControlManager = {
 
 export const useQuotationControlManager = create<QuotationControlManager>()((set, get) => ({
   isBankAccountDetailsHidden: false,
-  isInvoiceAddressHidden: false,
-  isDeliveryAddressHidden: false,
   isGeneralConditionsHidden: false,
   isArticleDescriptionHidden: false,
   toggle: (field: keyof QuotationControlManager) =>
@@ -37,8 +33,6 @@ export const useQuotationControlManager = create<QuotationControlManager>()((set
   reset: () =>
     set({
       isBankAccountDetailsHidden: false,
-      isInvoiceAddressHidden: false,
-      isDeliveryAddressHidden: false,
       isGeneralConditionsHidden: false,
       isArticleDescriptionHidden: false
     })

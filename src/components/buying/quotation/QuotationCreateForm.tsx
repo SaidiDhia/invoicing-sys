@@ -235,8 +235,6 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
           ? DISCOUNT_TYPE.PERCENTAGE
           : DISCOUNT_TYPE.AMOUNT,
       quotationMetaData: {
-        showDeliveryAddress: !controlManager?.isDeliveryAddressHidden,
-        showInvoiceAddress: !controlManager?.isInvoiceAddressHidden,
         showArticleDescription: !controlManager?.isArticleDescriptionHidden,
         hasBankingDetails: !controlManager.isBankAccountDetailsHidden,
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden
@@ -275,8 +273,6 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
                 <QuotationGeneralInformation
                   className="my-5"
                   firms={firms}
-                  isInvoicingAddressHidden={controlManager.isInvoiceAddressHidden}
-                  isDeliveryAddressHidden={controlManager.isDeliveryAddressHidden}
                   loading={debounceLoading}
                 />
                 {/* Article Management */}

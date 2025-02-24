@@ -98,8 +98,6 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   const { firms, isFetchFirmsPending } = useFirmChoice([
     'interlocutorsToFirm',
     'interlocutorsToFirm.interlocutor',
-    'invoicingAddress',
-    'deliveryAddress',
     'currency'
   ]);
   const { quotations, isFetchQuotationPending } = useQuotationChoices(BUYING_QUOTATION_STATUS.Invoiced);
@@ -203,8 +201,6 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     //invoice meta infos
     controlManager.setControls({
       isBankAccountDetailsHidden: !data?.invoiceMetaData?.hasBankingDetails,
-      isInvoiceAddressHidden: !data?.invoiceMetaData?.showInvoiceAddress,
-      isDeliveryAddressHidden: !data?.invoiceMetaData?.showDeliveryAddress,
       isArticleDescriptionHidden: !data?.invoiceMetaData?.showArticleDescription,
       isGeneralConditionsHidden: !data?.invoiceMetaData?.hasGeneralConditions,
       isTaxStampHidden: !data?.invoiceMetaData?.hasTaxStamp,
@@ -294,8 +290,6 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
       taxStampId: invoiceManager?.taxStampId,
       taxWithholdingId: invoiceManager?.taxWithholdingId,
       invoiceMetaData: {
-        showDeliveryAddress: !controlManager?.isDeliveryAddressHidden,
-        showInvoiceAddress: !controlManager?.isInvoiceAddressHidden,
         showArticleDescription: !controlManager?.isArticleDescriptionHidden,
         hasBankingDetails: !controlManager.isBankAccountDetailsHidden,
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden,
@@ -329,8 +323,6 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
                 <InvoiceGeneralInformation
                   className="my-5"
                   firms={firms}
-                  isInvoicingAddressHidden={controlManager.isInvoiceAddressHidden}
-                  isDeliveryAddressHidden={controlManager.isDeliveryAddressHidden}
                   edit={editMode}
                   loading={debounceFetching}
                 />

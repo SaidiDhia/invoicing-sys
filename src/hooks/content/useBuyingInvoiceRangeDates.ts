@@ -11,7 +11,7 @@ const useInvoiceRangeDates = (id?: number, enabled: boolean = true) => {
 
   const dateRange = React.useMemo(() => {
     if (!invoiceRangeResp) return {
-      from:undefined,to:undefined
+      from: undefined, to: undefined
     };
     //previous date
     const previousDate = invoiceRangeResp.previous?.date
