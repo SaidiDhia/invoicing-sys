@@ -10,7 +10,6 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import React from 'react';
-import { AddressDetails } from '../../../invoicing-commons/AddressDetails';
 import { cn } from '@/lib/utils';
 import { useQuotationManager } from '@/components/buying/quotation/hooks/useQuotationManager';
 import { SequenceInput } from '@/components/invoicing-commons/SequenceInput';
@@ -23,8 +22,7 @@ import { DatePicker } from '@/components/ui/date-picker';
 interface QuotationGeneralInformationProps {
   className?: string;
   firms: Firm[];
-  isInvoicingAddressHidden?: boolean;
-  isDeliveryAddressHidden?: boolean;
+
   loading?: boolean;
   edit?: boolean;
 }
@@ -32,8 +30,7 @@ interface QuotationGeneralInformationProps {
 export const QuotationGeneralInformation = ({
   className,
   firms,
-  isInvoicingAddressHidden,
-  isDeliveryAddressHidden,
+
   edit = true,
   loading
 }: QuotationGeneralInformationProps) => {
@@ -197,31 +194,8 @@ export const QuotationGeneralInformation = ({
             )}
           </div>
         </div>
-        {!(
-          (isInvoicingAddressHidden && isDeliveryAddressHidden) ||
-          quotationManager.firm?.id == undefined
-        ) && (
-          <div className="flex gap-4 pb-5 border-b mt-5">
-            {!isInvoicingAddressHidden && (
-              <div className="w-1/2">
-                <AddressDetails
-                  addressType={tInvoicing('quotation.attributes.invoicing_address')}
-                  address={quotationManager.firm?.invoicingAddress}
-                  loading={loading}
-                />
-              </div>
-            )}
-            {!isDeliveryAddressHidden && (
-              <div className="w-1/2">
-                <AddressDetails
-                  addressType={tInvoicing('quotation.attributes.delivery_address')}
-                  address={quotationManager.firm?.deliveryAddress}
-                  loading={loading}
-                />
-              </div>
-            )}
-          </div>
-        )}
+        
+
       </div>
     </div>
   );
