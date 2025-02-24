@@ -12,7 +12,7 @@ interface InvoiceReferenceDocumentProps {
   loading?: boolean;
 }
 
-export const InvoiceRefrenceDocument = ({ className, loading }: InvoiceReferenceDocumentProps) => {
+export const InvoiceReferenceDocument = ({ className, loading }: InvoiceReferenceDocumentProps) => {
   const { t: tInvoicing } = useTranslation('invoicing');
   const invoiceManager = useInvoiceManager();
 

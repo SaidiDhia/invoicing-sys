@@ -33,7 +33,7 @@ import { QuotationControlSection } from './form/QuotationControlSection';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
 import { BUYING_QUOTATION_STATUS, BuyingArticleQuotationEntry, CreateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
-import { QuotationRefrenceDocument } from './form/QuotationReferenceDocument';
+import { QuotationReferenceDocument } from './form/QuotationReferenceDocument';
 
 interface QuotationFormProps {
   className?: string;
@@ -270,7 +270,7 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
             <Card className="border-0">
               <CardContent className="p-5">
                 {/* Reference Document */}
-                <QuotationRefrenceDocument className="my-5" />
+                <QuotationReferenceDocument className="my-5" />
                 {/* General Information */}
                 <QuotationGeneralInformation
                   className="my-5"

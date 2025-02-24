@@ -88,7 +88,9 @@
       "payment": "Payment",
       "withholding": "Tax withholding",
       "no_date": "Missing Date",
-      "no_due_date": "Missing Due Date"
+      "no_due_date": "Missing Due Date",
+      "reference_doc": "Reference Document"
+
     },
     "invoice_list": "Invoice list",
     "new": "New invoice",

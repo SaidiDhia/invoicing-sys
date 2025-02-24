@@ -89,7 +89,10 @@
       "payment": "Paiement",
       "withholding": "Retenus à la source",
       "no_date": "Date manquante",
-      "no_due_date": "Date d'échéance manquante"
+      "no_due_date": "Date d'échéance manquante",
+
+      "reference_doc": "Document de Reference"
+
     },
     "invoice_list": "Liste des factures",
     "new": "Nouvelle facture",

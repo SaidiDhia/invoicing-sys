@@ -33,7 +33,9 @@ const factory = (): CreateBuyingInvoiceDto => {
       showArticleDescription: true,
       taxSummary: []
     },
-    files: []
+    files: [],
+    referenceDocId:0,
+    referenceDocFile:undefined,
   };
 };
 
@@ -108,9 +110,17 @@ const uploadInvoiceFiles = async (files: File[]): Promise<number[]> => {
 };
 
 const create = async (invoice: CreateBuyingInvoiceDto, files: File[]): Promise<BuyingInvoice> => {
+  
+  let referenceDocId = invoice.referenceDocId;
+  if (invoice.referenceDocFile) {
+    const [uploadId] = await uploadInvoiceFiles([invoice.referenceDocFile]);
+    referenceDocId = uploadId;
+  }
+
   const uploadIds = await uploadInvoiceFiles(files);
   const response = await axios.post<BuyingInvoice>('public/buying-invoice', {
     ...invoice,
+    referenceDocId,
     uploads: uploadIds.map((id) => {
       return { uploadId: id };
     })
@@ -161,9 +171,17 @@ const duplicate = async (duplicateInvoiceDto: DuplicateBuyingInvoiceDto): Promis
 };
 
 const update = async (invoice: UpdateBuyingInvoiceDto, files: File[]): Promise<BuyingInvoice> => {
+  
+  let referenceDocId = invoice.referenceDocId;
+  if (invoice.referenceDocFile) {
+    const [uploadId] = await uploadInvoiceFiles([invoice.referenceDocFile]);
+    referenceDocId = uploadId;
+  }
+  
   const uploadIds = await uploadInvoiceFiles(files);
   const response = await axios.put<BuyingInvoice>(`public/buying-invoice/${invoice.id}`, {
     ...invoice,
+    referenceDocId,
     uploads: [
       ...(invoice.uploads || []),
       ...uploadIds.map((id) => {

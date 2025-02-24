@@ -1,14 +1,13 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { api, buyingInvoice } from '@/api';
+import { api, } from '@/api';
 import {
   BuyingArticleInvoiceEntry,
   BUYING_INVOICE_STATUS,
   BuyingInvoice,
   BuyingInvoiceUploadedFile,
-  BuyingUpdateInvoiceDto
+  UpdateBuyingInvoiceDto,
 } from '@/types/invoices/buying-invoice';
-import { QUOTATION_STATUS } from '@/types';
 import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
@@ -35,7 +34,7 @@ import { useRouter } from 'next/router';
 import { useBreadcrumb } from '@/components/layout/BreadcrumbContext';
 import useInitializedState from '@/hooks/use-initialized-state';
 import { useQuotationManager } from '../quotation/hooks/useQuotationManager';
-import useQuotationChoices from '@/hooks/content/useQuotationChoice';
+import useQuotationChoices from '@/hooks/content/useBuyingQuotationChoice';
 import { InvoiceGeneralInformation } from './form/InvoiceGeneralInformation';
 import { InvoiceArticleManagement } from './form/InvoiceArticleManagement';
 import { InvoiceFinancialInformation } from './form/InvoiceFinancialInformation';
@@ -43,7 +42,8 @@ import { BuyingInvoiceControlSection } from './form/InvoiceControlSection';
 import useTaxWithholding from '@/hooks/content/useTaxWitholding';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
-import useInvoiceRangeDates from '@/hooks/content/useInvoiceRangeDates';
+import useInvoiceRangeDates from '@/hooks/content/useBuyingInvoiceRangeDates';
+import { BUYING_QUOTATION_STATUS } from '@/types/quotations/buying-quotation';
 
 interface InvoiceFormProps {
   className?: string;
@@ -102,7 +102,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     'deliveryAddress',
     'currency'
   ]);
-  const { quotations, isFetchQuotationPending } = useQuotationChoices(QUOTATION_STATUS.Invoiced);
+  const { quotations, isFetchQuotationPending } = useQuotationChoices(BUYING_QUOTATION_STATUS.Invoiced);
   const { taxes, isFetchTaxesPending } = useTax();
   const { currencies, isFetchCurrenciesPending } = useCurrency();
   const { bankAccounts, isFetchBankAccountsPending } = useBankAccount();
@@ -237,7 +237,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
 
   //update invoice mutator
   const { mutate: updateInvoice, isPending: isUpdatingPending } = useMutation({
-    mutationFn: (data: { invoice: BuyingUpdateInvoiceDto; files: File[] }) =>
+    mutationFn: (data: { invoice: UpdateBuyingInvoiceDto; files: File[] }) =>
       api.buyingInvoice.update(data.invoice, data.files),
     onSuccess: () => {
       refetchInvoice();
@@ -267,7 +267,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
         article?.discount_type === 'PERCENTAGE' ? DISCOUNT_TYPE.PERCENTAGE : DISCOUNT_TYPE.AMOUNT,
       taxes: article?.articleInvoiceEntryTaxes?.map((entry) => entry?.tax?.id) || []
     }));
-    const invoice: BuyingUpdateInvoiceDto = {
+    const invoice: UpdateBuyingInvoiceDto = {
       id: invoiceManager?.id,
       date: invoiceManager?.date?.toString(),
       dueDate: invoiceManager?.dueDate?.toString(),

@@ -28,7 +28,7 @@ const useInvoiceRangeDates = (id?: number, enabled: boolean = true) => {
   }, [invoiceRangeResp]);
 
   return {
-    dateRange: dateRange as {from?:Date;to?:Date},
+    dateRange: dateRange as {from:Date;to:Date},
     isFetchInvoiceRangePending
   };
 };

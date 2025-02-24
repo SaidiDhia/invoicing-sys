@@ -40,7 +40,7 @@ import { InvoiceExtraOptions } from './form/InvoiceExtraOptions';
 import { InvoiceArticleManagement } from './form/InvoiceArticleManagement';
 import { InvoiceGeneralInformation } from './form/InvoiceGeneralInformation';
 import { BuyingInvoiceControlSection } from './form/InvoiceControlSection';
-import { InvoiceRefrenceDocument } from './form/InvoiceReferenceDocument';
+import { InvoiceReferenceDocument } from './form/InvoiceReferenceDocument';
 import { BUYING_QUOTATION_STATUS } from '@/types/quotations/buying-quotation';
 
 interface InvoiceFormProps {
@@ -185,7 +185,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     mutationFn: (data: { buyingInvoice: CreateBuyingInvoiceDto; files: File[] }) =>
       api.buyingInvoice.create(data.buyingInvoice, data.files),
     onSuccess: () => {
-      if (!firmId) router.push('/selling/invoices');
+      if (!firmId) router.push('/buying/invoices');
       else router.push(`/contacts/firm/${firmId}/?tab=invoices`);
       toast.success('Facture crée avec succès');
     },
@@ -306,7 +306,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
 
                 {/* Reference Document */}
 
-                <InvoiceRefrenceDocument className='my-5'/>
+                <InvoiceReferenceDocument className='my-5'/>
                 {/* General Information */}
                 <InvoiceGeneralInformation
                   className="my-5"

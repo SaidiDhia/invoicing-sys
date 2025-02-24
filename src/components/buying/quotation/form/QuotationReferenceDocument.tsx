@@ -7,12 +7,12 @@ import { useQuotationManager } from '../hooks/useQuotationManager';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
-interface QuotationRefrenceDocumentProps {
+interface QuotationReferenceDocumentProps {
   className?: string;
   loading?: boolean;
 }
 
-export const QuotationRefrenceDocument = ({ className, loading }: QuotationRefrenceDocumentProps) => {
+export const QuotationReferenceDocument = ({ className, loading }: QuotationReferenceDocumentProps) => {
   const { t: tInvoicing } = useTranslation('invoicing');
   const quotationManager = useQuotationManager();
 
