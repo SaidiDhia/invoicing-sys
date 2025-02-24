@@ -44,6 +44,7 @@ import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
 import useInvoiceRangeDates from '@/hooks/content/useBuyingInvoiceRangeDates';
 import { BUYING_QUOTATION_STATUS } from '@/types/quotations/buying-quotation';
+import { InvoiceReferenceDocument } from './form/InvoiceReferenceDocument';
 
 interface InvoiceFormProps {
   className?: string;
@@ -196,7 +197,11 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   //full invoice setter across multiple stores
   const setInvoiceData = (data: Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>) => {
     //invoice infos
-    data && invoiceManager.setInvoice(data, firms, bankAccounts);
+    data && invoiceManager.setInvoice({
+      ...data,
+      referenceDoc: data.referenceDoc,
+      referenceDocId: data.referenceDocId
+    },firms, bankAccounts);
     data?.quotation && quotationManager.set('sequential', data?.quotation?.sequential);
     //invoice meta infos
     controlManager.setControls({
@@ -296,6 +301,10 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
         hasTaxStamp: !controlManager.isTaxStampHidden,
         hasTaxWithholding: !controlManager.isTaxWithholdingHidden
       },
+
+      referenceDocId: invoiceManager.referenceDocId,
+      referenceDoc: invoiceManager.referenceDoc,
+
       uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
     const validation = api.buyingInvoice.validate(invoice, dateRange);
@@ -320,6 +329,8 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
           <ScrollArea className=" max-h-[calc(100vh-120px)] border rounded-lg">
             <Card className="border-0">
               <CardContent className="p-5">
+                 {/* Reference Document */}
+                  <InvoiceReferenceDocument className="my-5" />
                 <InvoiceGeneralInformation
                   className="my-5"
                   firms={firms}

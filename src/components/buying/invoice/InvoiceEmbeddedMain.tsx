@@ -113,7 +113,7 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
 
   //Remove Invoice
   const { mutate: removeInvoice, isPending: isDeletePending } = useMutation({
-    mutationFn: (id: number) => api.invoice.remove(id),
+    mutationFn: (id: number) => api.buyingInvoice.remove(id),
     onSuccess: () => {
       if (invoices?.length == 1 && page > 1) setPage(page - 1);
       toast.success(tInvoicing('invoice.action_remove_success'));
@@ -128,7 +128,7 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
   //Duplicate Invoice
   const { mutate: duplicateInvoice, isPending: isDuplicationPending } = useMutation({
     mutationFn: (duplicateInvoiceDto:DuplicateBuyingInvoiceDto) =>
-      api.invoice.duplicate(duplicateInvoiceDto),
+      api.buyingInvoice.duplicate(duplicateInvoiceDto),
     onSuccess: async (data) => {
       toast.success(tInvoicing('invoice.action_duplicate_success'));
       await router.push('/buying/invoice/' + data.id);
@@ -144,7 +144,7 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
   //Download Invoice
   const { mutate: downloadInvoice, isPending: isDownloadPending } = useMutation({
     mutationFn: (data: { id: number; template: string }) =>
-      api.invoice.download(data.id, data.template),
+      api.buyingInvoice.download(data.id, data.template),
     onSuccess: () => {
       toast.success(tInvoicing('invoice.action_download_success'));
       setDownloadDialog(false);
