@@ -67,19 +67,19 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     setRoutes(
       !firmId
         ? [
-            { title: tCommon('menu.buying'), href: '/buying' },
-            { title: tInvoicing('invoice.plural'), href: '/buying/invoices' },
-            { title: tInvoicing('invoice.new') },
-          ]
+          { title: tCommon('menu.buying'), href: '/buying' },
+          { title: tInvoicing('invoice.plural'), href: '/buying/invoices' },
+          { title: tInvoicing('invoice.new') },
+        ]
         : [
-            { title: tCommon('menu.contacts'), href: '/contacts' },
-            { title: 'Entreprises', href: '/contacts/firms' },
-            {
-              title: `Entreprise N°${firmId}`,
-              href: `/contacts/firm/${firmId}?tab=entreprise`,
-            },
-            { title: 'Nouvelle Facture' },
-          ]
+          { title: tCommon('menu.contacts'), href: '/contacts' },
+          { title: 'Entreprises', href: '/contacts/firms' },
+          {
+            title: `Entreprise N°${firmId}`,
+            href: `/contacts/firm/${firmId}?tab=entreprise`,
+          },
+          { title: 'Nouvelle Facture' },
+        ]
     );
   }, [router.locale, firmId]);
 
@@ -88,8 +88,6 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     'interlocutorsToFirm',
     'interlocutorsToFirm.interlocutor',
     'paymentCondition',
-    'invoicingAddress',
-    'deliveryAddress',
     'currency',
   ]);
   const { quotations, isFetchQuotationPending } = useQuotationChoices(BUYING_QUOTATION_STATUS.Invoiced);
@@ -267,16 +265,14 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
       taxStampId: invoiceManager?.taxStampId,
       taxWithholdingId: invoiceManager?.taxWithholdingId,
       invoiceMetaData: {
-        showDeliveryAddress: !controlManager?.isDeliveryAddressHidden,
-        showInvoiceAddress: !controlManager?.isInvoiceAddressHidden,
         showArticleDescription: !controlManager?.isArticleDescriptionHidden,
         hasBankingDetails: !controlManager.isBankAccountDetailsHidden,
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden,
         hasTaxWithholding: !controlManager.isTaxWithholdingHidden,
       },
 
-      referenceDocId:invoiceManager?.referenceDocId,
-      referenceDocFile:invoiceManager?.referenceDocFile,
+      referenceDocId: invoiceManager?.referenceDocId,
+      referenceDocFile: invoiceManager?.referenceDocFile,
     };
 
     const validation = api.buyingInvoice.validate(Buyinginvoice, dateRange);
@@ -306,13 +302,12 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
 
                 {/* Reference Document */}
 
-                <InvoiceRefrenceDocument className='my-5'/>
+                <InvoiceRefrenceDocument className='my-5' />
                 {/* General Information */}
                 <InvoiceGeneralInformation
                   className="my-5"
                   firms={firms}
-                  isInvoicingAddressHidden={controlManager.isInvoiceAddressHidden}
-                  isDeliveryAddressHidden={controlManager.isDeliveryAddressHidden}
+
                   loading={isFetchFirmsPending || isInvoiceSequencePending}
                 />
                 {/* Article Management */}

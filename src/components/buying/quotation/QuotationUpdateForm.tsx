@@ -175,8 +175,6 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
     //quotation meta infos
     controlManager.setControls({
       isBankAccountDetailsHidden: !data?.quotationMetaData?.hasBankingDetails,
-      isInvoiceAddressHidden: !data?.quotationMetaData?.showInvoiceAddress,
-      isDeliveryAddressHidden: !data?.quotationMetaData?.showDeliveryAddress,
       isArticleDescriptionHidden: !data?.quotationMetaData?.showArticleDescription,
       isGeneralConditionsHidden: !data?.quotationMetaData?.hasGeneralConditions
     });
@@ -263,8 +261,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
           ? DISCOUNT_TYPE.PERCENTAGE
           : DISCOUNT_TYPE.AMOUNT,
       quotationMetaData: {
-        showDeliveryAddress: !controlManager?.isDeliveryAddressHidden,
-        showInvoiceAddress: !controlManager?.isInvoiceAddressHidden,
+
         showArticleDescription: !controlManager?.isArticleDescriptionHidden,
         hasBankingDetails: !controlManager.isBankAccountDetailsHidden,
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden
@@ -302,8 +299,6 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
                 <QuotationGeneralInformation
                   className="my-5"
                   firms={firms}
-                  isInvoicingAddressHidden={controlManager.isInvoiceAddressHidden}
-                  isDeliveryAddressHidden={controlManager.isDeliveryAddressHidden}
                   edit={editMode}
                   loading={debounceFetching}
                 />

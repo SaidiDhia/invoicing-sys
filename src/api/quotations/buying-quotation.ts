@@ -24,8 +24,7 @@ const factory = (): CreateBuyingQuotationDto => {
     notes: '',
     articleQuotationEntries: [],
     quotationMetaData: {
-      showDeliveryAddress: true,
-      showInvoiceAddress: true,
+
       hasBankingDetails: true,
       hasGeneralConditions: true,
       showArticleDescription: true,
@@ -87,8 +86,6 @@ const findOne = async (
     'uploads',
     'invoices',
     'uploads.upload',
-    'firm.deliveryAddress',
-    'firm.invoicingAddress',
     'articleQuotationEntries',
     'firm.interlocutorsToFirm',
     'articleQuotationEntries.article',

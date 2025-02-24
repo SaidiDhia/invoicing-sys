@@ -7,7 +7,7 @@ import { getErrorMessage } from '@/utils/errors';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { DataTable } from './data-table/data-table';
-import { BuyingDuplicateInvoiceDto } from '@/types/invoices/buying-invoice';
+import { DuplicateBuyingInvoiceDto } from '@/types/invoices/buying-invoice';
 import ContentSection from '@/components/common/ContentSection';
 import { cn } from '@/lib/utils';
 import { BreadcrumbRoute, useBreadcrumb } from '@/components/layout/BreadcrumbContext';
@@ -77,7 +77,7 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
       debouncedSearchTerm
     ],
     queryFn: () =>
-      api.invoice.findPaginated(
+      api.buyingInvoice.findPaginated(
         debouncedPage,
         debouncedSize,
         debouncedSortDetails.order ? 'ASC' : 'DESC',
@@ -127,7 +127,7 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
 
   //Duplicate Invoice
   const { mutate: duplicateInvoice, isPending: isDuplicationPending } = useMutation({
-    mutationFn: (duplicateInvoiceDto: BuyingDuplicateInvoiceDto) =>
+    mutationFn: (duplicateInvoiceDto: DuplicateBuyingInvoiceDto) =>
       api.invoice.duplicate(duplicateInvoiceDto),
     onSuccess: async (data) => {
       toast.success(tInvoicing('invoice.action_duplicate_success'));

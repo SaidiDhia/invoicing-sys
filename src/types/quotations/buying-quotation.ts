@@ -61,8 +61,6 @@ export interface CreateBuyingArticleQuotationEntry
 
 export interface BuyingQuotationMetaData extends DatabaseEntity {
   id?: number;
-  showInvoiceAddress?: boolean;
-  showDeliveryAddress?: boolean;
   showArticleDescription?: boolean;
   hasBankingDetails?: boolean;
   hasGeneralConditions?: boolean;

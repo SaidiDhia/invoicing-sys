@@ -23,8 +23,7 @@ import { AddressDetails } from '@/components/invoicing-commons/AddressDetails';
 interface InvoiceGeneralInformationProps {
   className?: string;
   firms: Firm[];
-  isInvoicingAddressHidden?: boolean;
-  isDeliveryAddressHidden?: boolean;
+
   edit?: boolean;
   loading?: boolean;
 }
@@ -32,8 +31,7 @@ interface InvoiceGeneralInformationProps {
 export const InvoiceGeneralInformation = ({
   className,
   firms,
-  isInvoicingAddressHidden,
-  isDeliveryAddressHidden,
+
   edit = true,
   loading
 }: InvoiceGeneralInformationProps) => {
@@ -190,31 +188,7 @@ export const InvoiceGeneralInformation = ({
             )}
           </div>
         </div>
-        {!(
-          (isInvoicingAddressHidden && isDeliveryAddressHidden) ||
-          invoiceManager.firm?.id == undefined
-        ) && (
-            <div className="flex gap-4 pb-5 border-b mt-5">
-              {!isInvoicingAddressHidden && (
-                <div className="w-1/2">
-                  <AddressDetails
-                    addressType={tInvoicing('invoice.attributes.invoicing_address')}
-                    address={invoiceManager.firm?.invoicingAddress}
-                    loading={loading}
-                  />
-                </div>
-              )}
-              {!isDeliveryAddressHidden && (
-                <div className="w-1/2">
-                  <AddressDetails
-                    addressType={tInvoicing('invoice.attributes.delivery_address')}
-                    address={invoiceManager.firm?.deliveryAddress}
-                    loading={loading}
-                  />
-                </div>
-              )}
-            </div>
-          )}
+         
       </div>
     </div>
   );
