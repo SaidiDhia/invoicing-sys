@@ -6,7 +6,7 @@ import { api } from '..';
 
 import { QUOTATION_FILTER_ATTRIBUTES } from '@/constants/quotation.filter-attributes';
 import { BUYING_QUOTATION_STATUS, BuyingQuotation, BuyingQuotationUploadedFile, CreateBuyingQuotationDto, DuplicateBuyingQuotationDto, PagedBuyingQuotation, UpdateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
-import {  ToastValidation, UpdateQuotationSequentialNumber } from '@/types';
+import {  ToastValidation } from '@/types';
 
 const factory = (): CreateBuyingQuotationDto => {
   return {
@@ -206,6 +206,22 @@ const validate = (quotation: Partial<BuyingQuotation>): ToastValidation => {
     return { message: 'Le document de référence est obligatoire' };
   }
 
+
+  if (!quotation.sequential) return { message: "Le numero de sequence est obligatoire" };
+  if (!/^[A-Z0-9\-]+$/.test(quotation.sequential)) {
+    return{ message :"Le numéro séquentiel ne peut contenir que des lettres majuscules, des chiffres et des tirets."};
+  }
+  if (quotation.sequential.length < 5) {
+    return{ message :"Le numéro séquentiel doit contenir au moins 5 caractères."};
+  }
+
+  // Vérifie la longueur maximale
+  if (quotation.sequential.length > 20) {
+    return{ message :"Le numéro séquentiel ne peut pas dépasser 20 caractères."};
+  }
+
+
+
   if (differenceInDays(new Date(quotation.date), new Date(quotation.dueDate)) >= 0)
     return { message: "L'échéance doit être supérieure à la date" };
   if (!quotation.firmId || !quotation.interlocutorId)
@@ -213,13 +229,6 @@ const validate = (quotation: Partial<BuyingQuotation>): ToastValidation => {
   return { message: '' };
 };
 
-const updateQuotationsSequentials = async (updatedSequenceDto: UpdateQuotationSequentialNumber) => {
-  const response = await axios.put<BuyingQuotation>(
-    `/public/buying-quotation/update-quotation-sequences`,
-    updatedSequenceDto
-  );
-  return response.data;
-};
 
 export const buyingQuotation = {
   factory,
@@ -231,7 +240,6 @@ export const buyingQuotation = {
   invoice,
   duplicate,
   update,
-  updateQuotationsSequentials,
   remove,
   validate
 };

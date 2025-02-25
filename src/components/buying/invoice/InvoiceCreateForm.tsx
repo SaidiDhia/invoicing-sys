@@ -101,15 +101,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
   );
   const { taxWithholdings, isFetchTaxWithholdingsPending } = useTaxWithholding();
   const { dateRange, isFetchInvoiceRangePending } = useInvoiceRangeDates(invoiceManager.id);
-  // Websocket to listen for server changes related to sequence number
-  const { currentSequence, isInvoiceSequencePending } = useInvoiceSocket();
 
-  // Handle Sequential Number
-  React.useEffect(() => {
-    invoiceManager.set('sequentialNumber', currentSequence);
-    invoiceManager.set('bankAccount', bankAccounts.find((a) => a.isMain));
-    invoiceManager.set('currency', cabinet?.currency);
-  }, [currentSequence]);
 
   // Perform calculations when the financial information changes
   const digitAfterComma = React.useMemo(() => {
@@ -240,6 +232,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     }));
 
     const Buyinginvoice: CreateBuyingInvoiceDto = {
+      sequential:invoiceManager?.sequential,
       date: invoiceManager?.date?.toString(),
       dueDate: invoiceManager?.dueDate?.toString(),
       object: invoiceManager?.object,
@@ -308,7 +301,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
                   className="my-5"
                   firms={firms}
 
-                  loading={isFetchFirmsPending || isInvoiceSequencePending}
+                  loading={isFetchFirmsPending}
                 />
                 {/* Article Management */}
                 <InvoiceArticleManagement

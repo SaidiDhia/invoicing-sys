@@ -6,7 +6,7 @@ import { api } from '..';
 
 import { INVOICE_FILTER_ATTRIBUTES } from '@/constants/invoice.filter-attributes';
 import { BUYING_INVOICE_STATUS, BuyingInvoice, BuyingInvoiceUploadedFile, CreateBuyingInvoiceDto, DuplicateBuyingInvoiceDto, PagedBuyingInvoice, ResponseBuyingInvoiceRangeDto, UpdateBuyingInvoiceDto } from '@/types/invoices/buying-invoice';
-import { ToastValidation, UpdateInvoiceSequentialNumber } from '@/types';
+import { ToastValidation } from '@/types';
 
 import { DateRange } from 'react-day-picker';
 
@@ -93,13 +93,13 @@ const findOne = async (
   const response = await axios.get<BuyingInvoice>(`public/buying-invoice/${id}?join=${relations.join(',')}`);
   return { ...response.data, files: await getInvoiceUploads(response.data) };
 };
-
+/*
 const findByRange = async (id?: number): Promise<ResponseBuyingInvoiceRangeDto> => {
   const response = await axios.get<ResponseBuyingInvoiceRangeDto>(
     `public/buying-invoice/sequential-range/${id}`
   );
   return response.data;
-};
+};*/
 
 const uploadInvoiceFiles = async (files: File[]): Promise<number[]> => {
   return files && files?.length > 0 ? await upload.uploadFiles(files) : [];
@@ -203,6 +203,23 @@ const validate = (invoice: Partial<BuyingInvoice>, dateRange?: DateRange): Toast
   ) {
     return { message: `La date doit être après ou égale à ${dateRange.from.toLocaleDateString()}` };
   }
+
+  
+
+  if (!invoice.sequential) return { message: "Le numero de sequence est obligatoire" };
+  if (!/^[A-Z0-9\-]+$/.test(invoice.sequential)) {
+    return{ message :"Le numéro séquentiel ne peut contenir que des lettres majuscules, des chiffres et des tirets."};
+  }
+  if (invoice.sequential.length < 5) {
+    return{ message :"Le numéro séquentiel doit contenir au moins 5 caractères."};
+  }
+
+  // Vérifie la longueur maximale
+  if (invoice.sequential.length > 20) {
+    return{ message :"Le numéro séquentiel ne peut pas dépasser 20 caractères."};
+  }
+
+
   if (
     dateRange?.to &&
     isAfter(invoiceDate, dateRange.to) &&
@@ -225,24 +242,16 @@ const validate = (invoice: Partial<BuyingInvoice>, dateRange?: DateRange): Toast
   return { message: '' };
 };
 
-const updateInvoicesSequentials = async (updatedSequenceDto: UpdateInvoiceSequentialNumber) => {
-  const response = await axios.put<BuyingInvoice>(
-    `/public/buying-invoice/update-invoice-sequences`,
-    updatedSequenceDto
-  );
-  return response.data;
-};
 
 export const buyingInvoice = {
   factory,
   findPaginated,
   findOne,
-  findByRange,
+  //findByRange,
   create,
   download,
   duplicate,
   update,
-  updateInvoicesSequentials,
   remove,
   validate
 };

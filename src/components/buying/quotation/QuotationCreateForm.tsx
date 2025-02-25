@@ -93,17 +93,6 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
     DOCUMENT_TYPE.QUOTATION
   );
 
-  //websocket to listen for server changes related to sequence number
-  const { currentSequence, isQuotationSequencePending } = useQuotationSocket();
-  //handle Sequential Number
-  React.useEffect(() => {
-    quotationManager.set('sequentialNumber', currentSequence);
-    quotationManager.set(
-      'bankAccount',
-      bankAccounts.find((a) => a.isMain)
-    );
-    quotationManager.set('currency', cabinet?.currency);
-  }, [currentSequence]);
 
   // perform calculations when the financialy Information are changed
   const digitAfterComma = React.useMemo(() => {
@@ -179,7 +168,6 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
     isFetchBankAccountsPending ||
     isFetchCurrenciesPending ||
     isFetchDefaultConditionPending ||
-    isQuotationSequencePending;
   !commonReady || !invoicingReady || isCreatePending;
   const { value: debounceLoading } = useDebounce<boolean>(loading, 500);
 
@@ -216,6 +204,7 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
       date: quotationManager?.date?.toString(),
       dueDate: quotationManager?.dueDate?.toString(),
       object: quotationManager?.object,
+      sequential:quotationManager?.sequential,
       cabinetId: quotationManager?.firm?.cabinetId,
       firmId: quotationManager?.firm?.id,
       interlocutorId: quotationManager?.interlocutor?.id,

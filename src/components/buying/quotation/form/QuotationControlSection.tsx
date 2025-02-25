@@ -291,7 +291,7 @@ export const QuotationControlSection = ({
       loading: false
     }
   ];
-  const sequential = fromSequentialObjectToString(quotationManager.sequentialNumber);
+  const sequential = quotationManager.sequential;
   return (
     <>
       <QuotationActionDialog

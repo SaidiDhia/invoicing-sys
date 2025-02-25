@@ -243,7 +243,7 @@ export const BuyingInvoiceControlSection = ({
       loading: false
     }
   ];
-  const sequential = fromSequentialObjectToString(invoiceManager.sequentialNumber);
+  const sequential = invoiceManager.sequential;
   return (
     <>
       <InvoiceActionDialog
@@ -280,7 +280,7 @@ export const BuyingInvoiceControlSection = ({
       />
       <InvoiceDeleteDialog
         id={invoiceManager?.id || 0}
-        sequential={fromSequentialObjectToString(invoiceManager?.sequentialNumber)}
+        sequential={invoiceManager?.sequential}
         open={deleteDialog}
         deleteInvoice={() => {
           invoiceManager?.id && removeInvoice(invoiceManager?.id);

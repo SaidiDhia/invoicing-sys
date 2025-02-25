@@ -132,9 +132,10 @@ export interface CreateBuyingInvoiceDto
     | 'articles'
     | 'firm'
     | 'interlocutor'
-    | 'sequential'
     | 'bankAccount'
   > {
+  sequential?:string;
+
   articleInvoiceEntries?: CreateBuyingArticleInvoiceEntry[];
   files?: File[];
 

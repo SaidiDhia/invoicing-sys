@@ -121,10 +121,10 @@ export interface CreateBuyingQuotationDto
     | 'articles'
     | 'firm'
     | 'interlocutor'
-    | 'sequential'
     | 'bankAccount'
     | 'invoices'
   > {
+  sequential?:string;
   articleQuotationEntries?: CreateBuyingArticleQuotationEntry[];
   files?: File[];
   referenceDocId?: number;

@@ -93,14 +93,22 @@ export const InvoiceGeneralInformation = ({
             <UneditableInput value={invoiceManager.object} />
           )}
         </div>
+        {/* Sequential */}
         <div className="w-2/6">
-          <Label>{tInvoicing('invoice.singular')} N°</Label>
-          <SequenceInput
-            prefix={invoiceManager.sequentialNumber?.prefix}
-            dateFormat={invoiceManager.sequentialNumber?.dynamicSequence}
-            value={invoiceManager.sequentialNumber?.next}
-            loading={loading}
-          />
+          <Label>{tInvoicing('invoice.singular')} N° (*)</Label>
+          {edit ? (
+            <Input
+              className="mt-1"
+              placeholder="QUO-2025-02-24-13"
+              value={invoiceManager.sequential || ''}
+              onChange={(e) => {
+                invoiceManager.set('sequential', e.target.value);
+              }}
+              isPending={loading}
+            />
+          ) : (
+            <UneditableInput value={invoiceManager.sequential} />
+          )}
         </div>
       </div>
       <div>

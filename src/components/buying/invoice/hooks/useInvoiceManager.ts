@@ -15,11 +15,6 @@ import { create } from 'zustand';
 type InvoiceManager = {
   // data
   id?: number;
-  sequentialNumber: {
-    dynamicSequence: DATE_FORMAT;
-    next: number;
-    prefix: string;
-  };
 
   referenceDoc?: BuyingInvoiceUpload;
   referenceDocFile?: File;
@@ -86,11 +81,7 @@ const initialState: Omit<
   'set' | 'reset' | 'setFirm' | 'setInterlocutor' | 'getInvoice' | 'setInvoice'
 > = {
   id: undefined,
-  sequentialNumber: {
-    prefix: '',
-    dynamicSequence: DATE_FORMAT.yy_MM,
-    next: 0
-  },
+
   sequential: '',
   date: undefined,
   dueDate: undefined,
@@ -160,7 +151,7 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
   getInvoice: () => {
     const {
       id,
-      sequentialNumber,
+      sequential,
       date,
       dueDate,
       object,
@@ -180,7 +171,7 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
 
     return {
       id,
-      sequentialNumber,
+      sequential,
       date,
       dueDate,
       object,
@@ -205,7 +196,7 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
     set((state) => ({
       ...state,
       id: invoice?.id,
-      sequentialNumber: fromStringToSequentialObject(invoice?.sequential || ''),
+      sequential:invoice?.sequential,
       date: invoice?.date ? new Date(invoice?.date) : undefined,
       dueDate: invoice?.dueDate ? new Date(invoice?.dueDate) : undefined,
       object: invoice?.object,

@@ -15,11 +15,6 @@ import { create } from 'zustand';
 type QuotationManager = {
   // data
   id?: number;
-  sequentialNumber: {
-    dynamicSequence: DATE_FORMAT;
-    next: number;
-    prefix: string;
-  };
 
   referenceDoc?: BuyingQuotationUpload;
   referenceDocFile?: File;
@@ -82,11 +77,6 @@ const initialState: Omit<
   'set' | 'reset' | 'setFirm' | 'setInterlocutor' | 'getQuotation' | 'setQuotation'
 > = {
   id: -1,
-  sequentialNumber: {
-    prefix: '',
-    dynamicSequence: DATE_FORMAT.yy_MM,
-    next: 0
-  },
   sequential: '',
   date: undefined,
   dueDate: undefined,
@@ -152,7 +142,7 @@ export const useQuotationManager = create<QuotationManager>((set, get) => ({
   getQuotation: () => {
     const {
       id,
-      sequentialNumber,
+      sequential,
       date,
       dueDate,
       object,
@@ -170,7 +160,7 @@ export const useQuotationManager = create<QuotationManager>((set, get) => ({
 
     return {
       id,
-      sequentialNumber,
+      sequential,
       date,
       dueDate,
       object,
@@ -193,7 +183,7 @@ export const useQuotationManager = create<QuotationManager>((set, get) => ({
     set((state) => ({
       ...state,
       id: quotation?.id,
-      sequentialNumber: fromStringToSequentialObject(quotation?.sequential || ''),
+      sequential: quotation?.sequential,
       date: quotation?.date ? new Date(quotation?.date) : undefined,
       dueDate: quotation?.dueDate ? new Date(quotation?.dueDate) : undefined,
       object: quotation?.object,

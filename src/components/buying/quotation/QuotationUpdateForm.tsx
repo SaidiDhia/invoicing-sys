@@ -239,6 +239,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
 
     const quotation: UpdateBuyingQuotationDto = {
       id: quotationManager?.id,
+      sequential:quotationManager?.sequential,
       date: quotationManager?.date?.toString(),
       dueDate: quotationManager?.dueDate?.toString(),
       object: quotationManager?.object,

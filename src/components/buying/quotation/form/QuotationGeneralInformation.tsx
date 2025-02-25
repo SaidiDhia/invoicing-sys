@@ -99,13 +99,20 @@ export const QuotationGeneralInformation = ({
         </div>
         {/* Sequential */}
         <div className="w-2/6">
-          <Label>{tInvoicing('quotation.singular')} N°</Label>
-          <SequenceInput
-            prefix={quotationManager.sequentialNumber?.prefix}
-            dateFormat={quotationManager.sequentialNumber?.dynamicSequence}
-            value={quotationManager.sequentialNumber?.next}
-            loading={loading}
-          />
+          <Label>{tInvoicing('quotation.singular')} N° (*)</Label>
+          {edit ? (
+            <Input
+              className="mt-1"
+              placeholder="QUO-2025-02-24-13"
+              value={quotationManager.sequential || ''}
+              onChange={(e) => {
+                quotationManager.set('sequential', e.target.value);
+              }}
+              isPending={loading}
+            />
+          ) : (
+            <UneditableInput value={quotationManager.sequential} />
+          )}
         </div>
       </div>
       <div>
