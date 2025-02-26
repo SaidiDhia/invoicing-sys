@@ -214,7 +214,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
   }, []);
 
   // Create handler
-  const onSubmit = (status: BUYING_INVOICE_STATUS) => {
+  const onSubmit = async (status: BUYING_INVOICE_STATUS) => {
     const articlesDto: BuyingArticleInvoiceEntry[] = articleManager.getArticles()?.map((article) => ({
       id: article?.id,
       article: {
@@ -268,7 +268,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
       referenceDocFile: invoiceManager?.referenceDocFile,
     };
 
-    const validation = api.buyingInvoice.validate(Buyinginvoice, dateRange);
+    const validation =await api.buyingInvoice.validate(Buyinginvoice, dateRange);
     if (validation.message) {
       toast.error(validation.message);
     } else {

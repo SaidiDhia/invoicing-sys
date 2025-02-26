@@ -52,7 +52,7 @@ export const InvoiceMain: React.FC<InvoiceMainProps> = ({ className }) => {
 
   const [deleteDialog, setDeleteDialog] = React.useState(false);
   const [duplicateDialog, setDuplicateDialog] = React.useState(false);
-  const [downloadDialog, setDownloadDialog] = React.useState(false);
+ // const [downloadDialog, setDownloadDialog] = React.useState(false);
 
   const {
     isPending: isFetchPending,
@@ -87,7 +87,7 @@ export const InvoiceMain: React.FC<InvoiceMainProps> = ({ className }) => {
     //dialogs
     openDeleteDialog: () => setDeleteDialog(true),
     openDuplicateDialog: () => setDuplicateDialog(true),
-    openDownloadDialog: () => setDownloadDialog(true),
+ //   openDownloadDialog: () => setDownloadDialog(true),
     //search, filtering, sorting & paging
     searchTerm,
     setSearchTerm,
@@ -132,6 +132,7 @@ export const InvoiceMain: React.FC<InvoiceMainProps> = ({ className }) => {
   });
 
   //Download Invoice
+  /*
   const { mutate: downloadInvoice, isPending: isDownloadPending } = useMutation({
     mutationFn: (data: { id: number; template: string }) =>
       api.buyingInvoice.download(data.id, data.template),
@@ -144,7 +145,7 @@ export const InvoiceMain: React.FC<InvoiceMainProps> = ({ className }) => {
         getErrorMessage('invoicing', error, tInvoicing('invoice.action_download_failure'))
       );
     }
-  });
+  });*/
 
   const isPending = isFetchPending || isDeletePending || paging || resizing || searching || sorting;
 
@@ -175,7 +176,8 @@ export const InvoiceMain: React.FC<InvoiceMainProps> = ({ className }) => {
         isDuplicationPending={isDuplicationPending}
         onClose={() => setDuplicateDialog(false)}
       />
-      <InvoiceDownloadDialog
+      {/**
+             <InvoiceDownloadDialog
         id={invoiceManager?.id || 0}
         open={downloadDialog}
         downloadInvoice={(template: string) => {
@@ -184,6 +186,9 @@ export const InvoiceMain: React.FC<InvoiceMainProps> = ({ className }) => {
         isDownloadPending={isDownloadPending}
         onClose={() => setDownloadDialog(false)}
       />
+       
+       */}
+
       <InvoiceActionsContext.Provider value={context}>
         <Card className={className}>
           <CardHeader>

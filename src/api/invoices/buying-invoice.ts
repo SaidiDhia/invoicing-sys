@@ -146,9 +146,10 @@ const getInvoiceUploads = async (invoice: BuyingInvoice): Promise<BuyingInvoiceU
     ) as BuyingInvoiceUploadedFile[];
 };
 
-const download = async (id: number, template: string): Promise<any> => {
+const download = async (id: number): Promise<any> => {
   const invoice = await findOne(id, []);
-  const response = await axios.get<string>(`public/buying-invoice/${id}/download?template=${template}`, {
+  console.log("id from api",id)
+  const response = await axios.get<string>(`public/buying-invoice/${id}/download`, {
     responseType: 'blob'
   });
   const blob = new Blob([response.data], { type: response.headers['content-type'] });
@@ -193,7 +194,17 @@ const remove = async (id: number): Promise<BuyingInvoice> => {
   return response.data;
 };
 
-const validate = (invoice: Partial<BuyingInvoice>, dateRange?: DateRange): ToastValidation => {
+const existSequential = async (sequential: string):Promise<Boolean> => {
+  try{
+    let response = await axios.get<BuyingInvoice>(`public/buying-invoice/seq/${sequential}`);
+    return true;
+  }
+  catch(error){
+    return false
+  }  
+};
+
+const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): Promise<ToastValidation> => {
   if (!invoice.date) return { message: 'La date est obligatoire' };
   const invoiceDate = new Date(invoice.date);
   if (
@@ -219,6 +230,10 @@ const validate = (invoice: Partial<BuyingInvoice>, dateRange?: DateRange): Toast
     return{ message :"Le numéro séquentiel ne peut pas dépasser 20 caractères."};
   }
 
+  if(await existSequential(invoice.sequential)){
+    return{ message :"Ce numéro séquentiel deja."};
+
+  }
 
   if (
     dateRange?.to &&

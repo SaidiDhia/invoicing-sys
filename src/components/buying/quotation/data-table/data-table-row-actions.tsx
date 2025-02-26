@@ -15,6 +15,11 @@ import { Copy, Download, FileCheck, Settings2, Telescope, Trash2 } from 'lucide-
 import { useQuotationManager } from '../hooks/useQuotationManager';
 import { useQuotationActions } from './ActionsContext';
 import { BUYING_QUOTATION_STATUS, BuyingQuotation } from '@/types/quotations/buying-quotation';
+import { api } from '@/api';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { getErrorMessage } from '@/utils/errors';
+
 
 interface DataTableRowActionsProps {
   row: Row<BuyingQuotation>;
@@ -33,6 +38,22 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
     quotationManager.set('sequential', quotation?.sequential);
     quotationManager.set('status', quotation?.status);
   };
+    const { t: tInvoicing, ready: invoicingReady } = useTranslation('invoicing');
+  
+
+    //Download Quotation
+    const { mutate: downloadQuotation } = useMutation({
+      mutationFn: (data: { id: number}) =>
+        api.buyingQuotation.download(data.id),
+      onSuccess: () => {
+        toast.success(tInvoicing('quotation.action_download_success'));
+      },
+      onError: (error) => {
+        toast.error(
+          getErrorMessage('invoicing', error, tInvoicing('quotation.action_download_failure'))
+        );
+      }
+    });
 
   return (
     <DropdownMenu>
@@ -52,7 +73,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         <DropdownMenuItem
           onClick={() => {
             targetQuotation();
-            openDownloadDialog?.();
+            quotation?.id && downloadQuotation({ id: quotation?.id })
           }}>
           <Download className="h-5 w-5 mr-2" /> {tCommon('commands.download')}
         </DropdownMenuItem>

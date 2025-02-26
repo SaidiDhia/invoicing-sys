@@ -184,7 +184,7 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
   }, []);
 
   //create handler
-  const onSubmit = (status: BUYING_QUOTATION_STATUS) => {
+  const onSubmit = async (status: BUYING_QUOTATION_STATUS) => {
     const articlesDto: BuyingArticleQuotationEntry[] = articleManager.getArticles()?.map((article) => ({
       id: article?.id,
       article: {
@@ -232,7 +232,7 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
       referenceDocId:quotationManager?.referenceDocId,
       referenceDocFile:quotationManager?.referenceDocFile,
     };
-    const validation = api.buyingQuotation.validate(quotation);
+    const validation = await  api.buyingQuotation.validate(quotation);
     if (validation.message) {
       toast.error(validation.message);
     } else {

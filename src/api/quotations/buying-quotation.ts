@@ -97,6 +97,9 @@ const findOne = async (
   return { ...response.data, files: await getQuotationUploads(response.data) };
 };
 
+
+
+
 const uploadQuotationFiles = async (files: File[]): Promise<number[]> => {
   return files && files?.length > 0 ? await upload.uploadFiles(files) : [];
 };
@@ -142,9 +145,9 @@ const getQuotationUploads = async (quotation: BuyingQuotation): Promise<BuyingQu
     ) as BuyingQuotationUploadedFile[];
 };
 
-const download = async (id: number, template: string): Promise<any> => {
+const download = async (id: number): Promise<any> => {
   const quotation = await findOne(id, []);
-  const response = await axios.get<string>(`public/buying-quotation/${id}/download?template=${template}`, {
+  const response = await axios.get<string>(`public/buying-quotation/${id}/download`, {
     responseType: 'blob'
   });
   const blob = new Blob([response.data], { type: response.headers['content-type'] });
@@ -197,7 +200,17 @@ const remove = async (id: number): Promise<BuyingQuotation> => {
   return response.data;
 };
 
-const validate = (quotation: Partial<BuyingQuotation>): ToastValidation => {
+const existSequential = async (sequential: string):Promise<Boolean> => {
+    try{
+      let response = await axios.get<BuyingQuotation>(`public/buying-quotation/seq/${sequential}`);
+      return true;
+    }
+    catch(error){
+      return false
+    }  
+};
+
+const  validate = async(quotation: Partial<BuyingQuotation>): Promise<ToastValidation> => {
   if (!quotation.date) return { message: 'La date est obligatoire' };
   if (!quotation.dueDate) return { message: "L'échéance est obligatoire" };
   if (!quotation.object) return { message: "L'objet est obligatoire" };
@@ -214,6 +227,13 @@ const validate = (quotation: Partial<BuyingQuotation>): ToastValidation => {
   if (quotation.sequential.length < 5) {
     return{ message :"Le numéro séquentiel doit contenir au moins 5 caractères."};
   }
+
+  if(await existSequential(quotation.sequential)){
+    return{ message :"Ce numéro séquentiel deja."};
+
+  }
+
+  
 
   // Vérifie la longueur maximale
   if (quotation.sequential.length > 20) {

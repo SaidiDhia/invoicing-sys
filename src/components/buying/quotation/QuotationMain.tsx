@@ -53,7 +53,7 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
 
   const [deleteDialog, setDeleteDialog] = React.useState(false);
   const [duplicateDialog, setDuplicateDialog] = React.useState(false);
-  const [downloadDialog, setDownloadDialog] = React.useState(false);
+ // const [downloadDialog, setDownloadDialog] = React.useState(false);
   const [invoiceDialog, setInvoiceDialog] = React.useState(false);
 
   const {
@@ -89,7 +89,7 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
     //dialogs
     openDeleteDialog: () => setDeleteDialog(true),
     openDuplicateDialog: () => setDuplicateDialog(true),
-    openDownloadDialog: () => setDownloadDialog(true),
+   // openDownloadDialog: () => setDownloadDialog(true),
     openInvoiceDialog: () => setInvoiceDialog(true),
     //search, filtering, sorting & paging
     searchTerm,
@@ -137,9 +137,10 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
   });
 
   //Download Quotation
+  /*
   const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
-    mutationFn: (data: { id: number; template: string }) =>
-      api.buyingQuotation.download(data.id, data.template),
+    mutationFn: (data: { id: number}) =>
+      api.buyingQuotation.download(data.id),
     onSuccess: () => {
       toast.success(tInvoicing('quotation.action_download_success'));
       setDownloadDialog(false);
@@ -149,7 +150,7 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
         getErrorMessage('invoicing', error, tInvoicing('quotation.action_download_failure'))
       );
     }
-  });
+  });*/
 
   //Invoice quotation
   const { mutate: invoiceQuotation, isPending: isInvoicingPending } = useMutation({
@@ -202,16 +203,18 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
         }}
         isDuplicationPending={isDuplicationPending}
         onClose={() => setDuplicateDialog(false)}
-      />
-      <QuotationDownloadDialog
+      />{/**
+            <QuotationDownloadDialog
         id={quotationManager?.id || 0}
         open={downloadDialog}
-        downloadQuotation={(template: string) => {
-          quotationManager?.id && downloadQuotation({ id: quotationManager?.id, template });
+        downloadQuotation={() => {
+          quotationManager?.id && downloadQuotation({ id: quotationManager?.id });
         }}
         isDownloadPending={isDownloadPending}
         onClose={() => setDownloadDialog(false)}
       />
+      */}
+
       <QuotationInvoiceDialog
         id={quotationManager?.id || 0}
         status={quotationManager?.status}

@@ -52,7 +52,9 @@ export const InvoiceDownloadDialog: React.FC<InvoiceDownloadDialogProps> = ({
         <Spinner className="ml-2" size={'small'} show={isDownloadPending} />
       </div>
 
-      <div
+      {/*
+      
+            <div
         className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-500 rounded-lg p-4"
         onClick={() => downloadInvoice('template2')}>
         <File />
@@ -67,7 +69,9 @@ export const InvoiceDownloadDialog: React.FC<InvoiceDownloadDialogProps> = ({
         <Label className="cursor-pointer">Template 3</Label>
         <Spinner className="ml-2" size={'small'} show={isDownloadPending} />
       </div>
+      */}
     </div>
+
   );
 
   if (isDesktop)
