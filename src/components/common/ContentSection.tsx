@@ -17,7 +17,19 @@ export default function ContentSection({
   children
 }: ContentSectionProps) {
   return (
-    <div className={cn('flex flex-col overflow-hidden', className)}>
+      <>
+      {children && (
+        <div
+          className={cn(
+            'faded-bottom -mx-4 flex flex-col flex-1 px-4 md:pb-10',
+            childrenClassName
+          )}>
+          {children}
+        </div>
+      )}</>
+  );
+  /*
+      <div className={cn('flex flex-col overflow-hidden', className)}>
       <div className="flex-none">
         <h3 className="text-lg font-medium">{title}</h3>
         <p className="text-sm text-muted-foreground">{desc}</p>
@@ -32,6 +44,5 @@ export default function ContentSection({
           {children}
         </div>
       )}
-    </div>
-  );
+    </div>*/
 }

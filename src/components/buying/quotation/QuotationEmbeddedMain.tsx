@@ -72,12 +72,14 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
     refetch: refetchQuotations
   } = useQuery({
     queryKey: [
-      'quotations',
+      'buyingQuotations',
       debouncedPage,
       debouncedSize,
       debouncedSortDetails.order,
       debouncedSortDetails.sortKey,
-      debouncedSearchTerm
+      debouncedSearchTerm,
+      firmId,
+      interlocutorId
     ],
     queryFn: () =>
       api.buyingQuotation.findPaginated(
@@ -119,6 +121,7 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
 
   //Remove Quotation
   const { mutate: removeQuotation, isPending: isDeletePending } = useMutation({
+    mutationKey:['deleteBuyingQuotation'],
     mutationFn: (id: number) => api.buyingQuotation.remove(id),
     onSuccess: () => {
       if (quotations?.length == 1 && page > 1) setPage(page - 1);
@@ -135,6 +138,7 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
 
   //Duplicate Quotation
   const { mutate: duplicateQuotation, isPending: isDuplicationPending } = useMutation({
+    mutationKey:['duplicateBuyingQuotation'],
     mutationFn: (duplicateQuotationDto: DuplicateBuyingQuotationDto) =>
       api.buyingQuotation.duplicate(duplicateQuotationDto),
     onSuccess: async (data) => {
@@ -150,7 +154,8 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
   });
 
   //Download Quotation
-  const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
+  /*
+    const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
     mutationFn: (data: { id: number; template: string }) =>
       api.buyingQuotation.download(data.id, data.template),
     onSuccess: () => {
@@ -163,9 +168,12 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
       );
     }
   });
+  */
+
 
   //Invoice quotation
   const { mutate: invoiceQuotation, isPending: isInvoicingPending } = useMutation({
+    mutationKey:['invoiceBuyingQuotation'],
     mutationFn: (data: { id?: number; createInvoice: boolean }) =>
       api.buyingQuotation.invoice(data.id, data.createInvoice),
     onSuccess: (data) => {
@@ -221,6 +229,7 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
           isDuplicationPending={isDuplicationPending}
           onClose={() => setDuplicateDialog(false)}
         />
+       {/**
         <QuotationDownloadDialog
           id={quotationManager?.id || 0}
           open={downloadDialog}
@@ -230,6 +239,7 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
           isDownloadPending={isDownloadPending}
           onClose={() => setDownloadDialog(false)}
         />
+        */} 
         <QuotationInvoiceDialog
           id={quotationManager?.id || 0}
           status={quotationManager?.status}

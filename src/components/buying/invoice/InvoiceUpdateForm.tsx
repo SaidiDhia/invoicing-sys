@@ -255,7 +255,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   });
 
   //update handler
-  const onSubmit = (status: BUYING_INVOICE_STATUS) => {
+  const onSubmit = async (status: BUYING_INVOICE_STATUS) => {
     const articlesDto: BuyingArticleInvoiceEntry[] = articleManager.getArticles()?.map((article) => ({
       article: {
         title: article?.article?.title,
@@ -307,7 +307,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
 
       uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
-    const validation = api.buyingInvoice.validate(invoice, dateRange);
+    const validation = await api.buyingInvoice.validate(invoice, dateRange);
     if (validation.message) {
       toast.error(validation.message, { position: validation.position || 'bottom-right' });
     } else {
