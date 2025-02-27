@@ -200,9 +200,10 @@ const remove = async (id: number): Promise<BuyingQuotation> => {
   return response.data;
 };
 
-const existSequential = async (sequential: string):Promise<Boolean> => {
+const existSequential = async (sequential: string,firmId:number):Promise<Boolean> => {
     try{
-      let response = await axios.get<BuyingQuotation>(`public/buying-quotation/seq/${sequential}`);
+      let response = await axios.get<BuyingQuotation>('public/buying-quotation/seq/',{params:{sequential,firmId}});
+      console.log("response",response.data)
       return true;
     }
     catch(error){
@@ -228,9 +229,10 @@ const  validate = async(quotation: Partial<BuyingQuotation>): Promise<ToastValid
     return{ message :"Le numéro séquentiel doit contenir au moins 5 caractères."};
   }
 
-  if(await existSequential(quotation.sequential)){
-    return{ message :"Ce numéro séquentiel deja."};
+  if (!quotation.firmId) return { message: "Le firm est obligatoire" };
 
+  if(await existSequential(quotation.sequential,quotation.firmId)){
+    return{ message :" Un Devis avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. "};
   }
 
   
