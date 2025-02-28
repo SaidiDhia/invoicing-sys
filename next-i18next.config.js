@@ -9,7 +9,7 @@ module.exports = {
 
       { expirationTime: 60 * 60 * 1000 },
       {
-        // loadPath: 'https:// somewhere else' 
+        //loadPath: 'https:// somewhere else' 
       }
     
     ], // 1 hour

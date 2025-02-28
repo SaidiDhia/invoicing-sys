@@ -232,7 +232,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     }));
 
     const Buyinginvoice: CreateBuyingInvoiceDto = {
-      sequential:invoiceManager?.sequential,
+      sequential: invoiceManager?.sequential,
       date: invoiceManager?.date?.toString(),
       dueDate: invoiceManager?.dueDate?.toString(),
       object: invoiceManager?.object,
@@ -268,7 +268,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
       referenceDocFile: invoiceManager?.referenceDocFile,
     };
 
-    const validation =await api.buyingInvoice.validate(Buyinginvoice, dateRange);
+    const validation = await api.buyingInvoice.validate(Buyinginvoice, dateRange);
     if (validation.message) {
       toast.error(validation.message);
     } else {
@@ -295,7 +295,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
 
                 {/* Reference Document */}
 
-                <InvoiceReferenceDocument className='my-5'/>
+                <InvoiceReferenceDocument />
                 {/* General Information */}
                 <InvoiceGeneralInformation
                   className="my-5"

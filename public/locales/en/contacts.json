@@ -128,5 +128,13 @@
     "update": "Update Interlocutor",
     "plural": "Interlocutors",
     "singular": "Interlocutor"
+  },
+  "quotations":{
+    "buying_quotations":"Buying Quotations",
+    "selling_quotations":"Selling Quotations"
+  },
+  "invoices":{
+    "buying_invoices":"Buying Invoices",
+    "selling_invoices":"Selling Invoices"
   }
 }

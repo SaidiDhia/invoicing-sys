@@ -201,7 +201,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
       ...data,
       referenceDoc: data.referenceDoc,
       referenceDocId: data.referenceDocId
-    },firms, bankAccounts);
+    }, firms, bankAccounts);
     data?.quotation && quotationManager.set('sequential', data?.quotation?.sequential);
     //invoice meta infos
     controlManager.setControls({
@@ -255,7 +255,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   });
 
   //update handler
-  const onSubmit = (status: BUYING_INVOICE_STATUS) => {
+  const onSubmit = async (status: BUYING_INVOICE_STATUS) => {
     const articlesDto: BuyingArticleInvoiceEntry[] = articleManager.getArticles()?.map((article) => ({
       article: {
         title: article?.article?.title,
@@ -307,7 +307,8 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
 
       uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
-    const validation = api.buyingInvoice.validate(invoice, dateRange);
+    
+    const validation = await api.buyingInvoice.validate(invoice, dateRange);
     if (validation.message) {
       toast.error(validation.message, { position: validation.position || 'bottom-right' });
     } else {
@@ -329,8 +330,8 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
           <ScrollArea className=" max-h-[calc(100vh-120px)] border rounded-lg">
             <Card className="border-0">
               <CardContent className="p-5">
-                 {/* Reference Document */}
-                  <InvoiceReferenceDocument className="my-5" />
+                {/* Reference Document */}
+                <InvoiceReferenceDocument />
                 <InvoiceGeneralInformation
                   className="my-5"
                   firms={firms}

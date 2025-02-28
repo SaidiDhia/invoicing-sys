@@ -142,7 +142,8 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
   });
 
   //Download Invoice
-  const { mutate: downloadInvoice, isPending: isDownloadPending } = useMutation({
+  /*
+    const { mutate: downloadInvoice, isPending: isDownloadPending } = useMutation({
     mutationFn: (data: { id: number; template: string }) =>
       api.buyingInvoice.download(data.id, data.template),
     onSuccess: () => {
@@ -155,6 +156,8 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
       );
     }
   });
+  */
+
 
   const isPending = isFetchPending || isDeletePending || paging || resizing || searching || sorting;
 
@@ -190,6 +193,7 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
           isDuplicationPending={isDuplicationPending}
           onClose={() => setDuplicateDialog(false)}
         />
+        {/*
         <InvoiceDownloadDialog
           id={invoiceManager?.id || 0}
           open={downloadDialog}
@@ -199,6 +203,7 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
           isDownloadPending={isDownloadPending}
           onClose={() => setDownloadDialog(false)}
         />
+        */}
         <InvoiceActionsContext.Provider value={context}>
           <DataTable
             className="flex flex-col flex-1 overflow-hidden p-1"

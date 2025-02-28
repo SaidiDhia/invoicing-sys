@@ -60,9 +60,11 @@ export const InvoiceExtraOptions = ({ className, loading }: InvoiceExtraOptionsP
             }}
             className="my-5"
             maxFileCount={Infinity}
+            // Only include files stored in uploadedFiles, not the reference document
             value={invoiceManager.uploadedFiles?.map((d) => d.file)}
             onValueChange={handleFilesChange}
           />
+
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">

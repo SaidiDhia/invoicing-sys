@@ -223,7 +223,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
   });
 
   //update handler
-  const onSubmit = (status: BUYING_QUOTATION_STATUS) => {
+  const onSubmit = async (status: BUYING_QUOTATION_STATUS) => {
     const articlesDto: BuyingArticleQuotationEntry[] = articleManager.getArticles()?.map((article) => ({
       article: {
         title: article?.article?.title,
@@ -272,7 +272,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
 
       uploads: quotationManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
-    const validation = api.buyingQuotation.validate(quotation);
+    const validation = await api.buyingQuotation.validate(quotation);
     if (validation.message) {
       toast.error(validation.message, { position: validation.position || 'bottom-right' });
     } else {

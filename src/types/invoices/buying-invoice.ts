@@ -77,6 +77,7 @@ export interface BuyingInvoiceUpload extends DatabaseEntity {
   invoice?: BuyingInvoice;
   uploadId?: number;
   upload?: Upload;
+  file?: File;
 }
 
 export interface BuyingInvoice extends DatabaseEntity {

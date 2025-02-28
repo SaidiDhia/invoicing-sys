@@ -128,5 +128,13 @@
     "update": "Mise à jour Interlocutor",
     "plural": "Interlocuteurs",
     "singular": "Interlocuteur"
+  },
+  "quotations":{
+    "buying_quotations":"Devis d'Achats",
+    "selling_quotations":"Devis de Ventes"
+  },
+  "invoices":{
+    "buying_invoices":"Factures d'Achats",
+    "selling_invoices":"Factures  de Ventes"
   }
 }
