@@ -103,15 +103,29 @@ export const BuyingInvoiceControlSection = ({
   const [action, setAction] = React.useState<() => void>(() => {});
 
   //download dialog
-  const [downloadDialog, setDownloadDialog] = React.useState(false);
+ // const [downloadDialog, setDownloadDialog] = React.useState(false);
 
   //Download Invoice
+  /*
   const { mutate: downloadInvoice, isPending: isDownloadPending } = useMutation({
     mutationFn: (data: { id: number; template: string }) =>
       api.buyingInvoice.download(data.id, data.template),
     onSuccess: () => {
       toast.success(tInvoicing('invoice.action_download_success'));
       setDownloadDialog(false);
+    },
+    onError: (error) => {
+      toast.error(
+        getErrorMessage('invoicing', error, tInvoicing('invoice.action_download_failure'))
+      );
+    }
+  });*/
+
+  const { mutate: downloadInvoice } = useMutation({
+    mutationFn: (data: { id: number}) =>
+      api.buyingInvoice.download(data.id),
+    onSuccess: () => {
+      toast.success(tInvoicing('invoice.action_download_success'));
     },
     onError: (error) => {
       toast.error(
@@ -218,7 +232,7 @@ export const BuyingInvoiceControlSection = ({
     {
       ...BUYING_INVOICE_LIFECYCLE_ACTIONS.download,
       key: 'download',
-      onClick: () => setDownloadDialog(true),
+      onClick: () => {invoiceManager?.id && downloadInvoice({ id: invoiceManager.id })},
       loading: false
     },
     {
@@ -269,7 +283,7 @@ export const BuyingInvoiceControlSection = ({
         isDuplicationPending={isDuplicationPending}
         onClose={() => setDuplicateDialog(false)}
       />
-      <InvoiceDownloadDialog
+      {/*<InvoiceDownloadDialog
         id={invoiceManager?.id || 0}
         open={downloadDialog}
         downloadInvoice={(template: string) => {
@@ -277,7 +291,7 @@ export const BuyingInvoiceControlSection = ({
         }}
         isDownloadPending={isDownloadPending}
         onClose={() => setDownloadDialog(false)}
-      />
+      />*/}
       <InvoiceDeleteDialog
         id={invoiceManager?.id || 0}
         sequential={invoiceManager?.sequential}

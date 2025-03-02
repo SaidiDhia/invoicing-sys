@@ -99,15 +99,29 @@ export const QuotationControlSection = ({
   const [action, setAction] = React.useState<() => void>(() => {});
 
   //download dialog
-  const [downloadDialog, setDownloadDialog] = React.useState(false);
+  //const [downloadDialog, setDownloadDialog] = React.useState(false);
 
   //Download Quotation
-  const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
+  /*const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
     mutationFn: (data: { id: number; template: string }) =>
       api.buyingQuotation.download(data.id, data.template),
     onSuccess: () => {
       toast.success(tInvoicing('quotation.action_download_success'));
       setDownloadDialog(false);
+    },
+    onError: (error) => {
+      toast.error(
+        getErrorMessage('invoicing', error, tInvoicing('quotation.action_download_failure'))
+      );
+    }
+  });*/
+
+  //Download Quotation
+  const { mutate: downloadQuotation } = useMutation({
+    mutationFn: (data: { id: number}) =>
+      api.buyingQuotation.download(data.id),
+    onSuccess: () => {
+      toast.success(tInvoicing('quotation.action_download_success'));
     },
     onError: (error) => {
       toast.error(
@@ -266,7 +280,10 @@ export const QuotationControlSection = ({
     {
       ...QUOTATION_LIFECYCLE_ACTIONS.download,
       key: 'download',
-      onClick: () => setDownloadDialog(true),
+      onClick: () =>{
+        quotationManager?.id && downloadQuotation({ id: quotationManager?.id })
+
+      },
       loading: false
     },
     {
@@ -317,7 +334,7 @@ export const QuotationControlSection = ({
         isDuplicationPending={isDuplicationPending}
         onClose={() => setDuplicateDialog(false)}
       />
-      <QuotationDownloadDialog
+      {/*<QuotationDownloadDialog
         id={quotationManager?.id || 0}
         open={downloadDialog}
         downloadQuotation={(template: string) => {
@@ -325,7 +342,7 @@ export const QuotationControlSection = ({
         }}
         isDownloadPending={isDownloadPending}
         onClose={() => setDownloadDialog(false)}
-      />
+      />*/}
       <QuotationDeleteDialog
         id={quotationManager?.id || 0}
         sequential={sequential}
