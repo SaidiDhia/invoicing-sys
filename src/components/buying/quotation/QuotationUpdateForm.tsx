@@ -295,7 +295,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
             <Card className="border-0">
               <CardContent className="p-5">
                 {/* Reference Document */}
-                <QuotationReferenceDocument className="my-5" />
+                <QuotationReferenceDocument />
                 {/* General Information */}
                 <QuotationGeneralInformation
                   className="my-5"

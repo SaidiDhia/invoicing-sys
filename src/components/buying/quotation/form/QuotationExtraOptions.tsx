@@ -60,6 +60,7 @@ export const QuotationExtraOptions = ({ className, loading }: QuotationExtraOpti
             }}
             className="my-5"
             maxFileCount={Infinity}
+            // Only include files stored in uploadedFiles, not the reference document
             value={quotationManager.uploadedFiles?.map((d) => d.file)}
             onValueChange={handleFilesChange}
           />

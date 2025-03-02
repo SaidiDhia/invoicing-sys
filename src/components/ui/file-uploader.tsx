@@ -82,7 +82,7 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Whether the uploader should accept multiple files.
    * @type boolean
-   * @default true
+   * @default false
    * @example multiple
    */
   multiple?: boolean;

@@ -73,6 +73,8 @@ export interface BuyingQuotationUpload extends DatabaseEntity {
   quotation?: BuyingQuotation;
   uploadId?: number;
   upload?: Upload;
+  file?: File;
+
 }
 
 export interface BuyingQuotation extends DatabaseEntity {
