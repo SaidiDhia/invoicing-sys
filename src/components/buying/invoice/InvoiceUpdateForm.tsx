@@ -304,6 +304,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
 
       referenceDocId: invoiceManager.referenceDocId,
       referenceDoc: invoiceManager.referenceDoc,
+      referenceDocFile:invoiceManager.referenceDocFile,
 
       uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
