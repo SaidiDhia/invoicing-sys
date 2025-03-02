@@ -1,12 +1,12 @@
-import { Payment } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableRowActions } from './data-table-row-actions';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { transformDate, transformDateTime } from '@/utils/date.utils';
 import { PAYMENT_FILTER_ATTRIBUTES } from '@/constants/payment-filter.attributes';
+import { BuyingPayment } from '@/types/payments/buying-payment';
 
-export const getPaymentColumns = (t: Function, tCurrency: Function): ColumnDef<Payment>[] => {
+export const getPaymentColumns = (t: Function, tCurrency: Function): ColumnDef<BuyingPayment>[] => {
   const translationNamespace = 'invoicing';
   const translate = (value: string, namespace: string = '') => {
     return t(value, { ns: namespace || translationNamespace });

@@ -1,7 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { api } from '@/api';
-import { Payment, PaymentInvoiceEntry, UpdatePaymentDto } from '@/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -25,6 +24,7 @@ import useCabinet from '@/hooks/content/useCabinet';
 import { PaymentExtraOptions } from './form/PaymentExtraOptions';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
+import { BuyingPayment, BuyingPaymentInvoiceEntry, UpdateBuyingPaymentDto } from '@/types/payments/buying-payment';
 
 interface PaymentFormProps {
   className?: string;
@@ -46,7 +46,7 @@ export const PaymentUpdateForm = ({ className, paymentId }: PaymentFormProps) =>
     refetch: refetchInvoice
   } = useQuery({
     queryKey: ['invoice', paymentId],
-    queryFn: () => api.payment.findOne(parseInt(paymentId))
+    queryFn: () => api.buyingPayment.findOne(parseInt(paymentId))
   });
 
   const payment = React.useMemo(() => {
@@ -78,7 +78,7 @@ export const PaymentUpdateForm = ({ className, paymentId }: PaymentFormProps) =>
   const fetching =
     isFetchPending || isFetchFirmsPending || isFetchCurrenciesPending || isFetchCabinetPending;
 
-  const setPaymentData = (data: Partial<Payment>) => {
+  const setPaymentData = (data: Partial<BuyingPayment>) => {
     //invoice infos
     paymentManager.setPayment({ ...data, firm: firms.find((firm) => firm.id === data.firmId) });
     //invoice article infos
@@ -89,14 +89,14 @@ export const PaymentUpdateForm = ({ className, paymentId }: PaymentFormProps) =>
   };
 
   const { isDisabled, globalReset } = useInitializedState({
-    data: payment || ({} as Partial<Payment>),
+    data: payment || ({} as Partial<BuyingPayment>),
     getCurrentData: () => {
       return {
         payment: paymentManager.getPayment(),
         invoices: invoiceManager.getInvoices()
       };
     },
-    setFormData: (data: Partial<Payment>) => {
+    setFormData: (data: Partial<BuyingPayment>) => {
       setPaymentData(data);
     },
     resetData: () => {
@@ -111,8 +111,8 @@ export const PaymentUpdateForm = ({ className, paymentId }: PaymentFormProps) =>
   }, [paymentManager.currencyId, currencies]);
 
   const { mutate: updatePayment, isPending: isUpdatePending } = useMutation({
-    mutationFn: (data: { payment: UpdatePaymentDto; files: File[] }) =>
-      api.payment.update(data.payment, data.files),
+    mutationFn: (data: { payment: UpdateBuyingPaymentDto; files: File[] }) =>
+      api.buyingPayment.update(data.payment, data.files),
     onSuccess: () => {
       toast.success('Paiement modifié avec succès');
       router.push('/buying/payments');
@@ -124,9 +124,9 @@ export const PaymentUpdateForm = ({ className, paymentId }: PaymentFormProps) =>
   });
 
   const onSubmit = () => {
-    const invoices: PaymentInvoiceEntry[] = invoiceManager
+    const invoices: BuyingPaymentInvoiceEntry[] = invoiceManager
       .getInvoices()
-      .map((invoice: PaymentInvoiceEntry) => ({
+      .map((invoice: BuyingPaymentInvoiceEntry) => ({
         invoiceId: invoice.invoice?.id,
         amount: invoice.amount
       }));
@@ -139,7 +139,7 @@ export const PaymentUpdateForm = ({ className, paymentId }: PaymentFormProps) =>
       precision: currency?.digitAfterComma || 3
     }).toUnit();
 
-    const payment: UpdatePaymentDto = {
+    const payment: UpdateBuyingPaymentDto = {
       id: paymentManager.id,
       amount: paymentManager.amount,
       fee: paymentManager.fee,
@@ -152,7 +152,7 @@ export const PaymentUpdateForm = ({ className, paymentId }: PaymentFormProps) =>
       invoices,
       uploads: paymentManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
-    const validation = api.payment.validate(payment, used, paid);
+    const validation = api.buyingPayment.validate(payment, used, paid);
     if (validation.message) {
       toast.error(validation.message);
     } else {

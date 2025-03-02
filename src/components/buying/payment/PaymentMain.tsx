@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import { getErrorMessage } from '@/utils/errors';
 import { usePaymentManager } from './hooks/usePaymentManager';
 import { PaymentDeleteDialog } from './dialogs/PaymentDeleteDialog';
+import { BuyingPayment } from '@/types/payments/buying-payment';
 
 interface PaymentMainProps {
   className?: string;
@@ -70,7 +71,7 @@ export const PaymentMain: React.FC<PaymentMainProps> = ({ className, firmId, int
       debouncedSearchTerm
     ],
     queryFn: () =>
-      api.payment.findPaginated(
+      api.buyingPayment.findPaginated(
         debouncedPage,
         debouncedSize,
         debouncedSortDetails.order ? 'ASC' : 'DESC',
@@ -105,7 +106,7 @@ export const PaymentMain: React.FC<PaymentMainProps> = ({ className, firmId, int
 
   //Remove Invoice
   const { mutate: removePayment, isPending: isDeletePending } = useMutation({
-    mutationFn: (id: number) => api.payment.remove(id),
+    mutationFn: (id: number) => api.buyingPayment.remove(id),
     onSuccess: () => {
       if (payments?.length == 1 && page > 1) setPage(page - 1);
       toast.success(tInvoicing('payment.action_remove_success'));
@@ -137,7 +138,7 @@ export const PaymentMain: React.FC<PaymentMainProps> = ({ className, firmId, int
             <CardDescription>{tInvoicing('payment.card_description')}</CardDescription>
           </CardHeader>
           <CardContent>
-            <DataTable
+            <DataTable<BuyingPayment,unknown>
               className="my-5"
               data={payments}
               columns={getPaymentColumns(tInvoicing, tCurrency)}

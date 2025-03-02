@@ -16,7 +16,7 @@ import { usePaymentManager } from './hooks/usePaymentManager';
 import { useMutation } from '@tanstack/react-query';
 import { getErrorMessage } from '@/utils/errors';
 import { toast } from 'sonner';
-import { CreatePaymentDto, PaymentInvoiceEntry } from '@/types';
+import { CreateBuyingPaymentDto, BuyingPaymentInvoiceEntry } from '@/types/payments/buying-payment';
 import { usePaymentInvoiceManager } from './hooks/usePaymentInvoiceManager';
 import { PaymentControlSection } from './form/PaymentControlSection';
 import useCabinet from '@/hooks/content/useCabinet';
@@ -68,8 +68,8 @@ export const PaymentCreateForm = ({ className, firmId }: PaymentFormProps) => {
   }, [paymentManager.currencyId, currencies]);
 
   const { mutate: createPayment, isPending: isCreatePending } = useMutation({
-    mutationFn: (data: { payment: CreatePaymentDto; files: File[] }) =>
-      api.payment.create(data.payment, data.files),
+    mutationFn: (data: { payment: CreateBuyingPaymentDto; files: File[] }) =>
+      api.buyingPayment.create(data.payment, data.files),
     onSuccess: () => {
       toast.success('Paiement crée avec succès');
       router.push('/buying/payments');
@@ -91,9 +91,9 @@ export const PaymentCreateForm = ({ className, firmId }: PaymentFormProps) => {
   }, []);
 
   const onSubmit = () => {
-    const invoices: PaymentInvoiceEntry[] = invoiceManager
+    const invoices: BuyingPaymentInvoiceEntry[] = invoiceManager
       .getInvoices()
-      .map((invoice: PaymentInvoiceEntry) => ({
+      .map((invoice: BuyingPaymentInvoiceEntry) => ({
         invoiceId: invoice.invoice?.id,
         amount: invoice.amount
       }));
@@ -107,7 +107,7 @@ export const PaymentCreateForm = ({ className, firmId }: PaymentFormProps) => {
       precision: currency?.digitAfterComma || 3
     }).toUnit();
 
-    const payment: CreatePaymentDto = {
+    const payment: CreateBuyingPaymentDto = {
       amount: paymentManager.amount,
       fee: paymentManager.fee,
       convertionRate: paymentManager.convertionRate,
@@ -118,7 +118,7 @@ export const PaymentCreateForm = ({ className, firmId }: PaymentFormProps) => {
       firmId: paymentManager.firmId,
       invoices
     };
-    const validation = api.payment.validate(payment, used, paid);
+    const validation = api.buyingPayment.validate(payment, used, paid);
     if (validation.message) {
       toast.error(validation.message);
     } else {

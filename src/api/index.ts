@@ -32,6 +32,9 @@ import { invoice } from './invoices/selling-invoice';
 export * from './invoices/selling-invoice';
 import { payment } from './payments/selling-payment';
 export * from './payments/selling-payment';
+import { buyingPayment } from './payments/buying-payment';
+export * from './payments/buying-payment';
+
 import { paymentCondition } from './payment-condition';
 export * from './payment-condition';
 import { permission } from './permission';
@@ -72,6 +75,7 @@ export const api = {
   buyingInvoice,
   invoice,
   payment,
+  buyingPayment,
   paymentCondition,
   permission,
   quotation,

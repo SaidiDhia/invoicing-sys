@@ -74,7 +74,7 @@ export const PaymentEmbeddedMain: React.FC<PaymentEmbeddedMainProps> = ({
       debouncedSearchTerm
     ],
     queryFn: () =>
-      api.payment.findPaginated(
+      api.buyingPayment.findPaginated(
         debouncedPage,
         debouncedSize,
         debouncedSortDetails.order ? 'ASC' : 'DESC',
@@ -109,7 +109,7 @@ export const PaymentEmbeddedMain: React.FC<PaymentEmbeddedMainProps> = ({
 
   //Remove Invoice
   const { mutate: removePayment, isPending: isDeletePending } = useMutation({
-    mutationFn: (id: number) => api.payment.remove(id),
+    mutationFn: (id: number) => api.buyingPayment.remove(id),
     onSuccess: () => {
       if (payments?.length == 1 && page > 1) setPage(page - 1);
       toast.success(tInvoicing('payment.action_remove_success'));

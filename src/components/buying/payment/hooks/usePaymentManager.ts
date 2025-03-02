@@ -1,4 +1,5 @@
-import { Currency, Firm, PAYMENT_MODE, Payment, PaymentUploadedFile } from '@/types';
+import { Currency, Firm} from '@/types';
+import { BUYING_PAYMENT_MODE, BuyingPayment, BuyingPaymentUploadedFile } from '@/types/payments/buying-payment';
 import { create } from 'zustand';
 
 type PaymentManager = {
@@ -11,14 +12,14 @@ type PaymentManager = {
   currency?: Currency;
   currencyId?: number;
   notes?: string;
-  mode?: PAYMENT_MODE;
-  uploadedFiles: PaymentUploadedFile[];
+  mode?: BUYING_PAYMENT_MODE;
+  uploadedFiles: BuyingPaymentUploadedFile[];
   firm?: Firm;
   firmId?: number;
   // methods
   set: (name: keyof PaymentManager, value: any) => void;
   getPayment: () => Partial<PaymentManager>;
-  setPayment: (payment: Partial<Payment & { files: PaymentUploadedFile[] }>) => void;
+  setPayment: (payment: Partial<BuyingPayment & { files: BuyingPaymentUploadedFile[] }>) => void;
   reset: () => void;
 };
 
@@ -30,7 +31,7 @@ const initialState: Omit<PaymentManager, 'set' | 'reset' | 'getPayment' | 'setPa
   convertionRate: 1,
   currencyId: undefined,
   notes: '',
-  mode: PAYMENT_MODE.Cash,
+  mode: BUYING_PAYMENT_MODE.Cash,
   uploadedFiles: [],
   firmId: undefined
 };
@@ -64,7 +65,7 @@ export const usePaymentManager = create<PaymentManager>((set, get) => ({
       uploadedFiles
     };
   },
-  setPayment: (payment: Partial<Payment & { files: PaymentUploadedFile[] }>) => {
+  setPayment: (payment: Partial<BuyingPayment & { files: BuyingPaymentUploadedFile[] }>) => {
     set((state) => ({
       ...state,
       id: payment?.id,
