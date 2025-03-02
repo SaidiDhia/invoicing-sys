@@ -199,16 +199,26 @@ const remove = async (id: number): Promise<BuyingQuotation> => {
   const response = await axios.delete<BuyingQuotation>(`public/buying-quotation/${id}`);
   return response.data;
 };
+import { AxiosError } from 'axios';
 
-const existSequential = async (sequential: string,firmId:number):Promise<Boolean> => {
-    try{
-      let response = await axios.get<BuyingQuotation>('public/buying-quotation/seq/',{params:{sequential,firmId}});
-      console.log("response",response.data)
-      return true;
+const existSequential = async (sequential: string, firmId: number): Promise<boolean> => {
+  try {
+    const response = await axios.get(`public/buying-quotation/seq?sequential=${sequential}&firmId=${firmId}`);
+    console.log("res",response)
+    return true;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 404) {
+        return false; // Quotation not found
+      }
+      console.error('Axios error checking sequential:', error.message);
+    } else if (error instanceof Error) {
+      console.error('Error checking sequential:', error.message);
+    } else {
+      console.error('Unknown error checking sequential:', error);
     }
-    catch(error){
-      return false
-    }  
+    throw new Error('Failed to check sequential');
+  }
 };
 
 const  validate = async(quotation: Partial<BuyingQuotation>): Promise<ToastValidation> => {

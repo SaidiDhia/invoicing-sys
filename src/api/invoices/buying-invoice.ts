@@ -9,6 +9,7 @@ import { BUYING_INVOICE_STATUS, BuyingInvoice, BuyingInvoiceUploadedFile, Create
 import { ToastValidation } from '@/types';
 
 import { DateRange } from 'react-day-picker';
+import { AxiosError } from 'axios';
 
 const factory = (): CreateBuyingInvoiceDto => {
   return {
@@ -93,13 +94,7 @@ const findOne = async (
   const response = await axios.get<BuyingInvoice>(`public/buying-invoice/${id}?join=${relations.join(',')}`);
   return { ...response.data, files: await getInvoiceUploads(response.data) };
 };
-/*
-const findByRange = async (id?: number): Promise<ResponseBuyingInvoiceRangeDto> => {
-  const response = await axios.get<ResponseBuyingInvoiceRangeDto>(
-    `public/buying-invoice/sequential-range/${id}`
-  );
-  return response.data;
-};*/
+
 
 const uploadInvoiceFiles = async (files: File[]): Promise<number[]> => {
   return files && files?.length > 0 ? await upload.uploadFiles(files) : [];
@@ -194,14 +189,27 @@ const remove = async (id: number): Promise<BuyingInvoice> => {
   return response.data;
 };
 
-const existSequential = async (sequential: string):Promise<Boolean> => {
-  try{
-    let response = await axios.get<BuyingInvoice>(`public/buying-invoice/seq/${sequential}`);
+const existSequential = async (sequential: string, firmId: number): Promise<boolean> => {
+  try {
+    const response = await axios.get(`public/buying-invoice/seq?sequential=${sequential}&firmId=${firmId}`);
+    console.log("res",response)
     return true;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      // Now TypeScript knows `error` is of type AxiosError
+      if (error.response?.status === 404) {
+        return false; // Invoice not found
+      }
+      console.error('Axios error checking sequential:', error.message);
+    } else if (error instanceof Error) {
+      // Handle generic errors
+      console.error('Error checking sequential:', error.message);
+    } else {
+      // Handle unknown errors
+      console.error('Unknown error checking sequential:', error);
+    }
+    throw new Error('Failed to check sequential');
   }
-  catch(error){
-    return false
-  }  
 };
 
 const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): Promise<ToastValidation> => {
@@ -230,10 +238,12 @@ const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): 
     return{ message :"Le numéro séquentiel ne peut pas dépasser 20 caractères."};
   }
 
-  if(await existSequential(invoice.sequential)){
-    return{ message :"Ce numéro séquentiel deja."};
+  if (!invoice.firmId) return { message: "Le firm est obligatoire" };
 
+  if(await existSequential(invoice.sequential,invoice.firmId)){
+    return{ message :" Une Facture avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. "};
   }
+
 
   if (
     dateRange?.to &&
