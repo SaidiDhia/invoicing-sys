@@ -61,12 +61,28 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
     refetch: refetchQuotation
   } = useQuery({
     queryKey: ['quotation', quotationId],
-    queryFn: () => api.buyingQuotation.findOne(parseInt(quotationId))
+    queryFn: async () => {
+      const quotation = await api.buyingQuotation.findOne(parseInt(quotationId));
+  
+      if (quotation.referenceDocId) {
+        const blob = await api.upload.fetchBlobById(quotation.referenceDocId);
+        if (!blob) {
+          throw new Error('Impossible de récupérer le fichier.');
+        }
+        const file=new File([blob], quotation.referenceDoc?.filename|| "referenceDoc", { type: blob.type })
+
+        quotationManager.set('referenceDocFile', file); 
+
+      }
+  
+      return quotation;
+    }
   });
   const quotation = React.useMemo(() => {
     return quotationResp || null;
   }, [quotationResp]);
 
+  
   //set page title in the breadcrumb
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {

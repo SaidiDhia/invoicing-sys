@@ -4,7 +4,8 @@ import {
   Currency,
   Firm,
   Interlocutor,
-  PaymentCondition
+  PaymentCondition,
+  Upload
 } from '@/types';
 import { BUYING_INVOICE_STATUS, BuyingInvoiceUploadedFile, BuyingInvoice, BuyingInvoiceUpload, } from '@/types/invoices/buying-invoice'
 import { DATE_FORMAT } from '@/types/enums/date-formats';
@@ -16,7 +17,7 @@ type InvoiceManager = {
   // data
   id?: number;
 
-  referenceDoc?: BuyingInvoiceUpload;
+  referenceDoc?: Upload;
   referenceDocFile?: File;
   referenceDocId?: number;
 
@@ -164,7 +165,6 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
       bankAccount,
       currency,
       uploadedFiles,
-      referenceDocFile,
       taxStampId,
       taxWithholdingId,
       ...rest
@@ -185,7 +185,6 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
       bankAccountId: bankAccount?.id,
       currencyId: currency?.id,
       uploadedFiles,
-      referenceDocFile,
       taxStampId,
       taxWithholdingId
     };
@@ -212,7 +211,6 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
       generalConditions: invoice?.generalConditions,
       status: invoice?.status,
       uploadedFiles: invoice?.files || [],
-      //referenceDocFile:invoice?.referenceDocFile,
       quotationId: invoice?.quotationId,
       taxStampId: invoice?.taxStampId,
       amountPaid: invoice?.amountPaid,

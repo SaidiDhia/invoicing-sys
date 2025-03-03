@@ -117,7 +117,7 @@ export interface BuyingInvoice extends DatabaseEntity {
   taxWithholdingId?: number;
   taxWithholdingAmount?: number;
 
-  referenceDoc?:BuyingInvoiceUpload;
+  referenceDoc?:Upload;
   referenceDocId?:number;
   referenceDocFile?:File | null;
 }

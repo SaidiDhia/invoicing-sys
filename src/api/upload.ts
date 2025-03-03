@@ -22,6 +22,8 @@ const uploadFile = async (file: File): Promise<Upload> => {
   return response.data;
 };
 
+
+
 const uploadFiles = async (files: File[]): Promise<number[]> => {
   let uploadIds = [];
   for (const file of files) {

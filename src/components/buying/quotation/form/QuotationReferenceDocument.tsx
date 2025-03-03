@@ -1,8 +1,8 @@
 import { Label } from '@/components/ui/label';
 import { useTranslation } from 'react-i18next';
-import { useQuotationManager } from '../hooks/useQuotationManager';
 import { cn } from '@/lib/utils';
 import React, { useRef } from 'react';
+import { useQuotationManager } from '../hooks/useQuotationManager';
 
 interface QuotationReferenceDocumentProps {
   className?: string;
@@ -33,8 +33,7 @@ export const QuotationReferenceDocument = ({ className, loading }: QuotationRefe
   };
 
   // Determine which file name to display: either the freshly uploaded file or the existing upload from the API.
-  const fileName =
-    quotationManager.referenceDoc?.file?.name || quotationManager.referenceDoc?.upload?.filename;
+  const fileName = quotationManager.referenceDoc?.filename;
 
   return (
     <div className={cn(className, 'space-y-4')}>
@@ -57,6 +56,7 @@ export const QuotationReferenceDocument = ({ className, loading }: QuotationRefe
         onChange={handleFileChange}
         ref={fileInputRef}
         className="block"
+        
       />
     </div>
   );

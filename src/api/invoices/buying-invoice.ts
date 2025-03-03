@@ -88,7 +88,8 @@ const findOne = async (
     'firm.interlocutorsToFirm',
     'articleInvoiceEntries.article',
     'articleInvoiceEntries.articleInvoiceEntryTaxes',
-    'articleInvoiceEntries.articleInvoiceEntryTaxes.tax'
+    'articleInvoiceEntries.articleInvoiceEntryTaxes.tax',
+    'referenceDoc'
   ]
 ): Promise<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }> => {
   const response = await axios.get<BuyingInvoice>(`public/buying-invoice/${id}?join=${relations.join(',')}`);
@@ -189,11 +190,10 @@ const remove = async (id: number): Promise<BuyingInvoice> => {
   return response.data;
 };
 
-const existSequential = async (sequential: string, firmId: number): Promise<boolean> => {
+const existSequential = async (sequential: string, firmId: number)=> {
   try {
-    const response = await axios.get(`public/buying-invoice/seq?sequential=${sequential}&firmId=${firmId}`);
-    console.log("res",response)
-    return true;
+    return await axios.get(`public/buying-invoice/seq?sequential=${sequential}&firmId=${firmId}`);
+
   } catch (error) {
     if (error instanceof AxiosError) {
       // Now TypeScript knows `error` is of type AxiosError
@@ -201,13 +201,7 @@ const existSequential = async (sequential: string, firmId: number): Promise<bool
         return false; // Invoice not found
       }
       console.error('Axios error checking sequential:', error.message);
-    } else if (error instanceof Error) {
-      // Handle generic errors
-      console.error('Error checking sequential:', error.message);
-    } else {
-      // Handle unknown errors
-      console.error('Unknown error checking sequential:', error);
-    }
+    } 
     throw new Error('Failed to check sequential');
   }
 };
@@ -224,7 +218,9 @@ const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): 
   }
 
   
-
+  if (!invoice.referenceDocId && !invoice.referenceDocFile) {
+    return { message: 'Le document de référence est obligatoire' };
+  }
   if (!invoice.sequential) return { message: "Le numero de sequence est obligatoire" };
   if (!/^[A-Z0-9\-]+$/.test(invoice.sequential)) {
     return{ message :"Le numéro séquentiel ne peut contenir que des lettres majuscules, des chiffres et des tirets."};
@@ -240,7 +236,10 @@ const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): 
 
   if (!invoice.firmId) return { message: "Le firm est obligatoire" };
 
-  if(await existSequential(invoice.sequential,invoice.firmId)){
+  const existInvoice=await existSequential(invoice.sequential,invoice.firmId)
+  console.log("existinvoice",existInvoice)
+  console.log("currentId",invoice.id)
+  if((existInvoice && existInvoice.data?.id!=invoice?.id)||existInvoice){
     return{ message :" Une Facture avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. "};
   }
 
