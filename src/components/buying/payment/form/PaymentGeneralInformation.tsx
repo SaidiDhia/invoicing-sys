@@ -10,12 +10,13 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Currency, Firm, INVOICE_STATUS, PAYMENT_MODE } from '@/types';
+import { Currency, Firm, BUYING_INVOICE_STATUS, BUYING_PAYMENT_MODE } from '@/types';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import React from 'react';
 import { CalendarDatePicker } from '@/components/ui/calendar-day-picker';
 import { usePaymentInvoiceManager } from '../hooks/usePaymentInvoiceManager';
+import { buyingInvoice } from '@/api';
 
 interface PaymentGeneralInformationProps {
   className?: string;
@@ -75,10 +76,10 @@ export const PaymentGeneralInformation = ({
                   if (
                     invoice?.status &&
                     [
-                      INVOICE_STATUS.PartiallyPaid,
-                      INVOICE_STATUS.Sent,
-                      INVOICE_STATUS.Unpaid
-                    ].includes(invoice?.status)
+                      BUYING_INVOICE_STATUS.PartiallyPaid,
+                      BUYING_INVOICE_STATUS.Sent,
+                      BUYING_INVOICE_STATUS.Unpaid
+                    ].includes(buyingInvoice?.status)
                   )
                     invoiceManager.add({
                       amount: 0,
@@ -159,7 +160,7 @@ export const PaymentGeneralInformation = ({
                 <SelectValue placeholder={tInvoicing('payment.attributes.mode')} />
               </SelectTrigger>
               <SelectContent>
-                {Object.values(PAYMENT_MODE).map((title) => (
+                {Object.values(BUYING_PAYMENT_MODE).map((title) => (
                   <SelectItem key={title} value={title}>
                     {tInvoicing(title)}
                   </SelectItem>

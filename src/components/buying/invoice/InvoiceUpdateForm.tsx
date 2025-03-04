@@ -305,7 +305,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
       referenceDocId: invoiceManager.referenceDocId,
       referenceDoc: invoiceManager.referenceDoc,
 
-      uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
+        uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
     
     const validation = await api.buyingInvoice.validate(invoice, dateRange);
