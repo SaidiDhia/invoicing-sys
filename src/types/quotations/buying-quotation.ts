@@ -106,7 +106,7 @@ export interface BuyingQuotation extends DatabaseEntity {
   uploads?: BuyingQuotationUpload[];
   invoices: BuyingInvoice[];
 
-  referenceDoc?:BuyingQuotationUpload;
+  referenceDoc?:Upload;
   referenceDocId?:number;
   referenceDocFile?:File | null;
 

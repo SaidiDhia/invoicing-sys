@@ -90,7 +90,8 @@ const findOne = async (
     'firm.interlocutorsToFirm',
     'articleQuotationEntries.article',
     'articleQuotationEntries.articleQuotationEntryTaxes',
-    'articleQuotationEntries.articleQuotationEntryTaxes.tax'
+    'articleQuotationEntries.articleQuotationEntryTaxes.tax',
+    'referenceDoc'
   ]
 ): Promise<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }> => {
   const response = await axios.get<BuyingQuotation>(`public/buying-quotation/${id}?join=${relations.join(',')}`);

@@ -10,7 +10,8 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Currency, Firm, BUYING_INVOICE_STATUS, BUYING_PAYMENT_MODE } from '@/types';
+import { Currency, Firm, PAYMENT_MODE } from '@/types';
+import { BUYING_INVOICE_STATUS } from '@/types/invoices/buying-invoice';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import React from 'react';
@@ -79,7 +80,7 @@ export const PaymentGeneralInformation = ({
                       BUYING_INVOICE_STATUS.PartiallyPaid,
                       BUYING_INVOICE_STATUS.Sent,
                       BUYING_INVOICE_STATUS.Unpaid
-                    ].includes(buyingInvoice?.status)
+                    ].includes(invoice?.status)
                   )
                     invoiceManager.add({
                       amount: 0,

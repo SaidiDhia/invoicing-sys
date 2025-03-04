@@ -4,7 +4,8 @@ import {
   Currency,
   Firm,
   Interlocutor,
-  PaymentCondition
+  PaymentCondition,
+  Upload
 } from '@/types';
 import { BUYING_INVOICE_STATUS, BuyingInvoiceUploadedFile, BuyingInvoice, BuyingInvoiceUpload, } from '@/types/invoices/buying-invoice'
 import { DATE_FORMAT } from '@/types/enums/date-formats';
@@ -16,7 +17,7 @@ type InvoiceManager = {
   // data
   id?: number;
 
-  referenceDoc?: BuyingInvoiceUpload;
+  referenceDoc?: Upload;
   referenceDocFile?: File;
   referenceDocId?: number;
 

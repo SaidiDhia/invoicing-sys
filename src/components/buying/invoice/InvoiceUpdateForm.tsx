@@ -72,7 +72,22 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     refetch: refetchInvoice
   } = useQuery({
     queryKey: ['invoice', invoiceId],
-    queryFn: () => api.buyingInvoice.findOne(parseInt(invoiceId))
+    queryFn: async () => {
+        const invoice = await api.buyingInvoice.findOne(parseInt(invoiceId));
+    
+        if (invoice.referenceDocId) {
+          const blob = await api.upload.fetchBlobById(invoice.referenceDocId);
+          if (!blob) {
+            throw new Error('Impossible de récupérer le fichier.');
+          }
+          const file=new File([blob], invoice.referenceDoc?.filename|| "referenceDoc", { type: blob.type })
+  
+          invoiceManager.set('referenceDocFile', file); 
+        }
+
+    
+        return invoice;
+      }
   });
   const invoice = React.useMemo(() => {
     return invoiceResp || null;
@@ -111,7 +126,6 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     DOCUMENT_TYPE.INVOICE
   );
   const { dateRange, isFetchInvoiceRangePending } = useInvoiceRangeDates(invoiceManager.id);
-  console.log(dateRange);
   const fetching =
     isFetchPending ||
     isFetchFirmsPending ||
@@ -270,6 +284,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     }));
     const invoice: UpdateBuyingInvoiceDto = {
       id: invoiceManager?.id,
+      sequential:invoiceManager?.sequential,
       date: invoiceManager?.date?.toString(),
       dueDate: invoiceManager?.dueDate?.toString(),
       object: invoiceManager?.object,

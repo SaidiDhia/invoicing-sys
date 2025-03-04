@@ -5,6 +5,7 @@ import {
   Firm,
   Interlocutor,
   PaymentCondition,
+  Upload,
 } from '@/types';
 import { DATE_FORMAT } from '@/types/enums/date-formats';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
@@ -16,7 +17,7 @@ type QuotationManager = {
   // data
   id?: number;
 
-  referenceDoc?: BuyingQuotationUpload;
+  referenceDoc?: Upload;
   referenceDocFile?: File;
   referenceDocId?: number;
   

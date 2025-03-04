@@ -33,7 +33,8 @@ export const InvoiceReferenceDocument = ({ className, loading }: InvoiceReferenc
   };
 
   // Determine which file name to display: either the freshly uploaded file or the existing upload from the API.
-  const fileName = invoiceManager.referenceDoc?.file?.name || invoiceManager.referenceDoc?.upload?.filename;
+  const fileName = invoiceManager.referenceDoc?.filename;
+  console.log("filename:",fileName)
 
   return (
     <div className={cn(className, 'space-y-4')}>

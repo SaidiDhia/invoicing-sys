@@ -3,35 +3,36 @@ import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
 import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';
+import { BuyingPaymentInvoiceEntry } from '@/types/payments/buying-payment';
 
-type PaymentPseudoItem = { id: string; invoice: PaymentInvoiceEntry };
+type PaymentPseudoItem = { id: string; invoice: BuyingPaymentInvoiceEntry };
 
 export type PaymentInvoiceManager = {
   invoices: PaymentPseudoItem[];
-  add: (invoice?: PaymentInvoiceEntry) => void;
-  update: (id: string, article: PaymentInvoiceEntry) => void;
+  add: (invoice?: BuyingPaymentInvoiceEntry) => void;
+  update: (id: string, article: BuyingPaymentInvoiceEntry) => void;
   delete: (id: string) => void;
   setInvoices: (
-    entries: PaymentInvoiceEntry[],
+    entries: BuyingPaymentInvoiceEntry[],
     currency: Currency,
     convertionRate: number,
     mode?: 'EDIT' | 'NEW'
   ) => void;
   reset: () => void;
-  getInvoices: () => PaymentInvoiceEntry[];
+  getInvoices: () => BuyingPaymentInvoiceEntry[];
   calculateUsedAmount: () => number;
   init: () => void;
 };
 
 export const usePaymentInvoiceManager = create<PaymentInvoiceManager>()((set, get) => ({
   invoices: [],
-  add: (invoice: PaymentInvoiceEntry = {} as PaymentInvoiceEntry) => {
+  add: (invoice: BuyingPaymentInvoiceEntry = {} as BuyingPaymentInvoiceEntry) => {
     set((state) => ({
       invoices: [...state.invoices, { id: uuidv4(), invoice }]
     }));
   },
 
-  update: (id: string, invoice: PaymentInvoiceEntry) => {
+  update: (id: string, invoice: BuyingPaymentInvoiceEntry) => {
     set((state) => ({
       invoices: state.invoices.map((a) => (a.id === id ? { ...a, invoice } : a))
     }));
@@ -44,7 +45,7 @@ export const usePaymentInvoiceManager = create<PaymentInvoiceManager>()((set, ge
   },
 
   setInvoices: (
-    entries: PaymentInvoiceEntry[],
+    entries: BuyingPaymentInvoiceEntry[],
     currency: Currency,
     convertionRate: number,
     mode?: 'EDIT' | 'NEW'

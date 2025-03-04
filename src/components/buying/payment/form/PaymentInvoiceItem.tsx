@@ -1,20 +1,21 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { Currency, PaymentInvoiceEntry } from '@/types';
+import { Currency } from '@/types';
 import { transformDate } from '@/utils/date.utils';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
+import { BuyingPaymentInvoiceEntry } from '@/types/payments/buying-payment';
 
 interface PaymentInvoiceItemProps {
   className?: string;
-  invoiceEntry: PaymentInvoiceEntry;
+  invoiceEntry: BuyingPaymentInvoiceEntry;
   currency?: Currency;
   convertionRate: number;
-  onChange: (item: PaymentInvoiceEntry) => void;
+  onChange: (item: BuyingPaymentInvoiceEntry) => void;
 }
 
 export const PaymentInvoiceItem: React.FC<PaymentInvoiceItemProps> = ({
