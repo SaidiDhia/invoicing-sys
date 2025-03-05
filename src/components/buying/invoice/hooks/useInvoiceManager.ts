@@ -166,6 +166,7 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
       currency,
       uploadedFiles,
       taxStampId,
+      referenceDocFile,
       taxWithholdingId,
       ...rest
     } = get();

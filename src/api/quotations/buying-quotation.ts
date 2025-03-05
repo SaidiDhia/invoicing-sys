@@ -170,13 +170,20 @@ const duplicate = async (duplicateQuotationDto: DuplicateBuyingQuotationDto): Pr
 };
 
 const update = async (quotation: UpdateBuyingQuotationDto, files: File[]): Promise<BuyingQuotation> => {
-  
-  let referenceDocId = quotation.referenceDocId;
-  if (quotation.referenceDocFile) {
-    const [uploadId] = await uploadQuotationFiles([quotation.referenceDocFile]);
-    referenceDocId = uploadId;
+  let existQuotation;
+  if(quotation.id){
+    existQuotation=await findOne(quotation.id)
   }
-
+  let referenceDocId = quotation.referenceDocId;
+  if(referenceDocId!=existQuotation?.referenceDocId){
+    if (quotation.referenceDocFile) {
+      const [uploadId] = await uploadQuotationFiles([quotation.referenceDocFile]);
+      referenceDocId = uploadId;
+    }
+    else{
+      referenceDocId=existQuotation?.referenceDocId
+    }
+  }
   const uploadIds = await uploadQuotationFiles(files);
   const response = await axios.put<BuyingQuotation>(`public/buying-quotation/${quotation.id}`, {
     ...quotation,
@@ -202,22 +209,18 @@ const remove = async (id: number): Promise<BuyingQuotation> => {
 };
 import { AxiosError } from 'axios';
 
-const existSequential = async (sequential: string, firmId: number): Promise<boolean> => {
+const existSequential = async (sequential: string, firmId: number)=> {
   try {
-    const response = await axios.get(`public/buying-quotation/seq?sequential=${sequential}&firmId=${firmId}`);
-    console.log("res",response)
-    return true;
+    return await axios.get(`public/buying-quotation/seq?sequential=${sequential}&firmId=${firmId}`);
+
   } catch (error) {
     if (error instanceof AxiosError) {
+      // Now TypeScript knows `error` is of type AxiosError
       if (error.response?.status === 404) {
-        return false; // Quotation not found
+        return false; // Invoice not found
       }
       console.error('Axios error checking sequential:', error.message);
-    } else if (error instanceof Error) {
-      console.error('Error checking sequential:', error.message);
-    } else {
-      console.error('Unknown error checking sequential:', error);
-    }
+    } 
     throw new Error('Failed to check sequential');
   }
 };
@@ -242,8 +245,14 @@ const  validate = async(quotation: Partial<BuyingQuotation>): Promise<ToastValid
 
   if (!quotation.firmId) return { message: "Le firm est obligatoire" };
 
-  if(await existSequential(quotation.sequential,quotation.firmId)){
-    return{ message :" Un Devis avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. "};
+  const existQuotation=await existSequential(quotation.sequential,quotation.firmId)
+
+
+  if(existQuotation && existQuotation.data?.id!==quotation?.id){
+    return{ message :" Un Devis avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. 1"};
+  }
+  if(!quotation.id && existQuotation){
+    return{ message :" Un Devis avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. 2"};
   }
 
   

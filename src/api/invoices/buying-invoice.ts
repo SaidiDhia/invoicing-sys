@@ -164,12 +164,21 @@ const duplicate = async (duplicateInvoiceDto: DuplicateBuyingInvoiceDto): Promis
 };
 
 const update = async (invoice: UpdateBuyingInvoiceDto, files: File[]): Promise<BuyingInvoice> => {
-  
-  let referenceDocId = invoice.referenceDocId;
-  if (invoice.referenceDocFile) {
-    const [uploadId] = await uploadInvoiceFiles([invoice.referenceDocFile]);
-    referenceDocId = uploadId;
+  let existInvoice;
+  if(invoice.id){
+    existInvoice=await findOne(invoice.id)
   }
+  let referenceDocId = invoice.referenceDocId;
+  if(referenceDocId!=existInvoice?.referenceDocId){
+    if (invoice.referenceDocFile) {
+      const [uploadId] = await uploadInvoiceFiles([invoice.referenceDocFile]);
+      referenceDocId = uploadId;
+    }
+    else{
+      referenceDocId=existInvoice?.referenceDocId
+    }
+  }
+
   
   const uploadIds = await uploadInvoiceFiles(files);
   const response = await axios.put<BuyingInvoice>(`public/buying-invoice/${invoice.id}`, {
@@ -237,22 +246,20 @@ const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): 
   if (!invoice.firmId) return { message: "Le firm est obligatoire" };
 
   const existInvoice=await existSequential(invoice.sequential,invoice.firmId)
-  console.log("existinvoice",existInvoice)
-  console.log("currentId",invoice.id)
-  if((existInvoice && existInvoice.data?.id!=invoice?.id)||existInvoice){
-    return{ message :" Une Facture avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. "};
+
+
+  if(existInvoice && existInvoice.data?.id!==invoice?.id){
+    return{ message :" Une Facture avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. 1"};
   }
-
-
+  if(!invoice.id && existInvoice){
+    return{ message :" Une Facture avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. 2"};
+  }
   if (
     dateRange?.to &&
     isAfter(invoiceDate, dateRange.to) &&
     invoiceDate.getTime() !== dateRange.to.getTime()
   ) {
     return { message: `La date doit être avant ou égale à ${dateRange.to.toLocaleDateString()}` };
-  }
-  if (!invoice.referenceDocId && !invoice.referenceDocFile) {
-    return { message: 'Le document de référence est obligatoire' };
   }
   if (!invoice.dueDate) return { message: "L'échéance est obligatoire" };
   if (!invoice.object) return { message: "L'objet est obligatoire" };

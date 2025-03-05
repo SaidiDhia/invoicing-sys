@@ -284,7 +284,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
         hasGeneralConditions: !controlManager.isGeneralConditionsHidden
       },
       referenceDocId: quotationManager.referenceDocId,
-      referenceDoc: quotationManager.referenceDoc,
+      referenceDocFile: quotationManager.referenceDocFile,
 
       uploads: quotationManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };

@@ -236,7 +236,8 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
       return {
         invoice: invoiceManager.getInvoice(),
         articles: articleManager.getArticles(),
-        controls: controlManager.getControls()
+        controls: controlManager.getControls(),
+      
       };
     },
     setFormData: (data: Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>) => {
@@ -318,7 +319,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
       },
 
       referenceDocId: invoiceManager.referenceDocId,
-      referenceDoc: invoiceManager.referenceDoc,
+      referenceDocFile: invoiceManager.referenceDocFile,
 
       uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
