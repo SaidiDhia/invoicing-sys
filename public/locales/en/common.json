@@ -52,6 +52,10 @@
     "shrink": "Shrink",
     "promote": "Promote",
     "reset": "Reset",
+    "partially_paid": "Partially Paid",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "expired": "Expired",
     "validate": "Validate",
     "unassociate": "Unassociate"
   },

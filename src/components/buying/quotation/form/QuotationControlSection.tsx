@@ -57,7 +57,6 @@ interface QuotationControlSectionProps {
   handleSubmit?: () => void;
   handleSubmitDraft: () => void;
   handleSubmitValidated: () => void;
-  handleSubmitSent: () => void;
   handleSubmitAccepted?: () => void;
   handleSubmitRejected?: () => void;
   reset: () => void;
@@ -76,7 +75,6 @@ export const QuotationControlSection = ({
   handleSubmit,
   handleSubmitDraft,
   handleSubmitValidated,
-  handleSubmitSent,
   handleSubmitAccepted,
   handleSubmitRejected,
   reset,
@@ -222,19 +220,7 @@ export const QuotationControlSection = ({
       },
       loading: false
     },
-    {
-      ...QUOTATION_LIFECYCLE_ACTIONS.sent,
-      key: 'sent',
-      onClick: () => {
-        setActionName(tCommon('commands.send'));
-        !!handleSubmitSent &&
-          setAction(() => {
-            return () => handleSubmitSent();
-          });
-        setActionDialog(true);
-      },
-      loading: false
-    },
+    
     {
       ...QUOTATION_LIFECYCLE_ACTIONS.accepted,
       key: 'accepted',

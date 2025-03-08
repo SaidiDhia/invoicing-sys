@@ -53,6 +53,10 @@
     "promote": "Promouvoir",
     "reset": "Réinitialiser",
     "validate": "Valider",
+    "partially_paid": "Partiellement Payé",
+    "paid": "Payé",
+    "unpaid": "Non Payé",
+    "expired": "Expiré",
     "unassociate": "Dissocier"
   },
   "elements": "Éléments",

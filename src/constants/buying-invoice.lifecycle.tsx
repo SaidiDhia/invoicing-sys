@@ -32,18 +32,10 @@ export const BUYING_INVOICE_LIFECYCLE_ACTIONS: Record<string, InvoiceLifecycle> 
     icon: <FilePlus className="h-5 w-5" />,
     when: {
       membership: 'IN',
-      set: [undefined, BUYING_INVOICE_STATUS.Draft, BUYING_INVOICE_STATUS.Sent]
+      set: [undefined, BUYING_INVOICE_STATUS.Draft,]
     }
   },
-  sent: {
-    label: 'commands.send',
-    variant: 'default',
-    icon: <Send className="h-5 w-5" />,
-    when: {
-      membership: 'IN',
-      set: [undefined, BUYING_INVOICE_STATUS.Draft, BUYING_INVOICE_STATUS.Validated]
-    }
-  },
+  
   duplicate: {
     label: 'commands.duplicate',
     variant: 'default',
@@ -71,6 +63,9 @@ export const BUYING_INVOICE_LIFECYCLE_ACTIONS: Record<string, InvoiceLifecycle> 
       set: [undefined]
     }
   },
+  
+  
+
   archive: {
     label: 'commands.archive',
     variant: 'outline',

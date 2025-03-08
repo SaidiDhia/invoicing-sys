@@ -73,21 +73,21 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   } = useQuery({
     queryKey: ['invoice', invoiceId],
     queryFn: async () => {
-        const invoice = await api.buyingInvoice.findOne(parseInt(invoiceId));
-    
-        if (invoice.referenceDocId) {
-          const blob = await api.upload.fetchBlobById(invoice.referenceDocId);
-          if (!blob) {
-            throw new Error('Impossible de récupérer le fichier.');
-          }
-          const file=new File([blob], invoice.referenceDoc?.filename|| "referenceDoc", { type: blob.type })
-  
-          invoiceManager.set('referenceDocFile', file); 
-        }
+      const invoice = await api.buyingInvoice.findOne(parseInt(invoiceId));
 
-    
-        return invoice;
+      if (invoice.referenceDocId) {
+        const blob = await api.upload.fetchBlobById(invoice.referenceDocId);
+        if (!blob) {
+          throw new Error('Impossible de récupérer le fichier.');
+        }
+        const file = new File([blob], invoice.referenceDoc?.filename || "referenceDoc", { type: blob.type })
+
+        invoiceManager.set('referenceDocFile', file);
       }
+
+
+      return invoice;
+    }
   });
   const invoice = React.useMemo(() => {
     return invoiceResp || null;
@@ -284,7 +284,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     }));
     const invoice: UpdateBuyingInvoiceDto = {
       id: invoiceManager?.id,
-      sequential:invoiceManager?.sequential,
+      sequential: invoiceManager?.sequential,
       date: invoiceManager?.date?.toString(),
       dueDate: invoiceManager?.dueDate?.toString(),
       object: invoiceManager?.object,
@@ -320,9 +320,9 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
       referenceDocId: invoiceManager.referenceDocId,
       referenceDoc: invoiceManager.referenceDoc,
 
-        uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
+      uploads: invoiceManager.uploadedFiles.filter((u) => !!u.upload).map((u) => u.upload)
     };
-    
+
     const validation = await api.buyingInvoice.validate(invoice, dateRange);
     if (validation.message) {
       toast.error(validation.message, { position: validation.position || 'bottom-right' });
@@ -405,7 +405,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
                   handleSubmit={() => onSubmit(invoiceManager.status)}
                   handleSubmitDraft={() => onSubmit(BUYING_INVOICE_STATUS.Draft)}
                   handleSubmitValidated={() => onSubmit(BUYING_INVOICE_STATUS.Validated)}
-                  handleSubmitSent={() => onSubmit(BUYING_INVOICE_STATUS.Sent)}
+                  
                   loading={debounceFetching}
                   reset={globalReset}
                   edit={editMode}

@@ -305,7 +305,6 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
                   invoices={[]}
                   handleSubmitDraft={() => onSubmit(BUYING_QUOTATION_STATUS.Draft)}
                   handleSubmitValidated={() => onSubmit(BUYING_QUOTATION_STATUS.Validated)}
-                  handleSubmitSent={() => onSubmit(BUYING_QUOTATION_STATUS.Sent)}
                   reset={globalReset}
                   loading={debounceLoading}
                 />

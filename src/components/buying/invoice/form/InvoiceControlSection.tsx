@@ -24,7 +24,7 @@ import {
   Currency,
   TaxWithholding
 } from '@/types';
-import {  BUYING_INVOICE_STATUS, DuplicateBuyingInvoiceDto,}from '@/types/invoices/buying-invoice'
+import { BUYING_INVOICE_STATUS, DuplicateBuyingInvoiceDto, } from '@/types/invoices/buying-invoice'
 import { BUYING_INVOICE_LIFECYCLE_ACTIONS } from '@/constants/buying-invoice.lifecycle';
 import { InvoicePaymentList } from './InvoicePaymentList';
 import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
@@ -64,8 +64,11 @@ interface InvoiceControlSectionProps {
   handleSubmit?: () => void;
   handleSubmitDraft: () => void;
   handleSubmitValidated: () => void;
-  handleSubmitSent: () => void;
   handleSubmitDuplicate?: () => void;
+  handleSubmitPartiallyPaid?: () => void;
+  handleSubmitPaid?: () => void;
+  handleSubmitUnpaid?: () => void;
+  handleSubmitExpired?: () => void;
   reset: () => void;
   loading?: boolean;
   edit?: boolean;
@@ -83,7 +86,10 @@ export const BuyingInvoiceControlSection = ({
   handleSubmit,
   handleSubmitDraft,
   handleSubmitValidated,
-  handleSubmitSent,
+  handleSubmitPartiallyPaid,
+  handleSubmitPaid,
+  handleSubmitUnpaid,
+  handleSubmitExpired,
   reset,
   loading,
   edit = true
@@ -100,10 +106,10 @@ export const BuyingInvoiceControlSection = ({
   //action dialog
   const [actionDialog, setActionDialog] = React.useState<boolean>(false);
   const [actionName, setActionName] = React.useState<string>();
-  const [action, setAction] = React.useState<() => void>(() => {});
+  const [action, setAction] = React.useState<() => void>(() => { });
 
   //download dialog
- // const [downloadDialog, setDownloadDialog] = React.useState(false);
+  // const [downloadDialog, setDownloadDialog] = React.useState(false);
 
   //Download Invoice
   /*
@@ -122,7 +128,7 @@ export const BuyingInvoiceControlSection = ({
   });*/
 
   const { mutate: downloadInvoice } = useMutation({
-    mutationFn: (data: { id: number}) =>
+    mutationFn: (data: { id: number }) =>
       api.buyingInvoice.download(data.id),
     onSuccess: () => {
       toast.success(tInvoicing('invoice.action_download_success'));
@@ -195,6 +201,8 @@ export const BuyingInvoiceControlSection = ({
       },
       loading: false
     },
+    
+  
     {
       ...BUYING_INVOICE_LIFECYCLE_ACTIONS.validated,
       key: 'validated',
@@ -203,19 +211,6 @@ export const BuyingInvoiceControlSection = ({
         !!handleSubmitValidated &&
           setAction(() => {
             return () => handleSubmitValidated();
-          });
-        setActionDialog(true);
-      },
-      loading: false
-    },
-    {
-      ...BUYING_INVOICE_LIFECYCLE_ACTIONS.sent,
-      key: 'sent',
-      onClick: () => {
-        setActionName(tCommon('commands.send'));
-        !!handleSubmitSent &&
-          setAction(() => {
-            return () => handleSubmitSent();
           });
         setActionDialog(true);
       },
@@ -232,7 +227,7 @@ export const BuyingInvoiceControlSection = ({
     {
       ...BUYING_INVOICE_LIFECYCLE_ACTIONS.download,
       key: 'download',
-      onClick: () => {invoiceManager?.id && downloadInvoice({ id: invoiceManager.id })},
+      onClick: () => { invoiceManager?.id && downloadInvoice({ id: invoiceManager.id }) },
       loading: false
     },
     {
@@ -383,7 +378,6 @@ export const BuyingInvoiceControlSection = ({
         {/* Payment list */}
         {status &&
           [
-            BUYING_INVOICE_STATUS.Sent,
             BUYING_INVOICE_STATUS.Unpaid,
             BUYING_INVOICE_STATUS.Paid,
             BUYING_INVOICE_STATUS.PartiallyPaid
@@ -520,7 +514,7 @@ export const BuyingInvoiceControlSection = ({
                 {...{ checked: !controlManager.isArticleDescriptionHidden }}
               />
             </div>
-          </div>  
+          </div>
           {/* general condition switch */}
           <div className="flex w-full items-center mt-1">
             <Label className="w-full">{tInvoicing('invoice.attributes.general_condition')}</Label>

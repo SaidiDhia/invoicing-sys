@@ -347,7 +347,6 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
                   taxWithholdings={taxWithholdings}
                   handleSubmitDraft={() => onSubmit(BUYING_INVOICE_STATUS.Draft)}
                   handleSubmitValidated={() => onSubmit(BUYING_INVOICE_STATUS.Validated)}
-                  handleSubmitSent={() => onSubmit(BUYING_INVOICE_STATUS.Sent)}
                   reset={globalReset}
                   loading={debounceLoading}
                 />
