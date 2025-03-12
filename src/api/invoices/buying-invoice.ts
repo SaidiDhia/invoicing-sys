@@ -278,7 +278,6 @@ export const buyingInvoice = {
   factory,
   findPaginated,
   findOne,
-  //findByRange,
   create,
   download,
   duplicate,

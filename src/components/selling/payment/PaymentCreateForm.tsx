@@ -59,8 +59,8 @@ export const PaymentCreateForm = ({ className, firmId }: PaymentFormProps) => {
 
   const { firms, isFetchFirmsPending } = useFirmChoices([
     'currency',
-    'invoices',
-    'invoices.currency'
+    'sellingInvoices',
+    'sellingInvoices.currency'
   ]);
 
   const currency = React.useMemo(() => {

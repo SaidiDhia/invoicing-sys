@@ -211,7 +211,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
     onSuccess: (data) => {
       if (data.status == QUOTATION_STATUS.Invoiced) {
         toast.success('Devis facturé avec succès');
-        // router.push(`/selling/invoice/${data.invoiceId}`);
+        router.push(`/selling/invoice/${data.invoices[data?.invoices?.length - 1].id}`);
       } else {
         toast.success('Devis modifié avec succès');
       }

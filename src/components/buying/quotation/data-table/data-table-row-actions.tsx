@@ -85,16 +85,16 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           }}>
           <Copy className="h-5 w-5 mr-2" /> {tCommon('commands.duplicate')}
         </DropdownMenuItem>
+        {/* Modify */}
         {(quotation.status == BUYING_QUOTATION_STATUS.Draft ||
-          quotation.status == BUYING_QUOTATION_STATUS.Validated ||
-          quotation.status == BUYING_QUOTATION_STATUS.Sent) && (
+          quotation.status == BUYING_QUOTATION_STATUS.Validated) && (
           <DropdownMenuItem onClick={() => router.push('/buying/quotation/' + quotation.id)}>
             <Settings2 className="h-5 w-5 mr-2" /> {tCommon('commands.modify')}
           </DropdownMenuItem>
         )}
-        {(quotation.status == BUYING_QUOTATION_STATUS.Accepted ||
-          quotation.status == BUYING_QUOTATION_STATUS.Invoiced) && (
-          <DropdownMenuItem
+        {(quotation.status == BUYING_QUOTATION_STATUS.Invoiced ||
+          quotation.status == BUYING_QUOTATION_STATUS.Validated) && 
+        (<DropdownMenuItem
             onClick={() => {
               targetQuotation();
               openInvoiceDialog?.();
@@ -102,7 +102,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             <FileCheck className="h-5 w-5 mr-2" /> {tCommon('commands.to_invoice')}
           </DropdownMenuItem>
         )}
-        {quotation.status != BUYING_QUOTATION_STATUS.Sent && (
+        {/* Delete */}
           <DropdownMenuItem
             onClick={() => {
               targetQuotation();
@@ -110,7 +110,6 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             }}>
             <Trash2 className="h-5 w-5 mr-2" /> {tCommon('commands.delete')}
           </DropdownMenuItem>
-        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

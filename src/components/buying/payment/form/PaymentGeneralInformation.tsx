@@ -73,13 +73,14 @@ export const PaymentGeneralInformation = ({
                 paymentManager.set('currencyId', firm?.currency?.id);
                 paymentManager.set('currency', firm?.currency);
                 invoiceManager.reset();
-                firm?.invoices?.forEach((invoice) => {
+
+                firm?.buyingInvoices?.forEach((invoice) => {
                   if (
                     invoice?.status &&
                     [
                       BUYING_INVOICE_STATUS.PartiallyPaid,
-                      BUYING_INVOICE_STATUS.Sent,
-                      BUYING_INVOICE_STATUS.Unpaid
+                      BUYING_INVOICE_STATUS.Unpaid,
+                      BUYING_INVOICE_STATUS.Validated
                     ].includes(invoice?.status)
                   )
                     invoiceManager.add({

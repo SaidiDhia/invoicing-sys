@@ -153,23 +153,6 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
     }
   });
 
-  //Download Quotation
-  /*
-    const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
-    mutationFn: (data: { id: number; template: string }) =>
-      api.buyingQuotation.download(data.id, data.template),
-    onSuccess: () => {
-      toast.success(tInvoicing('quotation.action_download_success'));
-      setDownloadDialog(false);
-    },
-    onError: (error) => {
-      toast.error(
-        getErrorMessage('invoicing', error, tInvoicing('quotation.action_download_failure'))
-      );
-    }
-  });
-  */
-
 
   //Invoice quotation
   const { mutate: invoiceQuotation, isPending: isInvoicingPending } = useMutation({
@@ -229,17 +212,6 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
           isDuplicationPending={isDuplicationPending}
           onClose={() => setDuplicateDialog(false)}
         />
-       {/**
-        <QuotationDownloadDialog
-          id={quotationManager?.id || 0}
-          open={downloadDialog}
-          downloadQuotation={(template: string) => {
-            quotationManager?.id && downloadQuotation({ id: quotationManager?.id, template });
-          }}
-          isDownloadPending={isDownloadPending}
-          onClose={() => setDownloadDialog(false)}
-        />
-        */} 
         <QuotationInvoiceDialog
           id={quotationManager?.id || 0}
           status={quotationManager?.status}

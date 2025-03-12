@@ -16,9 +16,6 @@ export enum BUYING_QUOTATION_STATUS {
   Expired = 'quotation.status.expired',
   Draft = 'quotation.status.draft',
   Validated = 'quotation.status.validated',
-  Sent = 'quotation.status.sent',
-  Accepted = 'quotation.status.accepted',
-  Rejected = 'quotation.status.rejected',
   Invoiced = 'quotation.status.invoiced'
 }
 

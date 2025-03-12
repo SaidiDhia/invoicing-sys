@@ -226,7 +226,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
     onSuccess: (data) => {
       if (data.status == BUYING_QUOTATION_STATUS.Invoiced) {
         toast.success('Devis facturé avec succès');
-        // router.push(`/buying/invoice/${data.invoiceId}`);
+        router.push(`/buying/invoice/${data.invoices[data?.invoices?.length - 1].id}`);
       } else {
         toast.success('Devis modifié avec succès');
       }
@@ -367,9 +367,6 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
                   handleSubmit={() => onSubmit(quotationManager.status)}
                   handleSubmitDraft={() => onSubmit(BUYING_QUOTATION_STATUS.Draft)}
                   handleSubmitValidated={() => onSubmit(BUYING_QUOTATION_STATUS.Validated)}
-                  handleSubmitSent={() => onSubmit(BUYING_QUOTATION_STATUS.Sent)}
-                  handleSubmitAccepted={() => onSubmit(BUYING_QUOTATION_STATUS.Accepted)}
-                  handleSubmitRejected={() => onSubmit(BUYING_QUOTATION_STATUS.Rejected)}
                   loading={debounceFetching}
                   refetch={refetchQuotation}
                   reset={globalReset}

@@ -193,7 +193,7 @@ export const InvoiceFinancialInformation = ({
           </div>
         </div>
       )}
-      {[BUYING_INVOICE_STATUS.PartiallyPaid, BUYING_INVOICE_STATUS.Unpaid, BUYING_INVOICE_STATUS.Sent].includes(
+      {[BUYING_INVOICE_STATUS.PartiallyPaid, BUYING_INVOICE_STATUS.Unpaid].includes(
         status
       ) && (
         <div>

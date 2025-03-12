@@ -15,7 +15,7 @@ import { useQuotationManager } from './hooks/useQuotationManager';
 import { QuotationActionsContext } from './data-table/ActionsContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useBreadcrumb } from '@/components/layout/BreadcrumbContext';
-import { QuotationInvoiceDialog } from './dialogs/QuotationInvoiceDialog';
+import { QuotationInvoiceDialog } from'./dialogs/QuotationInvoiceDialog';
 import { DuplicateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
 
 interface QuotationMainProps {
@@ -136,21 +136,6 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
     }
   });
 
-  //Download Quotation
-  /*
-  const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
-    mutationFn: (data: { id: number}) =>
-      api.buyingQuotation.download(data.id),
-    onSuccess: () => {
-      toast.success(tInvoicing('quotation.action_download_success'));
-      setDownloadDialog(false);
-    },
-    onError: (error) => {
-      toast.error(
-        getErrorMessage('invoicing', error, tInvoicing('quotation.action_download_failure'))
-      );
-    }
-  });*/
 
   //Invoice quotation
   const { mutate: invoiceQuotation, isPending: isInvoicingPending } = useMutation({
@@ -203,18 +188,7 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
         }}
         isDuplicationPending={isDuplicationPending}
         onClose={() => setDuplicateDialog(false)}
-      />{/**
-            <QuotationDownloadDialog
-        id={quotationManager?.id || 0}
-        open={downloadDialog}
-        downloadQuotation={() => {
-          quotationManager?.id && downloadQuotation({ id: quotationManager?.id });
-        }}
-        isDownloadPending={isDownloadPending}
-        onClose={() => setDownloadDialog(false)}
       />
-      */}
-
       <QuotationInvoiceDialog
         id={quotationManager?.id || 0}
         status={quotationManager?.status}
@@ -226,6 +200,8 @@ export const QuotationMain: React.FC<QuotationMainProps> = ({ className }) => {
         }}
         onClose={() => setInvoiceDialog(false)}
       />
+
+      
       <QuotationActionsContext.Provider value={context}>
         <Card className={className}>
           <CardHeader>

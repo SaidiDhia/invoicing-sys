@@ -72,7 +72,9 @@ export const PaymentGeneralInformation = ({
                 paymentManager.set('currencyId', firm?.currency?.id);
                 paymentManager.set('currency', firm?.currency);
                 invoiceManager.reset();
-                firm?.invoices?.forEach((invoice) => {
+                console.log('firm', firm);
+                firm?.sellingInvoices?.forEach((invoice) => {
+                  console.log('invoice', invoice);
                   if (
                     invoice?.status &&
                     [
@@ -81,6 +83,7 @@ export const PaymentGeneralInformation = ({
                       INVOICE_STATUS.Unpaid
                     ].includes(invoice?.status)
                   )
+
                     invoiceManager.add({
                       amount: 0,
                       invoiceId: invoice.id,

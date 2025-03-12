@@ -43,44 +43,17 @@ export const QUOTATION_LIFECYCLE_ACTIONS: Record<string, BuyingQuotationLifecycl
     icon: <FilePlus className="h-5 w-5" />,
     when: {
       membership: 'IN',
-      set: [undefined, BUYING_QUOTATION_STATUS.Draft, BUYING_QUOTATION_STATUS.Sent]
-    }
-  },
-  sent: {
-    label: 'commands.send',
-    variant: 'default',
-    icon: <Send className="h-5 w-5" />,
-    when: {
-      membership: 'IN',
-      set: [undefined, BUYING_QUOTATION_STATUS.Draft, BUYING_QUOTATION_STATUS.Validated]
-    }
-  },
-  accepted: {
-    label: 'commands.accept',
-    variant: 'default',
-    icon: <Check className="h-5 w-5" />,
-    when: {
-      membership: 'IN',
-      set: [BUYING_QUOTATION_STATUS.Sent]
-    }
-  },
-  rejected: {
-    label: 'commands.reject',
-    variant: 'default',
-    icon: <X className="h-5 w-5" />,
-    when: {
-      membership: 'IN',
-      set: [BUYING_QUOTATION_STATUS.Sent]
+      set: [undefined, BUYING_QUOTATION_STATUS.Draft]
     }
   },
   invoiced: {
-    label: 'commands.to_invoice',
-    variant: 'default',
-    icon: <FileCheck className="h-5 w-5" />,
-    when: {
-      membership: 'IN',
-      set: [BUYING_QUOTATION_STATUS.Accepted, BUYING_QUOTATION_STATUS.Invoiced]
-    }
+      label: 'commands.to_invoice',
+      variant: 'default',
+      icon: <FileCheck className="h-5 w-5" />,
+      when: {
+        membership: 'IN',
+        set: [BUYING_QUOTATION_STATUS.Validated,BUYING_QUOTATION_STATUS.Invoiced]
+      }
   },
   duplicate: {
     label: 'commands.duplicate',
@@ -106,7 +79,7 @@ export const QUOTATION_LIFECYCLE_ACTIONS: Record<string, BuyingQuotationLifecycl
     icon: <Trash className="h-5 w-5" />,
     when: {
       membership: 'OUT',
-      set: [undefined, BUYING_QUOTATION_STATUS.Sent]
+      set: [undefined]
     }
   },
   archive: {

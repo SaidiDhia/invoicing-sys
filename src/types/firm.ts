@@ -34,8 +34,8 @@ export interface Firm extends DatabaseEntity {
   interlocutorsToFirm?: FirmInterlocutorEntry[];
   notes?: string;
   quotations?: Quotation[];
-  invoices?: Invoice[];
-  invoicesF?: BuyingInvoice[];
+  sellingInvoices?: Invoice[];
+  buyingInvoices?: BuyingInvoice[];
 }
 
 export interface CreateFirmDto

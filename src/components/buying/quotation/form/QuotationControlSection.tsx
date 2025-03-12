@@ -57,8 +57,6 @@ interface QuotationControlSectionProps {
   handleSubmit?: () => void;
   handleSubmitDraft: () => void;
   handleSubmitValidated: () => void;
-  handleSubmitAccepted?: () => void;
-  handleSubmitRejected?: () => void;
   reset: () => void;
   refetch?: () => void;
   loading?: boolean;
@@ -75,8 +73,6 @@ export const QuotationControlSection = ({
   handleSubmit,
   handleSubmitDraft,
   handleSubmitValidated,
-  handleSubmitAccepted,
-  handleSubmitRejected,
   reset,
   refetch,
   loading,
@@ -95,24 +91,6 @@ export const QuotationControlSection = ({
   const [actionDialog, setActionDialog] = React.useState<boolean>(false);
   const [actionName, setActionName] = React.useState<string>();
   const [action, setAction] = React.useState<() => void>(() => {});
-
-  //download dialog
-  //const [downloadDialog, setDownloadDialog] = React.useState(false);
-
-  //Download Quotation
-  /*const { mutate: downloadQuotation, isPending: isDownloadPending } = useMutation({
-    mutationFn: (data: { id: number; template: string }) =>
-      api.buyingQuotation.download(data.id, data.template),
-    onSuccess: () => {
-      toast.success(tInvoicing('quotation.action_download_success'));
-      setDownloadDialog(false);
-    },
-    onError: (error) => {
-      toast.error(
-        getErrorMessage('invoicing', error, tInvoicing('quotation.action_download_failure'))
-      );
-    }
-  });*/
 
   //Download Quotation
   const { mutate: downloadQuotation } = useMutation({
@@ -161,7 +139,6 @@ export const QuotationControlSection = ({
       toast.error(getErrorMessage('', error, tInvoicing('quotation.action_remove_failure')));
     }
   });
-
   //invoice dialog
   const [invoiceDialog, setInvoiceDialog] = React.useState(false);
 
@@ -179,7 +156,6 @@ export const QuotationControlSection = ({
       toast.error(message);
     }
   });
-
   const buttonsWithHandlers: BuyingQuotationLifecycle[] = [
     {
       ...QUOTATION_LIFECYCLE_ACTIONS.save,
@@ -215,33 +191,6 @@ export const QuotationControlSection = ({
         !!handleSubmitValidated &&
           setAction(() => {
             return () => handleSubmitValidated();
-          });
-        setActionDialog(true);
-      },
-      loading: false
-    },
-    
-    {
-      ...QUOTATION_LIFECYCLE_ACTIONS.accepted,
-      key: 'accepted',
-      onClick: () => {
-        setActionName(tCommon('commands.accept'));
-        !!handleSubmitAccepted &&
-          setAction(() => {
-            return () => handleSubmitAccepted();
-          });
-        setActionDialog(true);
-      },
-      loading: false
-    },
-    {
-      ...QUOTATION_LIFECYCLE_ACTIONS.rejected,
-      key: 'rejected',
-      onClick: () => {
-        setActionName(tCommon('commands.reject'));
-        !!handleSubmitRejected &&
-          setAction(() => {
-            return () => handleSubmitRejected();
           });
         setActionDialog(true);
       },
@@ -320,15 +269,7 @@ export const QuotationControlSection = ({
         isDuplicationPending={isDuplicationPending}
         onClose={() => setDuplicateDialog(false)}
       />
-      {/*<QuotationDownloadDialog
-        id={quotationManager?.id || 0}
-        open={downloadDialog}
-        downloadQuotation={(template: string) => {
-          quotationManager?.id && downloadQuotation({ id: quotationManager?.id, template });
-        }}
-        isDownloadPending={isDownloadPending}
-        onClose={() => setDownloadDialog(false)}
-      />*/}
+
       <QuotationDeleteDialog
         id={quotationManager?.id || 0}
         sequential={sequential}

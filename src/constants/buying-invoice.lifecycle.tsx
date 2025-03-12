@@ -32,7 +32,7 @@ export const BUYING_INVOICE_LIFECYCLE_ACTIONS: Record<string, InvoiceLifecycle> 
     icon: <FilePlus className="h-5 w-5" />,
     when: {
       membership: 'IN',
-      set: [undefined, BUYING_INVOICE_STATUS.Draft,]
+      set: [undefined, BUYING_INVOICE_STATUS.Draft]
     }
   },
   

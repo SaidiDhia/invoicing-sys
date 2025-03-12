@@ -406,7 +406,6 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
                   handleSubmit={() => onSubmit(invoiceManager.status)}
                   handleSubmitDraft={() => onSubmit(BUYING_INVOICE_STATUS.Draft)}
                   handleSubmitValidated={() => onSubmit(BUYING_INVOICE_STATUS.Validated)}
-                  
                   loading={debounceFetching}
                   reset={globalReset}
                   edit={editMode}
