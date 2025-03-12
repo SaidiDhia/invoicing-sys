@@ -17,7 +17,6 @@ import { Input } from '@/components/ui/input';
 import React from 'react';
 import { CalendarDatePicker } from '@/components/ui/calendar-day-picker';
 import { usePaymentInvoiceManager } from '../hooks/usePaymentInvoiceManager';
-import { buyingInvoice } from '@/api';
 
 interface PaymentGeneralInformationProps {
   className?: string;
@@ -162,7 +161,7 @@ export const PaymentGeneralInformation = ({
                 <SelectValue placeholder={tInvoicing('payment.attributes.mode')} />
               </SelectTrigger>
               <SelectContent>
-                {Object.values(BUYING_PAYMENT_MODE).map((title) => (
+                {Object.values(PAYMENT_MODE).map((title) => (
                   <SelectItem key={title} value={title}>
                     {tInvoicing(title)}
                   </SelectItem>

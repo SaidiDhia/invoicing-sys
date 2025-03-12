@@ -165,14 +165,19 @@ const duplicate = async (duplicateInvoiceDto: DuplicateBuyingInvoiceDto): Promis
 
 const update = async (invoice: UpdateBuyingInvoiceDto, files: File[]): Promise<BuyingInvoice> => {
   let existInvoice;
+
   if(invoice.id){
     existInvoice=await findOne(invoice.id)
   }
-  let referenceDocId = invoice.referenceDocId;
-  if(referenceDocId!=existInvoice?.referenceDocId){
-    if (invoice.referenceDocFile) {
-      const [uploadId] = await uploadInvoiceFiles([invoice.referenceDocFile]);
-      referenceDocId = uploadId;
+  console.log("invoicereferenceDocId",invoice.referenceDocId)
+  console.log("existInvoice?.referenceDocId",existInvoice?.referenceDocId)
+
+  let referenceDocId
+  let referenceDocFile = invoice.referenceDocFile;
+  if(referenceDocFile!=existInvoice?.referenceDocFile){
+    if(referenceDocFile) {
+      [referenceDocId] = await uploadInvoiceFiles([referenceDocFile]);
+ 
     }
     else{
       referenceDocId=existInvoice?.referenceDocId
@@ -225,9 +230,7 @@ const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): 
   ) {
     return { message: `La date doit être après ou égale à ${dateRange.from.toLocaleDateString()}` };
   }
-
-  
-  if (!invoice.referenceDocId && !invoice.referenceDocFile) {
+    if (!invoice.referenceDocId && !invoice.referenceDocFile) {
     return { message: 'Le document de référence est obligatoire' };
   }
   if (!invoice.sequential) return { message: "Le numero de sequence est obligatoire" };

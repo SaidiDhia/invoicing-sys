@@ -72,8 +72,8 @@ export const PaymentUpdateForm = ({ className, paymentId }: PaymentFormProps) =>
 
   const { firms, isFetchFirmsPending } = useFirmChoices([
     'currency',
-    'invoices',
-    'invoices.currency'
+    'sellingInvoices',
+    'sellingInvoices.currency'
   ]);
   const fetching =
     isFetchPending || isFetchFirmsPending || isFetchCurrenciesPending || isFetchCabinetPending;
