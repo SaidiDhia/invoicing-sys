@@ -86,11 +86,11 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
   //set page title in the breadcrumb
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
-    if (quotation?.sequential)
+    if (quotation?.sequential || quotation?.id)
       setRoutes([
         { title: tCommon('menu.buying'), href: '/buying' },
         { title: tInvoicing('quotation.plural'), href: '/buying/quotations' },
-        { title: tInvoicing('quotation.singular') + ' N° ' + quotation?.sequential }
+        { title: quotation?.sequential ? tInvoicing('quotation.singular') + ' N° ' + quotation?.sequential : tInvoicing('quotation.add_button_label') }
       ]);
   }, [router.locale, quotation?.sequential]);
 

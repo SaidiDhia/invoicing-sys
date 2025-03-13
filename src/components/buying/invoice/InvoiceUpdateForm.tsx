@@ -96,11 +96,11 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   //set page title in the breadcrumb
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
-    if (invoice?.sequential)
+    if (invoice?.sequential || invoice?.id)
       setRoutes([
         { title: tCommon('menu.buying'), href: '/buying' },
         { title: tInvoicing('invoice.plural'), href: '/buying/invoices' },
-        { title: tInvoicing('invoice.singular') + ' N° ' + invoice?.sequential }
+        { title: invoice?.sequential ? tInvoicing('invoice.singular') + ' N° ' + invoice?.sequential : tInvoicing('invoice.add_button_label') }
       ]);
   }, [router.locale, invoice?.sequential]);
 
