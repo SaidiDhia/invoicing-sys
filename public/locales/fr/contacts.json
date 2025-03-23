@@ -51,7 +51,8 @@
       "chronological": "Chronologie",
       "quotations": "Devis",
       "invoices": "Factures",
-      "payments": "Paiements"
+      "payments": "Paiements",
+      "bank-accounts": "Comptes Bancaires"
     },
     "introduce_info": "Saisissez les informations de l'entreprise",
     "introduce_info_description": "Veuillez renseigner les détails de la nouvelle entreprise en fournissant toutes les informations requises.",
@@ -136,5 +137,34 @@
   "invoices":{
     "buying_invoices":"Factures d'Achats",
     "selling_invoices":"Factures  de Ventes"
+  },
+  "bank_accounts": {
+    "action_add_failure": "Erreur lors de la création du compte bancaire",
+    "action_add_success": "Compte Bancaire ajouté avec succès",
+    "action_edit_failure": "Erreur lors de la modification du compte bancaire",
+    "action_edit_success": "Compte Bancaire modifié avec succès",
+    "action_remove_failure": "Erreur lors de la suppression du compte bancaire",
+    "action_remove_success": "Compte Bancaire supprimé avec succès",
+    "action_promote_failure": "Erreur lors de la promotion du compte bancaire",
+    "action_promote_success": "Compte Bancaire {{name}} promu avec succès",
+    "add_button_label": "Nouveau Compte Bancaire",
+    "attributes": {
+      "name": "Nom de la Banque",
+      "bic": "BIC/SWIFT",
+      "currency": "Devise",
+      "rib": "RIB",
+      "iban": "IBAN",
+      "isMain": "Banque Principale"
+    },
+    "card_description": "Cette section permet aux utilisateurs de gérer efficacement les comptes bancaires en effectuant les actions clés liées aux comptes bancaires enregistrés",
+    "hints": {
+      "create_dialog_hint": "Introduisez les détails pour créer une nouveau compte bancaire. Assurez-vous que tous les champs obligatoires sont remplis avant d'enregistrer.",
+      "update_dialog_hint": "Introduisez les détails pour mettre à jour le compte bancaire. Assurez-vous que tous les champs obligatoires sont remplis avant d'enregistrer."
+    },
+    "new": "Nouveau Compte Bancaire",
+    "update": "Mise à jour d'un Compte Bancaire",
+    "singular": "Compte Bancaire",
+    "plural": "Comptes Bancaires",
+    "promote_prompt": "Etes-vous sûr de vouloir promouvoir '<label>{{label}}</label>' comme compte principal ?"
   }
 }

@@ -46,8 +46,16 @@ export const QUOTATION_LIFECYCLE_ACTIONS: Record<string, QuotationLifecycle> = {
       set: [undefined, QUOTATION_STATUS.Draft, QUOTATION_STATUS.Sent]
     }
   },
-  
-  
+  sent: {
+    label: 'commands.send',
+    variant: 'default',
+    icon: <Send className="h-5 w-5" />,
+    when: {
+      membership: 'IN',
+      set: [undefined, QUOTATION_STATUS.Draft, QUOTATION_STATUS.Validated]
+    }
+  },
+
   accepted: {
     label: 'commands.accept',
     variant: 'default',

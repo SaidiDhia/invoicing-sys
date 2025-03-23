@@ -37,7 +37,7 @@ const factory = (): CreateBuyingInvoiceDto => {
     referenceDocFile:undefined,
   };
 };
-
+/*
 const findPaginated = async (
   page: number = 1,
   size: number = 5,
@@ -53,9 +53,44 @@ const findPaginated = async (
       .map((key) => `${key}||$cont||${search}`)
       .join('||$or||')
     : '';
+  
   const firmCondition = firmId ? `firmId||$eq||${firmId}` : '';
   const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
   const filters = [generalFilter, firmCondition, interlocutorCondition].filter(Boolean).join(',');
+
+  const response = await axios.get<PagedBuyingInvoice>(
+    new String().concat(
+      'public/buying-invoice/list?',
+      `sort=${sortKey},${order}&`,
+      `filter=${filters}&`,
+      `limit=${size}&page=${page}&`,
+      `join=${relations.join(',')}`
+    )
+  );
+  return response.data;
+};*/
+const findPaginated = async (
+  page: number = 1,
+  size: number = 5,
+  order: 'ASC' | 'DESC' = 'ASC',
+  sortKey: string,
+  search: string = '',
+  relations: string[] = ['firm', 'interlocutor'],
+  firmId?: number,
+  interlocutorId?: number
+): Promise<PagedBuyingInvoice> => {
+  const generalFilter = search
+    ? Object.values(INVOICE_FILTER_ATTRIBUTES)
+      .map((key) => `${key}||$cont||${search}`)
+      .join('||$or||')
+    : '';
+
+    let filters: string=""
+    let mainCondition = "";
+    if(firmId || interlocutorId){
+      mainCondition = firmId ? `firmId||$eq||${firmId}` : interlocutorId?`interlocutorId||$cont||${interlocutorId}`:"";
+    }
+    filters = mainCondition && generalFilter ? `${mainCondition}&&(${generalFilter})` : mainCondition || generalFilter;
 
   const response = await axios.get<PagedBuyingInvoice>(
     new String().concat(
