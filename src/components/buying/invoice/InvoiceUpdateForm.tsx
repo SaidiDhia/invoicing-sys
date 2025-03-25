@@ -12,7 +12,7 @@ import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
 import useFirmChoice from '@/hooks/content/useFirmChoice';
-import useBankAccount from '@/hooks/content/useBankAccount';
+import useFirmBankAccount from '@/hooks/content/useFirmBankAccount';
 import { toast } from 'sonner';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getErrorMessage } from '@/utils/errors';
@@ -119,7 +119,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
   const { quotations, isFetchQuotationPending } = useQuotationChoices(BUYING_QUOTATION_STATUS.Invoiced);
   const { taxes, isFetchTaxesPending } = useTax();
   const { currencies, isFetchCurrenciesPending } = useCurrency();
-  const { bankAccounts, isFetchBankAccountsPending } = useBankAccount();
+  const { firmBankAccounts, isFetchFirmBankAccountsPending } = useFirmBankAccount();
   const { taxWithholdings, isFetchTaxWithholdingsPending } = useTaxWithholding();
   const { defaultCondition, isFetchDefaultConditionPending } = useDefaultCondition(
     ACTIVITY_TYPE.BUYING,
@@ -131,7 +131,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     isFetchFirmsPending ||
     isFetchTaxesPending ||
     isFetchCurrenciesPending ||
-    isFetchBankAccountsPending ||
+    isFetchFirmBankAccountsPending ||
     isFetchDefaultConditionPending ||
     isFetchQuotationPending ||
     isFetchTaxWithholdingsPending ||
@@ -215,7 +215,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
       ...data,
       referenceDoc: data.referenceDoc,
       referenceDocId: data.referenceDocId
-    }, firms, bankAccounts);
+    }, firms, firmBankAccounts);
     data?.quotation && quotationManager.set('sequential', data?.quotation?.sequential);
     //invoice meta infos
     controlManager.setControls({
@@ -398,7 +398,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
                 <BuyingInvoiceControlSection
                   status={invoiceManager.status}
                   isDataAltered={isDisabled}
-                  bankAccounts={bankAccounts}
+                  bankAccounts={firmBankAccounts}
                   currencies={currencies}
                   quotations={quotations}
                   payments={invoice?.payments || []}

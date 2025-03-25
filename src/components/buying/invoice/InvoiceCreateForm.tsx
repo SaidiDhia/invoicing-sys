@@ -11,7 +11,7 @@ import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
 import useFirmChoice from '@/hooks/content/useFirmChoice';
-import useBankAccount from '@/hooks/content/useBankAccount';
+import useFirmBankAccount from '@/hooks/content/useFirmBankAccount';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 import { getErrorMessage } from '@/utils/errors';
@@ -94,7 +94,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
   const { cabinet, isFetchCabinetPending } = useCabinet();
   const { taxes, isFetchTaxesPending } = useTax();
   const { currencies, isFetchCurrenciesPending } = useCurrency();
-  const { bankAccounts, isFetchBankAccountsPending } = useBankAccount();
+  const { firmBankAccounts, isFetchFirmBankAccountsPending } = useFirmBankAccount();
   const { defaultCondition, isFetchDefaultConditionPending } = useDefaultCondition(
     ACTIVITY_TYPE.BUYING,
     DOCUMENT_TYPE.INVOICE
@@ -189,7 +189,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
     isFetchFirmsPending ||
     isFetchTaxesPending ||
     isFetchCabinetPending ||
-    isFetchBankAccountsPending ||
+    isFetchFirmBankAccountsPending ||
     isFetchCurrenciesPending ||
     isFetchDefaultConditionPending ||
     isCreatePending ||
@@ -341,7 +341,7 @@ export const InvoiceCreateForm = ({ className, firmId }: InvoiceFormProps) => {
               <CardContent className="p-5">
                 {/* Control Section */}
                 <BuyingInvoiceControlSection
-                  bankAccounts={bankAccounts}
+                  bankAccounts={firmBankAccounts}
                   currencies={currencies}
                   quotations={quotations}
                   taxWithholdings={taxWithholdings}
