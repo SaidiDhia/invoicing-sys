@@ -138,6 +138,10 @@
     "buying_invoices":"Buying Invoices",
     "selling_invoices":"Selling Invoices"
   },
+  "payments":{
+    "buying_payments":"Buying Payments",
+    "selling_payments":"Selling Payments"
+  },
   "bank_accounts": {
     "action_add_failure": "Error while creating Bank Account",
     "action_add_success": "Bank Account Added Successfully",

@@ -37,12 +37,12 @@ export const QuotationEmbeddedMain: React.FC<QuotationEmbeddedMainProps> = ({
   const { t: tCommon, ready: commonReady } = useTranslation('common');
   const { t: tInvoicing, ready: invoicingReady } = useTranslation('invoicing');
 
-  const { setRoutes } = useBreadcrumb();
+  /*const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
     if (routes && (firmId || interlocutorId))
       setRoutes([...routes, { title: tCommon('submenu.quotations') }]);
   }, [router.locale, firmId, interlocutorId, routes]);
-
+*/
   const quotationManager = useQuotationManager();
 
   const [page, setPage] = React.useState(1);

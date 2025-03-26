@@ -134,6 +134,11 @@
     "buying_quotations":"Devis d'Achats",
     "selling_quotations":"Devis de Ventes"
   },
+
+  "payments":{
+    "buying_payments":"Payments d'Achats",
+    "selling_payments":"Payments de Ventes"
+  },
   "invoices":{
     "buying_invoices":"Factures d'Achats",
     "selling_invoices":"Factures  de Ventes"

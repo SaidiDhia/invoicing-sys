@@ -4,12 +4,13 @@ import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import React, { useState, useEffect } from 'react';
 
 const useLogs = (
+  firmId?: string,
   sortKey?: string,
   order?: 'ASC' | 'DESC',
   startDate?: Date,
   endDate?: Date,
   events: string[] = [],
-  enabled: boolean = true
+  enabled: boolean = true,
 ) => {
   const startDateString = startDate ? transformDateTime(startDate.toISOString()) : undefined;
   const endDateString = endDate ? transformDateTime(endDate.toISOString()) : undefined;
@@ -47,7 +48,8 @@ const useLogs = (
         page: '1',
         limit: '1',
         sort: `${sortKey || 'loggedAt'},${order || 'DESC'}`,
-        filter: `${eventFilter}`
+      //  filter: firmId&&eventFilter ?`logInfo||$cont||firmId:${firmId}&&(${eventFilter})` :  `logInfo||$cont||"firmId":${firmId}` || `${eventFilter}`
+        filter: firmId&&eventFilter ?`${eventFilter}&&(logInfo||$jsoncontains||{"firmId": ${firmId})` :!(firmId || eventFilter)?"": `${eventFilter}` ||`logInfo||$jsoncontains||{"firmId": ${firmId}}`
       }),
     enabled
   });
@@ -57,7 +59,6 @@ const useLogs = (
       if (firstLog.data[0].loggedAt) setAfterDate(transformDateTime(firstLog.data[0].loggedAt));
     }
   }, [firstLog]);
-
   const {
     data,
     fetchNextPage: loadMoreLogs,
@@ -66,15 +67,22 @@ const useLogs = (
     isFetchingNextPage,
     refetch: refetchLogs
   } = useInfiniteQuery({
-    queryKey: ['logs', afterDate, sortKey, order, dateFilter, eventFilter],
-    queryFn: ({ pageParam = 1 }) =>
-      api.admin.logger.findPaginatedRawFunction({
+    queryKey: ['logs', afterDate, sortKey, order, dateFilter, eventFilter, firmId],
+    queryFn: ({ pageParam = 1 }) => {
+      const filters = [
+        dateFilter,
+        eventFilter,
+        firmId ? `logInfo||$jsoncontains||{"firmId": ${firmId}}` : null
+      ].filter(Boolean).join(';');
+  
+      return api.admin.logger.findPaginatedRawFunction({
         page: pageParam.toString(),
         limit: '50',
         sort: `${sortKey || 'loggedAt'},${order || 'DESC'}`,
-        filter: `${dateFilter}${eventFilter ? ';' + eventFilter : ''}`,
+        filter: filters,
         join: 'user'
-      }),
+      });
+    },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => (lastPage.meta.hasNextPage ? lastPage.meta.page + 1 : null),
     enabled: enabled && !!afterDate

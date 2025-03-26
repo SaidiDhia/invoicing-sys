@@ -180,7 +180,7 @@ export function DataTable<TData, TValue>({
               : null}
 
             {!(hasNextPage || pending) ? (
-              <TableRow>
+              httpLogs.length==0 && <TableRow>
                 <TableCell colSpan={columns.length} className="h-16 text-center">
                   <div className="flex items-center justify-center gap-2 font-bold">
                     {tCommon('table.no_results')} <PackageOpen />

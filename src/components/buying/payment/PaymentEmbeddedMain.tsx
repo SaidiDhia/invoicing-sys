@@ -32,13 +32,13 @@ export const PaymentEmbeddedMain: React.FC<PaymentEmbeddedMainProps> = ({
   const { t: tCommon } = useTranslation('common');
   const { t: tInvoicing } = useTranslation('invoicing');
   const { t: tCurrency } = useTranslation('currency');
-
+/*
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
     if (routes && (firmId || interlocutorId))
       setRoutes([...routes, { title: tCommon('submenu.payments') }]);
   }, [router.locale, firmId, interlocutorId, routes]);
-
+*/
   const paymentManager = usePaymentManager();
 
   const [page, setPage] = React.useState(1);
