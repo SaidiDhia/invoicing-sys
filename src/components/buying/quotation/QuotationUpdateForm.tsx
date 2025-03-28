@@ -229,6 +229,8 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
         router.push(`/buying/invoice/${data.invoices[data?.invoices?.length - 1].id}`);
       } else {
         toast.success('Devis modifié avec succès');
+        router.push('/buying/quotations');
+
       }
       refetchQuotation();
     },
@@ -311,7 +313,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
             <Card className="border-0">
               <CardContent className="p-5">
                 {/* Reference Document */}
-                <QuotationReferenceDocument />
+                <QuotationReferenceDocument edit={editMode} />
                 {/* General Information */}
                 <QuotationGeneralInformation
                   className="my-5"

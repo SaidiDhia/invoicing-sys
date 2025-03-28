@@ -3,13 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { useInvoiceManager } from '../hooks/useInvoiceManager';
 import { cn } from '@/lib/utils';
 import React, { useRef } from 'react';
+import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
 
 interface InvoiceReferenceDocumentProps {
+  edit?: boolean;
   className?: string;
   loading?: boolean;
 }
+export const InvoiceReferenceDocument = ({ edit=true,className, loading }: InvoiceReferenceDocumentProps) => {
+  const [fileRemoved, setFileRemoved] = React.useState(false);
 
-export const InvoiceReferenceDocument = ({ className, loading }: InvoiceReferenceDocumentProps) => {
   const { t: tInvoicing } = useTranslation('invoicing');
   const invoiceManager = useInvoiceManager();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -25,11 +28,13 @@ export const InvoiceReferenceDocument = ({ className, loading }: InvoiceReferenc
   };
 
   const handleRemoveFile = () => {
+
     invoiceManager.set('referenceDoc', undefined);
     invoiceManager.set('referenceDocFile', null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    setFileRemoved(true);
   };
 
   // Determine which file name to display: either the freshly uploaded file or the existing upload from the API.
@@ -39,8 +44,9 @@ export const InvoiceReferenceDocument = ({ className, loading }: InvoiceReferenc
       <Label className="text-2xl flex justify-between">
         {tInvoicing('invoice.attributes.reference_doc')} (*)
       </Label>
-
-      {fileName ? (
+      {edit ? (
+        <>
+         {fileName ? (
         <div className="flex items-center gap-2 p-2 border rounded">
           <span>{fileName}</span>
           <button onClick={handleRemoveFile} className="text-red-500 hover:text-red-700">
@@ -49,13 +55,20 @@ export const InvoiceReferenceDocument = ({ className, loading }: InvoiceReferenc
         </div>
       ) : null}
 
-      <input
+      {fileRemoved || !fileName ?(
+        <input
         type="file"
         accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         onChange={handleFileChange}
         ref={fileInputRef}
         className="block"
       />
+      ):null}</>) 
+      : <UneditableInput value={fileName} />
+      }
+
+     
     </div>
   );
+  
 };

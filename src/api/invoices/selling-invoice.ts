@@ -218,6 +218,39 @@ const validate = (invoice: Partial<Invoice>, dateRange?: DateRange): ToastValida
   if (!invoice.firmId || !invoice.interlocutorId) {
     return { message: 'Entreprise et interlocuteur sont obligatoire' };
   }
+
+  if (invoice.articleInvoiceEntries?.length === 1){
+    console.log(invoice.articleInvoiceEntries[0]?.article?.title)
+    if(!invoice.articleInvoiceEntries[0]?.article?.title)
+      return { message: 'Au moins un article est obligatoire' };
+  }
+  if (invoice.articleInvoiceEntries?.some((entry) => !entry.article?.title))
+    return { message: 'Le titre d\'article est obligatoire' };
+
+  if (invoice.articleInvoiceEntries?.some((entry) => !entry.quantity))
+    return { message: 'La quantité est obligatoire' };
+  if (invoice.articleInvoiceEntries?.some((entry) => entry.quantity && entry.quantity <= 0))
+    return { message: 'La quantité doit être supérieure à 0' };
+  
+  
+  
+  if (invoice.articleInvoiceEntries?.some((entry) => !entry.unit_price))
+    return { message: 'Le prix unitaire est obligatoire' };
+  if (invoice.articleInvoiceEntries?.some((entry) => entry.unit_price && entry.unit_price <= 0))
+    return { message: 'Le prix unitaire doit être supérieur à 0' };
+
+
+  if (invoice.articleInvoiceEntries?.some((entry) => entry.discount  && entry.discount < 0))
+    return { message: 'La remise doit être supérieure ou égale à 0' };
+
+  if (invoice.articleInvoiceEntries?.some((entry) =>  entry.discount  && entry.discount_type==="PERCENTAGE"&& entry.discount > 100))
+    return { message: 'La remise doit être inférieure à 100' };
+
+  if (invoice.discount  && invoice.discount < 0)
+    return { message: 'La remise doit être supérieure ou égale à 0' };
+
+  if (invoice.discount && invoice.discount_type==="PERCENTAGE"&& invoice.discount >= 100)
+    return { message: 'La remise doit être inférieure à 100' };
   return { message: '' };
 };
 
