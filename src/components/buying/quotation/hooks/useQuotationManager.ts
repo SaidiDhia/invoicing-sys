@@ -157,6 +157,8 @@ export const useQuotationManager = create<QuotationManager>((set, get) => ({
       currency,
       uploadedFiles,
       referenceDocFile,
+      referenceDocId,
+      referenceDoc,
       ...rest
     } = get();
 
@@ -174,7 +176,10 @@ export const useQuotationManager = create<QuotationManager>((set, get) => ({
       generalConditions,
       bankAccountId: bankAccount?.id,
       currencyId: currency?.id,
-      uploadedFiles
+      uploadedFiles,
+      referenceDocFile,
+      referenceDocId,
+      referenceDoc
     };
   },
   setQuotation: (

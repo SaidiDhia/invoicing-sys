@@ -262,7 +262,7 @@ const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): 
   ) {
     return { message: `La date doit être après ou égale à ${dateRange.from.toLocaleDateString()}` };
   }
-    if (!invoice.referenceDocId && !invoice.referenceDocFile) {
+    if ((!invoice.referenceDocId && !invoice.referenceDocFile ) || (!invoice.referenceDocFile)) {
     return { message: 'Le document de référence est obligatoire' };
   }
   if (!invoice.sequential) return { message: "Le numero de sequence est obligatoire" };

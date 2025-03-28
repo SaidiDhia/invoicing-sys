@@ -214,7 +214,8 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     data && invoiceManager.setInvoice({
       ...data,
       referenceDoc: data.referenceDoc,
-      referenceDocId: data.referenceDocId
+      referenceDocId: data.referenceDocId,
+      referenceDocFile: data.referenceDocFile,
     }, firms, firmBankAccounts);
     data?.quotation && quotationManager.set('sequential', data?.quotation?.sequential);
     //invoice meta infos

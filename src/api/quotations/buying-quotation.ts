@@ -241,9 +241,9 @@ const  validate = async(quotation: Partial<BuyingQuotation>): Promise<ToastValid
   if (!quotation.date) return { message: 'La date est obligatoire' };
   if (!quotation.dueDate) return { message: "L'échéance est obligatoire" };
   if (!quotation.object) return { message: "L'objet est obligatoire" };
-  if (!quotation.referenceDocId && !quotation.referenceDocFile) {
-    return { message: 'Le document de référence est obligatoire' };
-  }
+  if ((!quotation.referenceDocId && !quotation.referenceDocFile ) || (!quotation.referenceDocFile)) {
+  return { message: 'Le document de référence est obligatoire' };
+}
   if (!quotation.sequential) return { message: "Le numero de sequence est obligatoire" };
   if (!/^[A-Z0-9\-]+$/.test(quotation.sequential)) {
     return{ message :"Le numéro séquentiel ne peut contenir que des lettres majuscules, des chiffres et des tirets."};

@@ -185,7 +185,8 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
     data && quotationManager.setQuotation({
       ...data,
       referenceDoc: data.referenceDoc,
-      referenceDocId: data.referenceDocId
+      referenceDocId: data.referenceDocId,
+      referenceDocFile: data.referenceDocFile,
     }, firms, firmBankAccounts);
 
     //quotation meta infos
@@ -205,7 +206,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
       return {
         quotation: quotationManager.getQuotation(),
         articles: articleManager.getArticles(),
-        controls: controlManager.getControls()
+        controls: controlManager.getControls(),
       };
     },
     setFormData: (data: Partial<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }>) => {
