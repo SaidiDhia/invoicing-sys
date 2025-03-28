@@ -168,6 +168,8 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
       taxStampId,
       referenceDocFile,
       taxWithholdingId,
+      referenceDoc,
+      referenceDocId,
       ...rest
     } = get();
 
@@ -187,7 +189,10 @@ export const useInvoiceManager = create<InvoiceManager>((set, get) => ({
       currencyId: currency?.id,
       uploadedFiles,
       taxStampId,
-      taxWithholdingId
+      taxWithholdingId,
+      referenceDoc,
+      referenceDocId,
+      referenceDocFile,
     };
   },
   setInvoice: (

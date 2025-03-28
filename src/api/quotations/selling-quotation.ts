@@ -50,9 +50,13 @@ const findPaginated = async (
       .map((key) => `${key}||$cont||${search}`)
       .join('||$or||')
     : '';
-  const firmCondition = firmId ? `firmId||$eq||${firmId}` : '';
-  const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
-  const filters = [generalFilter, firmCondition, interlocutorCondition].filter(Boolean).join(',');
+    
+    let filters: string=""
+    let mainCondition = "";
+    if(firmId || interlocutorId){
+      mainCondition = firmId ? `firmId||$eq||${firmId}` : interlocutorId?`interlocutorId||$cont||${interlocutorId}`:"";
+    }
+    filters = mainCondition && generalFilter ? `${mainCondition}&&(${generalFilter})` : mainCondition || generalFilter;
 
   const response = await axios.get<PagedQuotation>(
     new String().concat(
@@ -190,6 +194,39 @@ const validate = (quotation: Partial<Quotation>): ToastValidation => {
     return { message: "L'échéance doit être supérieure à la date" };
   if (!quotation.firmId || !quotation.interlocutorId)
     return { message: 'Entreprise et interlocuteur sont obligatoire' };
+
+  if (quotation.articleQuotationEntries?.length === 1){
+    console.log(quotation.articleQuotationEntries[0]?.article?.title)
+    if(!quotation.articleQuotationEntries[0]?.article?.title)
+      return { message: 'Au moins un article est obligatoire' };
+  }
+  if (quotation.articleQuotationEntries?.some((entry) => !entry.article?.title))
+    return { message: 'Le titre d\'article est obligatoire' };
+
+  if (quotation.articleQuotationEntries?.some((entry) => !entry.quantity))
+    return { message: 'La quantité est obligatoire' };
+  if (quotation.articleQuotationEntries?.some((entry) => entry.quantity && entry.quantity <= 0))
+    return { message: 'La quantité doit être supérieure à 0' };
+  
+  
+  
+  if (quotation.articleQuotationEntries?.some((entry) => !entry.unit_price))
+    return { message: 'Le prix unitaire est obligatoire' };
+  if (quotation.articleQuotationEntries?.some((entry) => entry.unit_price && entry.unit_price <= 0))
+    return { message: 'Le prix unitaire doit être supérieur à 0' };
+
+
+  if (quotation.articleQuotationEntries?.some((entry) => entry.discount  && entry.discount < 0))
+    return { message: 'La remise doit être supérieure ou égale à 0' };
+
+  if (quotation.articleQuotationEntries?.some((entry) =>  entry.discount  && entry.discount_type==="PERCENTAGE"&& entry.discount > 100))
+    return { message: 'La remise doit être inférieure à 100' }; 
+
+  if (quotation.discount  && quotation.discount < 0)
+    return { message: 'La remise doit être supérieure ou égale à 0' };
+
+  if (quotation.discount && quotation.discount_type==="PERCENTAGE"&& quotation.discount >= 100)
+    return { message: 'La remise doit être inférieure à 100' };
   return { message: '' };
 };
 

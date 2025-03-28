@@ -330,9 +330,9 @@ export const QuotationControlSection = ({
           <QuotationInvoiceList className="border-b" invoices={invoices} />
         )}
         <div className={cn('w-full mt-5 border-b')}>
-          {/* bank account choices */}
           <div>
-            {!controlManager.isBankAccountDetailsHidden && (
+            {/* bank account choices */}
+             {!controlManager.isBankAccountDetailsHidden && (
               <React.Fragment>
                 {bankAccounts.length == 0 && (
                   <div>
@@ -380,6 +380,8 @@ export const QuotationControlSection = ({
                 )}
               </React.Fragment>
             )}
+          
+            
             {/* currency choices */}
             <h1 className="font-bold">{tInvoicing('controls.currency_details')}</h1>
             {edit ? (

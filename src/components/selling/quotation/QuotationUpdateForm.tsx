@@ -214,6 +214,8 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
         router.push(`/selling/invoice/${data.invoices[data?.invoices?.length - 1].id}`);
       } else {
         toast.success('Devis modifié avec succès');
+        router.push('/selling/quotations');
+
       }
       refetchQuotation();
     },

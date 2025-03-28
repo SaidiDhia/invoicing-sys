@@ -12,6 +12,10 @@ import { appConfig } from './app-config';
 export * from './app-config';
 import { bankAccount } from './bank-account';
 export * from './bank-account';
+
+import { firmBankAccount } from './firm-bank-account';
+export * from './firm-bank-account';
+
 import { cabinet } from './cabinet';
 export * from './cabinet';
 import { country } from './country';
@@ -65,6 +69,7 @@ export const api = {
   article,
   appConfig,
   bankAccount,
+  firmBankAccount,
   cabinet,
   country,
   currency,

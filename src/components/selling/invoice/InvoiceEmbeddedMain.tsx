@@ -31,16 +31,18 @@ export const InvoiceEmbeddedMain: React.FC<InvoiceEmbeddedMainProps> = ({
   interlocutorId,
   routes
 }) => {
+
   const router = useRouter();
   const { t: tCommon } = useTranslation('common');
   const { t: tInvoicing } = useTranslation('invoicing');
 
+  /*
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
     if (routes && (firmId || interlocutorId))
       setRoutes([...routes, { title: tCommon('submenu.invoices') }]);
   }, [router.locale, firmId, interlocutorId, routes]);
-
+*/
   const invoiceManager = useInvoiceManager();
 
   const [page, setPage] = React.useState(1);

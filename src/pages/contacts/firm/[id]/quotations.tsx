@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/router';
 import { Package, ShoppingCart } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { useBreadcrumb } from '@/components/layout/BreadcrumbContext';
 
 export default function Page() {
   const router = useRouter();
@@ -25,6 +26,14 @@ export default function Page() {
     { title: `${tContact('firm.singular')} N°${id}`, href: `/contacts/firm?id=${id}` }
   ];
 
+  const { setRoutes } = useBreadcrumb();
+  React.useEffect(() => {
+    setRoutes([
+      ...routes,
+      { title: tCommon('submenu.quotations') }
+    ]);
+  }, [router.locale,id]);
+    
   const handleAccordionChange = (value: string[]) => {
     // Bloquer l'ouverture si une section est déjà ouverte
     if (value.length > 1) {

@@ -12,6 +12,7 @@ import { Package, ShoppingCart } from 'lucide-react';
 
 import { InvoiceEmbeddedMain as SellingInvoiceEmbeddedMain} from '@/components/selling/invoice/InvoiceEmbeddedMain';
 import { InvoiceEmbeddedMain as BuyingInvoiceEmbeddedMain} from '@/components/buying/invoice/InvoiceEmbeddedMain';
+import { useBreadcrumb } from '@/components/layout/BreadcrumbContext';
 
 
 export default function Page() {
@@ -34,6 +35,15 @@ export default function Page() {
       href: '/contacts/firm?id=' + id
     }
   ];
+
+    const { setRoutes } = useBreadcrumb();
+    React.useEffect(() => {
+      setRoutes([
+        ...routes,
+        { title: tCommon('submenu.invoices') }
+      ]);
+    }, [router.locale,id]);
+      
 
 
   const handleAccordionChange = (value: string[]) => {

@@ -37,7 +37,7 @@ const factory = (): CreateBuyingInvoiceDto => {
     referenceDocFile:undefined,
   };
 };
-
+/*
 const findPaginated = async (
   page: number = 1,
   size: number = 5,
@@ -53,9 +53,44 @@ const findPaginated = async (
       .map((key) => `${key}||$cont||${search}`)
       .join('||$or||')
     : '';
+  
   const firmCondition = firmId ? `firmId||$eq||${firmId}` : '';
   const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
   const filters = [generalFilter, firmCondition, interlocutorCondition].filter(Boolean).join(',');
+
+  const response = await axios.get<PagedBuyingInvoice>(
+    new String().concat(
+      'public/buying-invoice/list?',
+      `sort=${sortKey},${order}&`,
+      `filter=${filters}&`,
+      `limit=${size}&page=${page}&`,
+      `join=${relations.join(',')}`
+    )
+  );
+  return response.data;
+};*/
+const findPaginated = async (
+  page: number = 1,
+  size: number = 5,
+  order: 'ASC' | 'DESC' = 'ASC',
+  sortKey: string,
+  search: string = '',
+  relations: string[] = ['firm', 'interlocutor'],
+  firmId?: number,
+  interlocutorId?: number
+): Promise<PagedBuyingInvoice> => {
+  const generalFilter = search
+    ? Object.values(INVOICE_FILTER_ATTRIBUTES)
+      .map((key) => `${key}||$cont||${search}`)
+      .join('||$or||')
+    : '';
+
+    let filters: string=""
+    let mainCondition = "";
+    if(firmId || interlocutorId){
+      mainCondition = firmId ? `firmId||$eq||${firmId}` : interlocutorId?`interlocutorId||$cont||${interlocutorId}`:"";
+    }
+    filters = mainCondition && generalFilter ? `${mainCondition}&&(${generalFilter})` : mainCondition || generalFilter;
 
   const response = await axios.get<PagedBuyingInvoice>(
     new String().concat(
@@ -169,9 +204,6 @@ const update = async (invoice: UpdateBuyingInvoiceDto, files: File[]): Promise<B
   if(invoice.id){
     existInvoice=await findOne(invoice.id)
   }
-  console.log("invoicereferenceDocId",invoice.referenceDocId)
-  console.log("existInvoice?.referenceDocId",existInvoice?.referenceDocId)
-
   let referenceDocId
   let referenceDocFile = invoice.referenceDocFile;
   if(referenceDocFile!=existInvoice?.referenceDocFile){
@@ -230,7 +262,7 @@ const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): 
   ) {
     return { message: `La date doit être après ou égale à ${dateRange.from.toLocaleDateString()}` };
   }
-    if (!invoice.referenceDocId && !invoice.referenceDocFile) {
+    if ((!invoice.referenceDocId && !invoice.referenceDocFile ) || (!invoice.referenceDocFile)) {
     return { message: 'Le document de référence est obligatoire' };
   }
   if (!invoice.sequential) return { message: "Le numero de sequence est obligatoire" };
@@ -273,6 +305,39 @@ const validate = async(invoice: Partial<BuyingInvoice>, dateRange?: DateRange): 
   if (!invoice.firmId || !invoice.interlocutorId) {
     return { message: 'Entreprise et interlocuteur sont obligatoire' };
   }
+
+  if (invoice.articleInvoiceEntries?.length === 1){
+    console.log(invoice.articleInvoiceEntries[0]?.article?.title)
+    if(!invoice.articleInvoiceEntries[0]?.article?.title)
+      return { message: 'Au moins un article est obligatoire' };
+  }
+  if (invoice.articleInvoiceEntries?.some((entry) => !entry.article?.title))
+    return { message: 'Le titre d\'article est obligatoire' };
+
+  if (invoice.articleInvoiceEntries?.some((entry) => !entry.quantity))
+    return { message: 'La quantité est obligatoire' };
+  if (invoice.articleInvoiceEntries?.some((entry) => entry.quantity && entry.quantity <= 0))
+    return { message: 'La quantité doit être supérieure à 0' };
+  
+  
+  
+  if (invoice.articleInvoiceEntries?.some((entry) => !entry.unit_price))
+    return { message: 'Le prix unitaire est obligatoire' };
+  if (invoice.articleInvoiceEntries?.some((entry) => entry.unit_price && entry.unit_price <= 0))
+    return { message: 'Le prix unitaire doit être supérieur à 0' };
+
+
+  if (invoice.articleInvoiceEntries?.some((entry) => entry.discount  && entry.discount < 0))
+    return { message: 'La remise doit être supérieure ou égale à 0' };
+
+  if (invoice.articleInvoiceEntries?.some((entry) =>  entry.discount  && entry.discount_type==="PERCENTAGE"&& entry.discount > 100))
+    return { message: 'La remise doit être inférieure à 100' };
+
+  if (invoice.discount  && invoice.discount < 0)
+    return { message: 'La remise doit être supérieure ou égale à 0' };
+
+  if (invoice.discount && invoice.discount_type==="PERCENTAGE"&& invoice.discount >= 100)
+    return { message: 'La remise doit être inférieure à 100' };
   return { message: '' };
 };
 

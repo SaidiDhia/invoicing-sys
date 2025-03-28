@@ -242,6 +242,8 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     onSuccess: () => {
       refetchInvoice();
       toast.success('Facture modifié avec succès');
+      router.push('/selling/invoices');
+
     },
     onError: (error) => {
       const message = getErrorMessage(

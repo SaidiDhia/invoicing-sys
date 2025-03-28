@@ -51,9 +51,13 @@ const findPaginated = async (
       .map((key) => `${key}||$cont||${search}`)
       .join('||$or||')
     : '';
-  const firmCondition = firmId ? `firmId||$eq||${firmId}` : '';
-  const interlocutorCondition = interlocutorId ? `interlocutorId||$cont||${interlocutorId}` : '';
-  const filters = [generalFilter, firmCondition, interlocutorCondition].filter(Boolean).join(',');
+ 
+    let filters: string=""
+    let mainCondition = "";
+    if(firmId || interlocutorId){
+      mainCondition = firmId ? `firmId||$eq||${firmId}` : interlocutorId?`interlocutorId||$cont||${interlocutorId}`:"";
+    }
+    filters = mainCondition && generalFilter ? `${mainCondition}&&(${generalFilter})` : mainCondition || generalFilter;
 
   const response = await axios.get<PagedBuyingQuotation>(
     new String().concat(
@@ -171,19 +175,23 @@ const duplicate = async (duplicateQuotationDto: DuplicateBuyingQuotationDto): Pr
 
 const update = async (quotation: UpdateBuyingQuotationDto, files: File[]): Promise<BuyingQuotation> => {
   let existQuotation;
+
   if(quotation.id){
-    existQuotation=await findOne(quotation.id)
+    existQuotation=await findOne(quotation.id);
   }
-  let referenceDocId = quotation.referenceDocId;
-  if(referenceDocId!=existQuotation?.referenceDocId){
-    if (quotation.referenceDocFile) {
-      const [uploadId] = await uploadQuotationFiles([quotation.referenceDocFile]);
-      referenceDocId = uploadId;
+  let referenceDocId
+  let referenceDocFile = quotation.referenceDocFile;
+  if(referenceDocFile!=existQuotation?.referenceDocFile){
+    if(referenceDocFile) {
+      [referenceDocId] = await uploadQuotationFiles([referenceDocFile]);
+ 
     }
     else{
       referenceDocId=existQuotation?.referenceDocId
     }
   }
+
+  
   const uploadIds = await uploadQuotationFiles(files);
   const response = await axios.put<BuyingQuotation>(`public/buying-quotation/${quotation.id}`, {
     ...quotation,
@@ -197,6 +205,7 @@ const update = async (quotation: UpdateBuyingQuotationDto, files: File[]): Promi
   });
   return response.data;
 };
+
 
 const invoice = async (id?: number, createInvoice?: boolean): Promise<BuyingQuotation> => {
   const response = await axios.put<BuyingQuotation>(`public/buying-quotation/invoice/${id}/${createInvoice}`);
@@ -226,15 +235,15 @@ const existSequential = async (sequential: string, firmId: number)=> {
 };
 
 const  validate = async(quotation: Partial<BuyingQuotation>): Promise<ToastValidation> => {
+
+  console.log(quotation.articleQuotationEntries);
+
   if (!quotation.date) return { message: 'La date est obligatoire' };
   if (!quotation.dueDate) return { message: "L'échéance est obligatoire" };
   if (!quotation.object) return { message: "L'objet est obligatoire" };
-  
-  if (!quotation.referenceDocId && !quotation.referenceDocFile) {
-    return { message: 'Le document de référence est obligatoire' };
-  }
-
-
+  if ((!quotation.referenceDocId && !quotation.referenceDocFile ) || (!quotation.referenceDocFile)) {
+  return { message: 'Le document de référence est obligatoire' };
+}
   if (!quotation.sequential) return { message: "Le numero de sequence est obligatoire" };
   if (!/^[A-Z0-9\-]+$/.test(quotation.sequential)) {
     return{ message :"Le numéro séquentiel ne peut contenir que des lettres majuscules, des chiffres et des tirets."};
@@ -242,32 +251,54 @@ const  validate = async(quotation: Partial<BuyingQuotation>): Promise<ToastValid
   if (quotation.sequential.length < 5) {
     return{ message :"Le numéro séquentiel doit contenir au moins 5 caractères."};
   }
-
   if (!quotation.firmId) return { message: "Le firm est obligatoire" };
-
   const existQuotation=await existSequential(quotation.sequential,quotation.firmId)
-
-
   if(existQuotation && existQuotation.data?.id!==quotation?.id){
     return{ message :" Un Devis avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. 1"};
   }
   if(!quotation.id && existQuotation){
     return{ message :" Un Devis avec ce numéro séquentiel existe déjà pour l'entreprise spécifiée. 2"};
   }
-
-  
-
-  // Vérifie la longueur maximale
   if (quotation.sequential.length > 20) {
     return{ message :"Le numéro séquentiel ne peut pas dépasser 20 caractères."};
   }
-
-
-
   if (differenceInDays(new Date(quotation.date), new Date(quotation.dueDate)) >= 0)
     return { message: "L'échéance doit être supérieure à la date" };
   if (!quotation.firmId || !quotation.interlocutorId)
     return { message: 'Entreprise et interlocuteur sont obligatoire' };
+
+  if (quotation.articleQuotationEntries?.length === 1){
+    console.log(quotation.articleQuotationEntries[0]?.article?.title)
+    if(!quotation.articleQuotationEntries[0]?.article?.title)
+      return { message: 'Au moins un article est obligatoire' };
+  }
+  if (quotation.articleQuotationEntries?.some((entry) => !entry.article?.title))
+    return { message: 'Le titre d\'article est obligatoire' };
+
+  if (quotation.articleQuotationEntries?.some((entry) => !entry.quantity))
+    return { message: 'La quantité est obligatoire' };
+  if (quotation.articleQuotationEntries?.some((entry) => entry.quantity && entry.quantity <= 0))
+    return { message: 'La quantité doit être supérieure à 0' };
+  
+  
+  
+  if (quotation.articleQuotationEntries?.some((entry) => !entry.unit_price))
+    return { message: 'Le prix unitaire est obligatoire' };
+  if (quotation.articleQuotationEntries?.some((entry) => entry.unit_price && entry.unit_price <= 0))
+    return { message: 'Le prix unitaire doit être supérieur à 0' };
+
+
+  if (quotation.articleQuotationEntries?.some((entry) => entry.discount  && entry.discount < 0))
+    return { message: 'La remise doit être supérieure ou égale à 0' };
+
+  if (quotation.articleQuotationEntries?.some((entry) =>  entry.discount  && entry.discount_type==="PERCENTAGE"&& entry.discount > 100))
+    return { message: 'La remise doit être inférieure à 100' };
+
+  if (quotation.discount  && quotation.discount < 0)
+    return { message: 'La remise doit être supérieure ou égale à 0' };
+
+  if (quotation.discount && quotation.discount_type==="PERCENTAGE"&& quotation.discount >= 100)
+    return { message: 'La remise doit être inférieure à 100' };
   return { message: '' };
 };
 

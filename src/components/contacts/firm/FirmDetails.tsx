@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Info, Hourglass, File, FileText, Wallet, Users } from 'lucide-react';
+import { Info, Hourglass, File, FileText, Wallet, Users, Landmark } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Separator } from '@/components/ui/separator';
 import SidebarNav from '@/components/sidebar-nav';
@@ -45,6 +45,11 @@ export const FirmDetails: React.FC<FirmDetailsProps> = ({ className, firmId, chi
       title: tContacts('firm.detailmenu.payments'),
       icon: <Wallet size={18} />,
       href: `/contacts/firm/${firmId}/payments`
+    },
+    {
+      title: tContacts('firm.detailmenu.bank-accounts'),
+      icon: <Landmark size={18} />,
+      href: `/contacts/firm/${firmId}/bank-accounts`
     },
     {
       title: tContacts('firm.detailmenu.chronological'),

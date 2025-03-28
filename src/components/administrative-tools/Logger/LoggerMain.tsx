@@ -10,12 +10,14 @@ import { Separator } from '@/components/ui/separator';
 import useSocketLogs from './hooks/useSocketLogs';
 import { LoggerActionsContext, LoggerActionsContextProps } from './data-table/ActionsContext';
 import { useDebounce } from '@/hooks/other/useDebounce';
+import { firm } from '@/api';
 
 interface LoggerMainProps {
+  firmId?: string;
   className?: string;
 }
 
-export const LoggerMain = ({ className }: LoggerMainProps) => {
+export const LoggerMain = ({ firmId ,className }: LoggerMainProps) => {
   const router = useRouter();
   const { t: tCommon } = useTranslation('common');
   const { t: tLogger } = useTranslation('logger');
@@ -36,11 +38,12 @@ export const LoggerMain = ({ className }: LoggerMainProps) => {
 
   //http logs
   const { logs, isPending, loadMoreLogs, hasNextPage, refetchLogs } = useLogs(
+    firmId,
     debouncedSortDetails.sortKey,
     debouncedSortDetails.order ? 'ASC' : 'DESC',
     startDate,
     endDate,
-    events
+    events,
   );
   //socket logs
   const { logs: socketLogs, toggleConnection, isConnected } = useSocketLogs();
@@ -48,6 +51,7 @@ export const LoggerMain = ({ className }: LoggerMainProps) => {
   const [newLogsCount, setNewLogsCount] = React.useState(0);
 
   const { setRoutes } = useBreadcrumb();
+  !firmId &&(
   React.useEffect(() => {
     setRoutes([
       {
@@ -56,7 +60,7 @@ export const LoggerMain = ({ className }: LoggerMainProps) => {
       },
       { title: tCommon('submenu.logger') }
     ]);
-  }, [router.locale]);
+  }, [router.locale]));
 
   const context: LoggerActionsContextProps = {
     startDate,

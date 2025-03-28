@@ -3,13 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import React, { useRef } from 'react';
 import { useQuotationManager } from '../hooks/useQuotationManager';
+import { UneditableInput } from '@/components/ui/uneditable/uneditable-input';
 
 interface QuotationReferenceDocumentProps {
+  edit?: boolean;
   className?: string;
   loading?: boolean;
 }
 
-export const QuotationReferenceDocument = ({ className, loading }: QuotationReferenceDocumentProps) => {
+export const QuotationReferenceDocument = ({edit=true, className, loading }: QuotationReferenceDocumentProps) => {
+   const [fileRemoved, setFileRemoved] = React.useState(false);
+ 
   const { t: tInvoicing } = useTranslation('invoicing');
   const quotationManager = useQuotationManager();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -41,7 +45,9 @@ export const QuotationReferenceDocument = ({ className, loading }: QuotationRefe
         {tInvoicing('quotation.attributes.reference_doc')} (*)
       </Label>
 
-      {fileName ? (
+      {edit ? (
+        <>
+         {fileName ? (
         <div className="flex items-center gap-2 p-2 border rounded">
           <span>{fileName}</span>
           <button onClick={handleRemoveFile} className="text-red-500 hover:text-red-700">
@@ -50,14 +56,18 @@ export const QuotationReferenceDocument = ({ className, loading }: QuotationRefe
         </div>
       ) : null}
 
-      <input
+      {fileRemoved || !fileName ?(
+        <input
         type="file"
         accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         onChange={handleFileChange}
         ref={fileInputRef}
         className="block"
-        
       />
+      ):null}</>) 
+      : <UneditableInput value={fileName} />
+      }
+
     </div>
   );
 };

@@ -7,10 +7,10 @@ module.exports = {
     backendOptions: [
 
 
-      //{ expirationTime: 60 * 60 * 1000 },
-      {
+      {expirationTime: 60 * 60 * 1000 },
+      /*{
         loadPath: 'https:// somewhere else' 
-      }
+      }*/
     
     ], // 1 hour
     backends: typeof window !== 'undefined' ? [LocalStorageBackend, HttpBackend] : []

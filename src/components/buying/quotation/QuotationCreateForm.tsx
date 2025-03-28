@@ -34,6 +34,7 @@ import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
 import { BUYING_QUOTATION_STATUS, BuyingArticleQuotationEntry, CreateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
 import { QuotationReferenceDocument } from './form/QuotationReferenceDocument';
+import useFirmBankAccount from '@/hooks/content/useFirmBankAccount';
 
 interface QuotationFormProps {
   className?: string;
@@ -87,7 +88,7 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
   const { cabinet, isFetchCabinetPending } = useCabinet();
   const { taxes, isFetchTaxesPending } = useTax();
   const { currencies, isFetchCurrenciesPending } = useCurrency();
-  const { bankAccounts, isFetchBankAccountsPending } = useBankAccount();
+  const { firmBankAccounts, isFetchFirmBankAccountsPending } = useFirmBankAccount();
   const { defaultCondition, isFetchDefaultConditionPending } = useDefaultCondition(
     ACTIVITY_TYPE.BUYING,
     DOCUMENT_TYPE.QUOTATION
@@ -165,7 +166,7 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
     isFetchFirmsPending ||
     isFetchTaxesPending ||
     isFetchCabinetPending ||
-    isFetchBankAccountsPending ||
+    isFetchFirmBankAccountsPending ||
     isFetchCurrenciesPending ||
     isFetchDefaultConditionPending ||
   !commonReady || !invoicingReady || isCreatePending;
@@ -300,7 +301,7 @@ export const QuotationCreateForm = ({ className, firmId }: QuotationFormProps) =
               <CardContent className="p-5">
                 {/* Control Section */}
                 <QuotationControlSection
-                  bankAccounts={bankAccounts}
+                  bankAccounts={firmBankAccounts}
                   currencies={currencies}
                   invoices={[]}
                   handleSubmitDraft={() => onSubmit(BUYING_QUOTATION_STATUS.Draft)}

@@ -6,7 +6,6 @@ import { Spinner } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
 import useTax from '@/hooks/content/useTax';
 import useFirmChoice from '@/hooks/content/useFirmChoice';
-import useBankAccount from '@/hooks/content/useBankAccount';
 import { toast } from 'sonner';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getErrorMessage } from '@/utils/errors';
@@ -35,6 +34,7 @@ import dinero from 'dinero.js';
 import { createDineroAmountFromFloatWithDynamicCurrency } from '@/utils/money.utils';
 import { BUYING_QUOTATION_STATUS, BuyingArticleQuotationEntry, BuyingQuotation, BuyingQuotationUploadedFile, UpdateBuyingQuotationDto } from '@/types/quotations/buying-quotation';
 import { QuotationReferenceDocument } from './form/QuotationReferenceDocument';
+import useFirmBankAccount from '@/hooks/content/useFirmBankAccount';
 
 interface QuotationFormProps {
   className?: string;
@@ -110,7 +110,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
   ]);
   const { taxes, isFetchTaxesPending } = useTax();
   const { currencies, isFetchCurrenciesPending } = useCurrency();
-  const { bankAccounts, isFetchBankAccountsPending } = useBankAccount();
+  const { firmBankAccounts, isFetchFirmBankAccountsPending } = useFirmBankAccount();
   const { defaultCondition, isFetchDefaultConditionPending } = useDefaultCondition(
     ACTIVITY_TYPE.BUYING,
     DOCUMENT_TYPE.QUOTATION
@@ -120,7 +120,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
     isFetchFirmsPending ||
     isFetchTaxesPending ||
     isFetchCurrenciesPending ||
-    isFetchBankAccountsPending ||
+    isFetchFirmBankAccountsPending ||
     isFetchDefaultConditionPending ||
     !commonReady ||
     !invoicingReady;
@@ -185,8 +185,9 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
     data && quotationManager.setQuotation({
       ...data,
       referenceDoc: data.referenceDoc,
-      referenceDocId: data.referenceDocId
-    }, firms, bankAccounts);
+      referenceDocId: data.referenceDocId,
+      referenceDocFile: data.referenceDocFile,
+    }, firms, firmBankAccounts);
 
     //quotation meta infos
     controlManager.setControls({
@@ -205,7 +206,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
       return {
         quotation: quotationManager.getQuotation(),
         articles: articleManager.getArticles(),
-        controls: controlManager.getControls()
+        controls: controlManager.getControls(),
       };
     },
     setFormData: (data: Partial<BuyingQuotation & { files: BuyingQuotationUploadedFile[] }>) => {
@@ -229,6 +230,8 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
         router.push(`/buying/invoice/${data.invoices[data?.invoices?.length - 1].id}`);
       } else {
         toast.success('Devis modifié avec succès');
+        router.push('/buying/quotations');
+
       }
       refetchQuotation();
     },
@@ -311,7 +314,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
             <Card className="border-0">
               <CardContent className="p-5">
                 {/* Reference Document */}
-                <QuotationReferenceDocument />
+                <QuotationReferenceDocument edit={editMode} />
                 {/* General Information */}
                 <QuotationGeneralInformation
                   className="my-5"
@@ -361,7 +364,7 @@ export const QuotationUpdateForm = ({ className, quotationId }: QuotationFormPro
                 <QuotationControlSection
                   status={quotationManager.status}
                   isDataAltered={isDisabled}
-                  bankAccounts={bankAccounts}
+                  bankAccounts={firmBankAccounts}
                   currencies={currencies}
                   invoices={quotation?.invoices || []}
                   handleSubmit={() => onSubmit(quotationManager.status)}

@@ -51,7 +51,8 @@
       "chronological": "Chronological",
       "quotations": "Quotations",
       "invoices": "Invoices",
-      "payments": "Payments"
+      "payments": "Payments",
+      "bank-accounts": "Bank Accounts"
     },
     "introduce_info": "Enter the company information",
     "introduce_info_description": "Please provide the required details of the new company in the fields below.",
@@ -136,5 +137,38 @@
   "invoices":{
     "buying_invoices":"Buying Invoices",
     "selling_invoices":"Selling Invoices"
+  },
+  "payments":{
+    "buying_payments":"Buying Payments",
+    "selling_payments":"Selling Payments"
+  },
+  "bank_accounts": {
+    "action_add_failure": "Error while creating Bank Account",
+    "action_add_success": "Bank Account Added Successfully",
+    "action_edit_failure": "Error while updating Bank Account",
+    "action_edit_success": "Bank Account updated successfully",
+    "action_remove_failure": "Error while deleting bank account",
+    "action_remove_success": "Bank Account deleted successfully",
+    "action_promote_failure": "Error while promoting bank account",
+    "action_promote_success": "Bank Account {{name}} promoted successfully",
+    "add_button_label": "New Bank Account",
+    "attributes": {
+        "name": "Bank Name",
+        "bic": "BIC/SWIFT",
+        "currency": "Currency",
+        "rib": "RIB",
+        "iban": "IBAN",
+        "isMain": "Main Bank"
+    },
+    "card_description": "This section allows users to efficiently manage bank accounts by performing the key actions related to saved bank accounts",
+    "hints": {
+        "create_dialog_hint": "Enter the details to create a new bank account. Make sure all the required fields are filled before saving.",
+        "update_dialog_hint": "Enter the details to update the bank account. Make sure all the required fields are filled before saving."
+    },
+    "new": "New Bank Account",
+    "update": "Bank Account Update",
+    "singular": "Bank Account",
+    "plural": "Bank Accounts",
+    "promote_prompt": "Are you sure you want to promote '<label>{{label}}</label>' as your main account?"
   }
 }
