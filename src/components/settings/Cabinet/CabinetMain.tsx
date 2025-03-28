@@ -33,7 +33,7 @@ const CabinetMain: React.FC<CabinetMainProps> = ({ className }) => {
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
     setRoutes([
-      { title: tCommon('menu.settings') },
+      { title: tCommon('menu.settings') , href: '/settings' },
       { title: tCommon('submenu.account') },
       { title: tCommon('settings.account.my_cabinet') }
     ]);

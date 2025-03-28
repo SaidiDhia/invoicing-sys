@@ -11,4 +11,5 @@ export interface Upload extends DatabaseEntity {
 
 export interface UploadFileDto {
   file: File;
+  referenceDoc?: File;
 }

@@ -32,7 +32,7 @@ const PaymentConditionMain: React.FC<PaymentConditionMainProps> = ({ className }
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
     setRoutes([
-      { title: tCommon('menu.settings') },
+      { title: tCommon('menu.settings'), href: '/settings'  },
       { title: tCommon('submenu.system') },
       { title: tCommon('settings.system.payment_condition') }
     ]);

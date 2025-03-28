@@ -29,7 +29,7 @@ export const DefaultConditionMain: React.FC<DefaultConditionMainProps> = ({ clas
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
     setRoutes([
-      { title: tCommon('menu.settings') },
+      { title: tCommon('menu.settings') , href: '/settings' },
       { title: tCommon('submenu.system') },
       { title: tCommon('settings.system.default_condition') }
     ]);

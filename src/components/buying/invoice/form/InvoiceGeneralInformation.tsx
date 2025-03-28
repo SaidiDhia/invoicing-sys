@@ -99,7 +99,7 @@ export const InvoiceGeneralInformation = ({
           {edit ? (
             <Input
               className="mt-1"
-              placeholder="QUO-2025-02-24-13"
+              placeholder="INV-2025-02-24-13"
               value={invoiceManager.sequential || ''}
               onChange={(e) => {
                 invoiceManager.set('sequential', e.target.value);

@@ -35,7 +35,7 @@ export const BankAccountMain: React.FC<BankAccountMainProps> = ({ className }) =
   const { setRoutes } = useBreadcrumb();
   React.useEffect(() => {
     setRoutes([
-      { title: tCommon('menu.settings') },
+      { title: tCommon('menu.settings'), href: '/settings'  },
       { title: tCommon('submenu.account') },
       { title: tCommon('settings.account.bank_accounts') }
     ]);

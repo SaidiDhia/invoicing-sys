@@ -21,7 +21,14 @@ export const InvoiceReferenceDocument = ({ className, loading }: InvoiceReferenc
       // Set both properties so validation and UI display work correctly.
       invoiceManager.set('referenceDoc', { upload: { filename: file.name }, file });
       invoiceManager.set('referenceDocFile', file);
+
     }
+    /*else {
+      const updatedFiles = invoiceManager.uploadedFiles.filter((uploadedFile) =>
+        e.some((file: File) => file === uploadedFile.file)
+      );
+      invoiceManager.set('uploadedFiles', updatedFiles);
+    }*/
   };
 
   const handleRemoveFile = () => {

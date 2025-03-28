@@ -1,11 +1,10 @@
-import { PagedResponse } from './response';
-import { DatabaseEntity } from './response/DatabaseEntity';
+import { PagedResponse } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/types/response/PagedResponse';
+import { DatabaseEntity } from 'C:/Users/MSI/Desktop/PFE/invoicing-sys-pfe/invoicing-sys/src/types/response/DatabaseEntity';
 
 export interface TaxWithholding extends DatabaseEntity {
   id?: number;
   label?: string;
   rate?: number;
-
 }
 
 export interface CreateTaxWithholdingDto

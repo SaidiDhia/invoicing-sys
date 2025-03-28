@@ -229,7 +229,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
     articleManager.setArticles(data?.articleInvoiceEntries || []);
   };
 
-  //initialized value to detect changement whiie modifying the invoice
+  //initialized value to detect changement while modifying the invoice
   const { isDisabled, globalReset } = useInitializedState({
     data: invoice || ({} as Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>),
     getCurrentData: () => {
@@ -237,7 +237,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
         invoice: invoiceManager.getInvoice(),
         articles: articleManager.getArticles(),
         controls: controlManager.getControls(),
-      
+
       };
     },
     setFormData: (data: Partial<BuyingInvoice & { files: BuyingInvoiceUploadedFile[] }>) => {
@@ -397,7 +397,7 @@ export const InvoiceUpdateForm = ({ className, invoiceId }: InvoiceFormProps) =>
               <CardContent className="p-5">
                 <BuyingInvoiceControlSection
                   status={invoiceManager.status}
-                  isDataAltered={isDisabled}
+                  //isDataAltered={isDisabled}
                   bankAccounts={bankAccounts}
                   currencies={currencies}
                   quotations={quotations}

@@ -1,4 +1,5 @@
 export enum DOCUMENT_TYPE {
   QUOTATION = 'quotation',
-  INVOICE = 'invoice'
+  INVOICE = 'invoice',
+  WITHHOLDING = 'withholding'
 }

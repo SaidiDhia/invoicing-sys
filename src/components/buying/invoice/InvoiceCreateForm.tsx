@@ -18,7 +18,6 @@ import { getErrorMessage } from '@/utils/errors';
 import { DISCOUNT_TYPE } from '@/types/enums/discount-types';
 import { useInvoiceManager } from '@/components/buying/invoice/hooks/useInvoiceManager';
 import { useInvoiceArticleManager } from './hooks/useInvoiceArticleManager';
-import useInvoiceSocket from './hooks/useInvoiceSocket';
 import { useDebounce } from '@/hooks/other/useDebounce';
 import { useInvoiceControlManager } from './hooks/useInvoiceControlManager';
 import useCurrency from '@/hooks/content/useCurrency';

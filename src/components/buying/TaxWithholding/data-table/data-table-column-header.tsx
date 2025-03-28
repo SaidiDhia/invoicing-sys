@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { useTranslation } from 'react-i18next';
-import { useWithholdingActions } from './ActionsContext';
+import { useTaxWithholdingActions } from './ActionDialogContext';
 
 interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
@@ -25,7 +25,7 @@ export function DataTableColumnHeader<TData, TValue>({
   attribute,
   className
 }: DataTableColumnHeaderProps<TData, TValue>) {
-  const { order, sortKey, setSortDetails } = useWithholdingActions();
+  const { order, sortKey, setSortDetails } = useTaxWithholdingActions();
   const { t: tCommon } = useTranslation('common');
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>;
@@ -49,14 +49,14 @@ export function DataTableColumnHeader<TData, TValue>({
         <DropdownMenuContent align="start">
           <DropdownMenuItem
             onClick={() => {
-              attribute && setSortDetails?.(false, attribute);
+              attribute && setSortDetails(false, attribute);
             }}>
             <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             {tCommon('order.asc')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              attribute && setSortDetails?.(true, attribute);
+              attribute && setSortDetails(true, attribute);
             }}>
             <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             {tCommon('order.desc')}

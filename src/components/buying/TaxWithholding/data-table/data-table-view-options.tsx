@@ -17,7 +17,7 @@ interface DataTableViewOptionsProps<TData> {
 
 export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
   const { t: tCommon } = useTranslation('common');
-  const { t: tInvoicing } = useTranslation('invoicing');
+  const { t: tSettings } = useTranslation('settings');
 
   return (
     <DropdownMenu>
@@ -36,7 +36,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           .getAllColumns()
           .filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide())
           .map((column) => {
-            const translatedColumnTitle = tInvoicing(`withholding.attributes.${column.id}`, {
+            const translatedColumnTitle = tSettings(`tax.attributes.${column.id}`, {
               defaultValue: column.id
             });
 

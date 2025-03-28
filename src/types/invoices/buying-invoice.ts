@@ -116,9 +116,9 @@ export interface BuyingInvoice extends DatabaseEntity {
   taxWithholdingId?: number;
   taxWithholdingAmount?: number;
 
-  referenceDoc?:Upload;
-  referenceDocId?:number;
-  referenceDocFile?:File | null;
+  referenceDoc?: Upload;
+  referenceDocId?: number;
+  referenceDocFile?: File | null;
 }
 
 export interface CreateBuyingInvoiceDto
@@ -134,7 +134,7 @@ export interface CreateBuyingInvoiceDto
     | 'interlocutor'
     | 'bankAccount'
   > {
-  sequential?:string;
+  sequential?: string;
 
   articleInvoiceEntries?: CreateBuyingArticleInvoiceEntry[];
   files?: File[];
